@@ -1,0 +1,13 @@
+id: ai.faster-iteration
+title: Iteration speed roughly tripled
+kind: milestone
+phase: adoption
+stream: tooling
+date: '2026-02-10'
+enabled_by:
+  - ai.adopted-ai-tooling
+description: |
+  Cycle time from idea to working change dropped sharply once AI assistance was
+  embedded in the loop. This is the slack that funded everything in the later
+  phases.
+impact: Created budget headroom without adding headcount.

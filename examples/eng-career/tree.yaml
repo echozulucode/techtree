@@ -1,0 +1,36 @@
+schema_version: 1
+tree:
+  id: eng-career
+  title: Engineering Career Progression
+  version: '2026.1'
+  description: |
+    Example career-track tree for software engineering progression
+    from junior IC through staff. Authored as a demonstration of how
+    a real organization's competency matrix can be expressed in the
+    @skill-tree schema.
+  owners:
+    - eng-architecture-committee
+  default_theme: civ-iv
+  namespace: eng
+
+eras:
+  - id: junior
+    title: Junior IC
+    order: 0
+  - id: mid
+    title: Mid-Level IC
+    order: 1
+  - id: senior
+    title: Senior IC
+    order: 2
+  - id: staff
+    title: Staff+
+    order: 3
+
+paths:
+  - id: backend
+    title: Backend Track
+    description: Server-side, data, infrastructure.
+  - id: leadership
+    title: Technical Leadership
+    description: Cross-team and organizational impact.

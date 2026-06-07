@@ -1,0 +1,7 @@
+id: smoke.hello-world
+title: Hello World
+description: |
+  Phase 0 smoke skill — proves the compiler can parse a single YAML file
+  and emit a stub IR. Replaced by real example trees in Phase 1.
+category: foundations
+era: era-0

@@ -1,0 +1,16 @@
+id: eng.senior/cross-team-collaboration
+title: Cross-Team Collaboration
+description: Drive technical alignment across team boundaries.
+category: leadership
+tags: [collaboration, leadership]
+era: senior
+path: leadership
+difficulty: 4
+estimated_hours: 150
+requires:
+  - eng.mid/mentoring
+owner: engineering-manager
+validation_criteria:
+  - Drove a technical decision that involved 3+ teams to consensus
+  - Cited as a useful collaborator by leads of other teams in 360 feedback
+approver_role: engineering-manager

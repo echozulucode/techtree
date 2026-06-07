@@ -1,0 +1,14 @@
+id: personal.intermediate/version-control-advanced
+title: Advanced Version Control
+description: Interactive rebase, bisect, reflog, recovering lost commits.
+category: tools
+tags: [git, vcs]
+era: intermediate
+difficulty: 3
+estimated_hours: 15
+requires:
+  - personal.foundations/git-basics
+owner: self
+validation_criteria:
+  - Recovered a "lost" commit using reflog without panicking
+  - Cleaned up a messy branch into a coherent set of commits via interactive rebase

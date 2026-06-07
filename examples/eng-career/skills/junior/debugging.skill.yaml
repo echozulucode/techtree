@@ -1,0 +1,15 @@
+id: eng.junior/debugging
+title: Debugging Fluency
+description: Find root causes with logs, stack traces, and breakpoints — not guessing.
+category: skills
+tags: [debugging, fundamentals]
+era: junior
+path: backend
+difficulty: 2
+estimated_hours: 30
+requires:
+  - eng.junior/onboarding
+owner: tech-lead
+validation_criteria:
+  - Diagnosed a non-trivial bug without escalating
+  - Articulated the root cause in writing (not just the fix)

@@ -1,0 +1,18 @@
+id: eng.staff/technical-strategy
+title: Technical Strategy
+description: Translate business goals into multi-quarter technical strategy.
+category: leadership
+tags: [strategy, leadership]
+era: staff
+path: backend
+difficulty: 5
+estimated_hours: 500
+requires:
+  - eng.senior/system-design
+  - eng.senior/cross-team-collaboration
+owner: director-of-engineering
+validation_criteria:
+  - Authored a strategy doc adopted as the org's technical direction for 1+ year
+  - Cited as a key shaper of org technical direction in 360 feedback
+approver_role: director-of-engineering
+review_cadence: annual

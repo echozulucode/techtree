@@ -1,0 +1,4 @@
+id: fixture.alias/skill-b
+title: Skill B
+aliases:
+  - fixture.alias/shared-alias

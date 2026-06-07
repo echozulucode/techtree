@@ -1,0 +1,12 @@
+id: ai.auto-update-spike
+title: Spike — automatic update mechanism
+kind: experiment
+phase: expansion
+stream: platform
+date: '2026-05-02'
+enabled_by:
+  - ai.freed-capacity
+hypothesis: |
+  The freed capacity is enough to design and prove a safe automatic-update
+  mechanism (staged rollout + rollback) for the product.
+impact: Validated — staged rollout with rollback proven on a test fleet.

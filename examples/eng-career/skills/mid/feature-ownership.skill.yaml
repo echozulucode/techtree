@@ -1,0 +1,18 @@
+id: eng.mid/feature-ownership
+title: End-to-End Feature Ownership
+description: Take a feature from design through deploy and own its operations.
+category: delivery
+tags: [ownership, delivery]
+era: mid
+path: backend
+difficulty: 3
+estimated_hours: 200
+requires:
+  - eng.junior/unit-testing
+  - eng.junior/code-review-basics
+owner: tech-lead
+validation_criteria:
+  - Shipped a feature owned end-to-end — spec, code, tests, rollout, monitoring
+  - Responded to at least one incident on the feature in production
+approver_role: tech-lead
+review_cadence: annual

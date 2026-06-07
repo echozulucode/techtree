@@ -1,0 +1,12 @@
+id: ai.auto-updates-shipped
+title: Shipped automatic updates
+kind: milestone
+phase: expansion
+stream: platform
+date: '2026-05-28'
+enabled_by:
+  - ai.auto-update-spike
+description: |
+  Automatic updates went to production with staged rollout and rollback — a
+  capability that would normally never have cleared the backlog.
+impact: Reduced manual release toil; faster, safer delivery to users.

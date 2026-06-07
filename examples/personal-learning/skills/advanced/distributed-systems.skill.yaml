@@ -1,0 +1,19 @@
+id: personal.advanced/distributed-systems
+title: Distributed Systems
+description: Reason about partial failure, consistency, and coordination.
+category: programming
+tags: [systems, distributed]
+era: advanced
+path: programming
+difficulty: 5
+estimated_hours: 150
+requires:
+  - personal.advanced/system-design
+owner: self
+validation_criteria:
+  - Can explain CAP and PACELC in concrete terms with examples
+  - Debugged a real distributed-systems incident — partition, retry storm, or quorum loss
+learning_resources:
+  - label: Designing Data-Intensive Applications
+    url: https://dataintensive.net/
+    kind: book

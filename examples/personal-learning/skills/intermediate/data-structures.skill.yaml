@@ -1,0 +1,15 @@
+id: personal.intermediate/data-structures
+title: Data Structures
+description: Know when to reach for which structure and why.
+category: programming
+tags: [programming, fundamentals]
+era: intermediate
+path: programming
+difficulty: 3
+estimated_hours: 40
+requires:
+  - personal.intermediate/programming-language
+owner: self
+validation_criteria:
+  - Can articulate tradeoffs between array, linked list, hash, tree, heap, graph
+  - Implemented each from scratch at least once

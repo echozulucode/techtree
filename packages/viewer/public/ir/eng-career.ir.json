@@ -1,0 +1,600 @@
+{
+  "bands": [
+    {
+      "id": "junior",
+      "order": 0,
+      "title": "Junior IC"
+    },
+    {
+      "id": "mid",
+      "order": 1,
+      "title": "Mid-Level IC"
+    },
+    {
+      "id": "senior",
+      "order": 2,
+      "title": "Senior IC"
+    },
+    {
+      "id": "staff",
+      "order": 3,
+      "title": "Staff+"
+    }
+  ],
+  "edges": [
+    {
+      "from": "eng.junior/code-review-basics",
+      "kind": "requires",
+      "to": "eng.mid/feature-ownership"
+    },
+    {
+      "from": "eng.junior/code-review-basics",
+      "kind": "requires",
+      "to": "eng.mid/mentoring"
+    },
+    {
+      "from": "eng.junior/debugging",
+      "kind": "requires",
+      "to": "eng.junior/unit-testing"
+    },
+    {
+      "from": "eng.junior/onboarding",
+      "kind": "requires",
+      "to": "eng.junior/code-review-basics"
+    },
+    {
+      "from": "eng.junior/onboarding",
+      "kind": "requires",
+      "to": "eng.junior/debugging"
+    },
+    {
+      "from": "eng.junior/unit-testing",
+      "kind": "requires",
+      "to": "eng.mid/feature-ownership"
+    },
+    {
+      "from": "eng.mid/api-design",
+      "kind": "requires",
+      "to": "eng.senior/system-design"
+    },
+    {
+      "from": "eng.mid/database-fluency",
+      "kind": "requires",
+      "to": "eng.senior/system-design"
+    },
+    {
+      "from": "eng.mid/feature-ownership",
+      "kind": "requires",
+      "to": "eng.mid/api-design"
+    },
+    {
+      "from": "eng.mid/feature-ownership",
+      "kind": "requires",
+      "to": "eng.mid/database-fluency"
+    },
+    {
+      "from": "eng.mid/feature-ownership",
+      "kind": "requires",
+      "to": "eng.senior/incident-management"
+    },
+    {
+      "from": "eng.mid/mentoring",
+      "kind": "requires",
+      "to": "eng.senior/cross-team-collaboration"
+    },
+    {
+      "from": "eng.mid/mentoring",
+      "kind": "requires",
+      "to": "eng.staff/external-influence"
+    },
+    {
+      "from": "eng.senior/cross-team-collaboration",
+      "kind": "requires",
+      "to": "eng.staff/technical-strategy"
+    },
+    {
+      "from": "eng.senior/system-design",
+      "kind": "requires",
+      "to": "eng.staff/technical-strategy"
+    },
+    {
+      "from": "eng.staff/technical-strategy",
+      "kind": "requires",
+      "to": "eng.staff/external-influence"
+    }
+  ],
+  "ir_version": 1,
+  "meta": {
+    "edge_count": 16,
+    "node_count": 13,
+    "source_count": 13
+  },
+  "nodes": [
+    {
+      "aliases": [],
+      "band": "junior",
+      "category": "process",
+      "data": {
+        "difficulty": 2,
+        "estimated_hours": 20,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "tech-lead",
+          "evidence_requirements": [],
+          "owner": "tech-lead",
+          "validation_criteria": [
+            "Reviewed 10+ PRs from peers with constructive feedback",
+            "Demonstrated ability to incorporate review feedback without defensiveness"
+          ]
+        }
+      },
+      "description": "Give and receive code review productively.",
+      "id": "eng.junior/code-review-basics",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 307.3333333333333
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "code-review",
+        "process"
+      ],
+      "title": "Code Review Basics",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "junior",
+      "category": "skills",
+      "data": {
+        "difficulty": 2,
+        "estimated_hours": 30,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "tech-lead",
+          "validation_criteria": [
+            "Diagnosed a non-trivial bug without escalating",
+            "Articulated the root cause in writing (not just the fix)"
+          ]
+        }
+      },
+      "description": "Find root causes with logs, stack traces, and breakpoints — not guessing.",
+      "id": "eng.junior/debugging",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 19.333333333333332
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "debugging",
+        "fundamentals"
+      ],
+      "title": "Debugging Fluency",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "junior",
+      "category": "foundations",
+      "data": {
+        "difficulty": 1,
+        "estimated_hours": 40,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "hiring-manager",
+          "evidence_requirements": [
+            "Link to first merged PR"
+          ],
+          "owner": "hiring-manager",
+          "validation_criteria": [
+            "First PR merged to main",
+            "On-call shadow shift completed",
+            "Read and acknowledged engineering handbook"
+          ]
+        }
+      },
+      "description": "Local dev environment working, first PR merged, on-call shadow done.",
+      "id": "eng.junior/onboarding",
+      "pinned": false,
+      "position": {
+        "x": 12,
+        "y": 34
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "onboarding"
+      ],
+      "title": "Onboarding Complete",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "junior",
+      "category": "skills",
+      "data": {
+        "difficulty": 2,
+        "estimated_hours": 25,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "tech-lead",
+          "validation_criteria": [
+            "Wrote tests that caught a regression before deploy",
+            "Refactored tests that were testing implementation, not behavior"
+          ]
+        }
+      },
+      "description": "Write tests that catch the bugs that matter.",
+      "id": "eng.junior/unit-testing",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 19.333333333333332
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "quality",
+        "testing"
+      ],
+      "title": "Unit Testing",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "mid",
+      "category": "design",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 80,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "tech-lead",
+          "validation_criteria": [
+            "Designed an API that survived 3+ feature iterations without breaking changes",
+            "Authored API documentation that consumers used without asking questions"
+          ]
+        }
+      },
+      "description": "Design APIs that are usable, evolvable, and well-documented.",
+      "id": "eng.mid/api-design",
+      "pinned": false,
+      "position": {
+        "x": 1212,
+        "y": 253.33333333333331
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "api",
+        "design"
+      ],
+      "title": "API Design",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "mid",
+      "category": "skills",
+      "data": {
+        "difficulty": 4,
+        "estimated_hours": 100,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "tech-lead",
+          "validation_criteria": [
+            "Diagnosed and fixed a slow query in production",
+            "Designed a schema that survived a non-trivial product pivot"
+          ]
+        }
+      },
+      "description": "Schema design, indexing, query optimization, transactions.",
+      "id": "eng.mid/database-fluency",
+      "pinned": false,
+      "position": {
+        "x": 1212,
+        "y": 125.33333333333333
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "database",
+        "persistence"
+      ],
+      "title": "Database Fluency",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "mid",
+      "category": "delivery",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 200,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "tech-lead",
+          "evidence_requirements": [],
+          "owner": "tech-lead",
+          "review_cadence": "annual",
+          "validation_criteria": [
+            "Shipped a feature owned end-to-end — spec, code, tests, rollout, monitoring",
+            "Responded to at least one incident on the feature in production"
+          ]
+        }
+      },
+      "description": "Take a feature from design through deploy and own its operations.",
+      "id": "eng.mid/feature-ownership",
+      "pinned": false,
+      "position": {
+        "x": 912,
+        "y": 34
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "delivery",
+        "ownership"
+      ],
+      "title": "End-to-End Feature Ownership",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "mid",
+      "category": "leadership",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 100,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "engineering-manager",
+          "evidence_requirements": [],
+          "owner": "engineering-manager",
+          "validation_criteria": [
+            "Mentored at least one engineer through a promotion cycle",
+            "Solicited feedback on mentoring style from mentees"
+          ]
+        }
+      },
+      "description": "Help newer engineers grow without doing the work for them.",
+      "id": "eng.mid/mentoring",
+      "pinned": false,
+      "position": {
+        "x": 912,
+        "y": 322
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "leadership",
+        "mentoring"
+      ],
+      "title": "Mentoring Juniors",
+      "track": "leadership"
+    },
+    {
+      "aliases": [],
+      "band": "senior",
+      "category": "leadership",
+      "data": {
+        "difficulty": 4,
+        "estimated_hours": 150,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "engineering-manager",
+          "evidence_requirements": [],
+          "owner": "engineering-manager",
+          "validation_criteria": [
+            "Drove a technical decision that involved 3+ teams to consensus",
+            "Cited as a useful collaborator by leads of other teams in 360 feedback"
+          ]
+        }
+      },
+      "description": "Drive technical alignment across team boundaries.",
+      "id": "eng.senior/cross-team-collaboration",
+      "pinned": false,
+      "position": {
+        "x": 1512,
+        "y": 307.3333333333333
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "collaboration",
+        "leadership"
+      ],
+      "title": "Cross-Team Collaboration",
+      "track": "leadership"
+    },
+    {
+      "aliases": [],
+      "band": "senior",
+      "category": "operations",
+      "data": {
+        "difficulty": 4,
+        "estimated_hours": 80,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "principal-engineer",
+          "evidence_requirements": [],
+          "owner": "principal-engineer",
+          "validation_criteria": [
+            "Led at least one P1 incident from page to mitigation",
+            "Authored a postmortem that produced lasting action items"
+          ]
+        }
+      },
+      "description": "Lead incident response — diagnose, mitigate, communicate, postmortem.",
+      "id": "eng.senior/incident-management",
+      "pinned": false,
+      "position": {
+        "x": 1512,
+        "y": 12
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "incidents",
+        "oncall"
+      ],
+      "title": "Incident Management",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "senior",
+      "category": "design",
+      "data": {
+        "difficulty": 4,
+        "estimated_hours": 300,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "principal-engineer",
+          "evidence_requirements": [],
+          "owner": "principal-engineer",
+          "validation_criteria": [
+            "Led design of a system used by 3+ teams",
+            "Anticipated and mitigated a non-obvious failure mode before deploy"
+          ]
+        }
+      },
+      "description": "Design systems that survive ambiguity, growth, and failure modes.",
+      "id": "eng.senior/system-design",
+      "pinned": false,
+      "position": {
+        "x": 1512,
+        "y": 140
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "design",
+        "systems"
+      ],
+      "title": "System Design",
+      "track": "backend"
+    },
+    {
+      "aliases": [],
+      "band": "staff",
+      "category": "leadership",
+      "data": {
+        "difficulty": 5,
+        "estimated_hours": 200,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "director-of-engineering",
+          "validation_criteria": [
+            "Published technical content (talk, paper, OSS) attributed to the org",
+            "Sourced or interviewed candidates who became hires"
+          ]
+        }
+      },
+      "description": "Represent the engineering org externally — conferences, OSS, hiring.",
+      "id": "eng.staff/external-influence",
+      "pinned": false,
+      "position": {
+        "x": 2112,
+        "y": 169.33333333333331
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "external",
+        "leadership"
+      ],
+      "title": "External Technical Influence",
+      "track": "leadership"
+    },
+    {
+      "aliases": [],
+      "band": "staff",
+      "category": "leadership",
+      "data": {
+        "difficulty": 5,
+        "estimated_hours": 500,
+        "learning_resources": [],
+        "workflow": {
+          "approver_role": "director-of-engineering",
+          "evidence_requirements": [],
+          "owner": "director-of-engineering",
+          "review_cadence": "annual",
+          "validation_criteria": [
+            "Authored a strategy doc adopted as the org's technical direction for 1+ year",
+            "Cited as a key shaper of org technical direction in 360 feedback"
+          ]
+        }
+      },
+      "description": "Translate business goals into multi-quarter technical strategy.",
+      "id": "eng.staff/technical-strategy",
+      "pinned": false,
+      "position": {
+        "x": 1812,
+        "y": 154.66666666666666
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "leadership",
+        "strategy"
+      ],
+      "title": "Technical Strategy",
+      "track": "backend"
+    }
+  ],
+  "tracks": [
+    {
+      "description": "Server-side, data, infrastructure.",
+      "id": "backend",
+      "title": "Backend Track"
+    },
+    {
+      "description": "Cross-team and organizational impact.",
+      "id": "leadership",
+      "title": "Technical Leadership"
+    }
+  ],
+  "tree": {
+    "default_theme": "civ-iv",
+    "description": "Example career-track tree for software engineering progression\nfrom junior IC through staff. Authored as a demonstration of how\na real organization's competency matrix can be expressed in the\n@skill-tree schema.\n",
+    "id": "eng-career",
+    "title": "Engineering Career Progression",
+    "version": "2026.1"
+  }
+}

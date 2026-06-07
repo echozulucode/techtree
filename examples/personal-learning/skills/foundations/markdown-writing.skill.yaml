@@ -1,0 +1,12 @@
+id: personal.foundations/markdown-writing
+title: Markdown Writing
+description: Write clean, well-structured Markdown for docs and READMEs.
+category: writing
+tags: [writing, docs]
+era: foundational
+path: communication
+difficulty: 1
+estimated_hours: 4
+owner: self
+validation_criteria:
+  - Authored a README that another engineer used without asking questions

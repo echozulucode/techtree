@@ -1,0 +1,16 @@
+id: eng.senior/incident-management
+title: Incident Management
+description: Lead incident response — diagnose, mitigate, communicate, postmortem.
+category: operations
+tags: [oncall, incidents]
+era: senior
+path: backend
+difficulty: 4
+estimated_hours: 80
+requires:
+  - eng.mid/feature-ownership
+owner: principal-engineer
+validation_criteria:
+  - Led at least one P1 incident from page to mitigation
+  - Authored a postmortem that produced lasting action items
+approver_role: principal-engineer

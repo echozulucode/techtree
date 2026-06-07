@@ -1,0 +1,15 @@
+id: personal.intermediate/programming-language
+title: Pick a Primary Programming Language
+description: Achieve real fluency in one language — idioms, ecosystem, debugging.
+category: programming
+tags: [language, programming]
+era: intermediate
+path: programming
+difficulty: 3
+estimated_hours: 200
+requires:
+  - personal.foundations/cli-fluency
+owner: self
+validation_criteria:
+  - Built and shipped a non-trivial project in the language
+  - Read and contributed to someone else's codebase in the language

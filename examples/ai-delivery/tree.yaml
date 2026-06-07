@@ -1,0 +1,39 @@
+schema_version: 1
+tree:
+  id: ai-delivery
+  title: AI-Accelerated Delivery
+  version: '2026.1'
+  description: |
+    A delivery-narrative graph: how adopting AI-assisted development let one
+    project iterate fast enough to deliver a simulator that was originally out
+    of budget, and freed capacity to explore automatic updates. Nodes are
+    events, experiments, and milestones — not skills. Same engine, different
+    profile (see docs/overview.md). Compile with `--profile delivery`.
+  owners:
+    - self
+  default_theme: civ-iv
+  namespace: ai
+
+# Bands = project phases (timeline columns).
+eras:
+  - id: adoption
+    title: Adoption
+    order: 0
+  - id: acceleration
+    title: Acceleration
+    order: 1
+  - id: expansion
+    title: Expansion
+    order: 2
+
+# Tracks = workstreams.
+paths:
+  - id: tooling
+    title: Tooling
+    description: Developer tooling and AI-assisted workflow.
+  - id: product
+    title: Product
+    description: User-facing deliverables.
+  - id: platform
+    title: Platform
+    description: Foundational capabilities unlocked by freed capacity.

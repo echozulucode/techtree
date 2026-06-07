@@ -1,0 +1,10 @@
+id: ai.adopted-ai-tooling
+title: Adopted AI-assisted development
+kind: event
+phase: adoption
+stream: tooling
+date: '2026-01-15'
+description: |
+  Team brought AI coding assistance into the daily workflow — code generation,
+  review, and test scaffolding.
+impact: Baseline change that everything downstream builds on.

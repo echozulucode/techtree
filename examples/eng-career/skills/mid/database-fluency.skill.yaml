@@ -1,0 +1,15 @@
+id: eng.mid/database-fluency
+title: Database Fluency
+description: Schema design, indexing, query optimization, transactions.
+category: skills
+tags: [database, persistence]
+era: mid
+path: backend
+difficulty: 4
+estimated_hours: 100
+requires:
+  - eng.mid/feature-ownership
+owner: tech-lead
+validation_criteria:
+  - Diagnosed and fixed a slow query in production
+  - Designed a schema that survived a non-trivial product pivot

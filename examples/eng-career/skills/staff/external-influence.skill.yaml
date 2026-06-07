@@ -1,0 +1,16 @@
+id: eng.staff/external-influence
+title: External Technical Influence
+description: Represent the engineering org externally — conferences, OSS, hiring.
+category: leadership
+tags: [external, leadership]
+era: staff
+path: leadership
+difficulty: 5
+estimated_hours: 200
+requires:
+  - eng.staff/technical-strategy
+  - eng.mid/mentoring
+owner: director-of-engineering
+validation_criteria:
+  - Published technical content (talk, paper, OSS) attributed to the org
+  - Sourced or interviewed candidates who became hires

@@ -1,0 +1,532 @@
+{
+  "bands": [
+    {
+      "id": "foundational",
+      "order": 0,
+      "title": "Foundations"
+    },
+    {
+      "id": "intermediate",
+      "order": 1,
+      "title": "Intermediate"
+    },
+    {
+      "id": "advanced",
+      "order": 2,
+      "title": "Advanced"
+    }
+  ],
+  "edges": [
+    {
+      "from": "personal.advanced/algorithms",
+      "kind": "requires",
+      "to": "personal.advanced/system-design"
+    },
+    {
+      "from": "personal.advanced/system-design",
+      "kind": "requires",
+      "to": "personal.advanced/distributed-systems"
+    },
+    {
+      "from": "personal.foundations/cli-fluency",
+      "kind": "requires",
+      "to": "personal.intermediate/programming-language"
+    },
+    {
+      "from": "personal.foundations/git-basics",
+      "kind": "requires",
+      "to": "personal.foundations/cli-fluency"
+    },
+    {
+      "from": "personal.foundations/git-basics",
+      "kind": "requires",
+      "to": "personal.intermediate/version-control-advanced"
+    },
+    {
+      "from": "personal.foundations/markdown-writing",
+      "kind": "requires",
+      "to": "personal.intermediate/technical-writing"
+    },
+    {
+      "from": "personal.intermediate/data-structures",
+      "kind": "requires",
+      "to": "personal.advanced/algorithms"
+    },
+    {
+      "from": "personal.intermediate/data-structures",
+      "kind": "recommends",
+      "to": "personal.intermediate/testing"
+    },
+    {
+      "from": "personal.intermediate/programming-language",
+      "kind": "requires",
+      "to": "personal.intermediate/data-structures"
+    },
+    {
+      "from": "personal.intermediate/programming-language",
+      "kind": "requires",
+      "to": "personal.intermediate/testing"
+    },
+    {
+      "from": "personal.intermediate/testing",
+      "kind": "requires",
+      "to": "personal.advanced/system-design"
+    }
+  ],
+  "ir_version": 1,
+  "meta": {
+    "edge_count": 11,
+    "node_count": 12,
+    "source_count": 12
+  },
+  "nodes": [
+    {
+      "aliases": [],
+      "band": "advanced",
+      "category": "programming",
+      "data": {
+        "difficulty": 4,
+        "estimated_hours": 80,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Can implement Dijkstra and explain its complexity without notes",
+            "Recognized a known algorithm in a real production problem"
+          ]
+        }
+      },
+      "description": "Recognize and apply core algorithms — sort, search, graph, dp.",
+      "id": "personal.advanced/algorithms",
+      "pinned": false,
+      "position": {
+        "x": 1212,
+        "y": 262.6666666666667
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "fundamentals",
+        "programming"
+      ],
+      "title": "Algorithms",
+      "track": "programming"
+    },
+    {
+      "aliases": [],
+      "band": "advanced",
+      "category": "programming",
+      "data": {
+        "difficulty": 5,
+        "estimated_hours": 150,
+        "learning_resources": [
+          {
+            "kind": "book",
+            "label": "Designing Data-Intensive Applications",
+            "url": "https://dataintensive.net/"
+          }
+        ],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Can explain CAP and PACELC in concrete terms with examples",
+            "Debugged a real distributed-systems incident — partition, retry storm, or quorum loss"
+          ]
+        }
+      },
+      "description": "Reason about partial failure, consistency, and coordination.",
+      "id": "personal.advanced/distributed-systems",
+      "pinned": false,
+      "position": {
+        "x": 1812,
+        "y": 248
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "distributed",
+        "systems"
+      ],
+      "title": "Distributed Systems",
+      "track": "programming"
+    },
+    {
+      "aliases": [],
+      "band": "advanced",
+      "category": "programming",
+      "data": {
+        "difficulty": 4,
+        "estimated_hours": 100,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Designed a system that survived a 10x traffic increase without redesign",
+            "Wrote a design doc that surfaced a non-obvious bottleneck before code was written"
+          ]
+        }
+      },
+      "description": "Design systems that are testable, observable, and survive growth.",
+      "id": "personal.advanced/system-design",
+      "pinned": false,
+      "position": {
+        "x": 1512,
+        "y": 248
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "design",
+        "systems"
+      ],
+      "title": "System Design",
+      "track": "programming"
+    },
+    {
+      "aliases": [],
+      "band": "foundational",
+      "category": "tools",
+      "data": {
+        "difficulty": 2,
+        "estimated_hours": 10,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Comfortable composing pipelines of 3+ tools without reaching for a GUI"
+          ]
+        }
+      },
+      "description": "Work comfortably in a shell — pipes, redirection, find, grep, ssh.",
+      "id": "personal.foundations/cli-fluency",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 248
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "cli",
+        "foundational",
+        "shell"
+      ],
+      "title": "Command-Line Fluency"
+    },
+    {
+      "aliases": [],
+      "band": "foundational",
+      "category": "tools",
+      "data": {
+        "difficulty": 2,
+        "estimated_hours": 6,
+        "learning_resources": [
+          {
+            "kind": "book",
+            "label": "Pro Git book",
+            "url": "https://git-scm.com/book/en/v2"
+          }
+        ],
+        "workflow": {
+          "evidence_requirements": [
+            "A merged pull request in any repo"
+          ],
+          "owner": "self",
+          "validation_criteria": [
+            "Can create a branch, commit, and open a PR end-to-end",
+            "Can resolve a non-trivial merge conflict"
+          ]
+        }
+      },
+      "description": "Branch, commit, rebase, and resolve conflicts without panic.",
+      "id": "personal.foundations/git-basics",
+      "pinned": false,
+      "position": {
+        "x": 12,
+        "y": 233.33333333333334
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "foundational",
+        "git",
+        "vcs"
+      ],
+      "title": "Git Basics"
+    },
+    {
+      "aliases": [],
+      "band": "foundational",
+      "category": "writing",
+      "data": {
+        "difficulty": 1,
+        "estimated_hours": 4,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Authored a README that another engineer used without asking questions"
+          ]
+        }
+      },
+      "description": "Write clean, well-structured Markdown for docs and READMEs.",
+      "id": "personal.foundations/markdown-writing",
+      "pinned": false,
+      "position": {
+        "x": 252,
+        "y": 12
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "docs",
+        "writing"
+      ],
+      "title": "Markdown Writing",
+      "track": "communication"
+    },
+    {
+      "aliases": [],
+      "band": "foundational",
+      "category": "foundations",
+      "data": {
+        "difficulty": 1,
+        "estimated_hours": 20,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Sustained 60+ wpm at <2% error rate on a one-minute typing test"
+          ]
+        }
+      },
+      "description": "60+ wpm with low error rate. Foundation for everything else.",
+      "id": "personal.foundations/typing",
+      "pinned": false,
+      "position": {
+        "x": 12,
+        "y": 12
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "foundational"
+      ],
+      "title": "Touch Typing",
+      "track": "communication"
+    },
+    {
+      "aliases": [],
+      "band": "intermediate",
+      "category": "programming",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 40,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Can articulate tradeoffs between array, linked list, hash, tree, heap, graph",
+            "Implemented each from scratch at least once"
+          ]
+        }
+      },
+      "description": "Know when to reach for which structure and why.",
+      "id": "personal.intermediate/data-structures",
+      "pinned": false,
+      "position": {
+        "x": 912,
+        "y": 262.6666666666667
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "fundamentals",
+        "programming"
+      ],
+      "title": "Data Structures",
+      "track": "programming"
+    },
+    {
+      "aliases": [],
+      "band": "intermediate",
+      "category": "programming",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 200,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Built and shipped a non-trivial project in the language",
+            "Read and contributed to someone else's codebase in the language"
+          ]
+        }
+      },
+      "description": "Achieve real fluency in one language — idioms, ecosystem, debugging.",
+      "id": "personal.intermediate/programming-language",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 248
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "language",
+        "programming"
+      ],
+      "title": "Pick a Primary Programming Language",
+      "track": "programming"
+    },
+    {
+      "aliases": [],
+      "band": "intermediate",
+      "category": "writing",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 50,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Authored a design doc that another engineer implemented from",
+            "Wrote a postmortem that produced a concrete action item adopted by the team"
+          ]
+        }
+      },
+      "description": "Write design docs, postmortems, RFCs, and engineering blog posts.",
+      "id": "personal.intermediate/technical-writing",
+      "pinned": false,
+      "position": {
+        "x": 552,
+        "y": 12
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "communication",
+        "writing"
+      ],
+      "title": "Technical Writing",
+      "track": "communication"
+    },
+    {
+      "aliases": [],
+      "band": "intermediate",
+      "category": "programming",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 30,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Wrote a test suite that caught a regression in someone else's PR",
+            "Refactored a brittle test to be resilient without losing coverage"
+          ]
+        }
+      },
+      "description": "Write tests that catch regressions and don't rot.",
+      "id": "personal.intermediate/testing",
+      "pinned": false,
+      "position": {
+        "x": 912,
+        "y": 134.66666666666669
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "quality",
+        "testing"
+      ],
+      "title": "Testing Discipline",
+      "track": "programming"
+    },
+    {
+      "aliases": [],
+      "band": "intermediate",
+      "category": "tools",
+      "data": {
+        "difficulty": 3,
+        "estimated_hours": 15,
+        "learning_resources": [],
+        "workflow": {
+          "evidence_requirements": [],
+          "owner": "self",
+          "validation_criteria": [
+            "Recovered a \"lost\" commit using reflog without panicking",
+            "Cleaned up a messy branch into a coherent set of commits via interactive rebase"
+          ]
+        }
+      },
+      "description": "Interactive rebase, bisect, reflog, recovering lost commits.",
+      "id": "personal.intermediate/version-control-advanced",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [
+        "git",
+        "vcs"
+      ],
+      "title": "Advanced Version Control"
+    }
+  ],
+  "tracks": [
+    {
+      "description": "Written and verbal communication for engineers.",
+      "id": "communication",
+      "title": "Communication and Writing"
+    },
+    {
+      "description": "Core programming progression from basics to systems thinking.",
+      "id": "programming",
+      "title": "Programming Mastery"
+    }
+  ],
+  "tree": {
+    "default_theme": "civ-iv",
+    "description": "A personal growth tree for software-engineering continuous learning.\nAuthored as an example for the @skill-tree platform.\n",
+    "id": "personal-learning",
+    "title": "Personal Continuous Learning",
+    "version": "2026.1"
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "bands": [
+    {
+      "id": "adoption",
+      "order": 0,
+      "title": "Adoption"
+    },
+    {
+      "id": "acceleration",
+      "order": 1,
+      "title": "Acceleration"
+    },
+    {
+      "id": "expansion",
+      "order": 2,
+      "title": "Expansion"
+    }
+  ],
+  "edges": [
+    {
+      "from": "ai.adopted-ai-tooling",
+      "kind": "requires",
+      "to": "ai.faster-iteration"
+    },
+    {
+      "from": "ai.auto-update-spike",
+      "kind": "requires",
+      "to": "ai.auto-updates-shipped"
+    },
+    {
+      "from": "ai.auto-update-spike",
+      "kind": "recommends",
+      "to": "ai.regression-harness"
+    },
+    {
+      "from": "ai.faster-iteration",
+      "kind": "requires",
+      "to": "ai.freed-capacity"
+    },
+    {
+      "from": "ai.faster-iteration",
+      "kind": "requires",
+      "to": "ai.regression-harness"
+    },
+    {
+      "from": "ai.faster-iteration",
+      "kind": "requires",
+      "to": "ai.simulator-spike"
+    },
+    {
+      "from": "ai.freed-capacity",
+      "kind": "requires",
+      "to": "ai.auto-update-spike"
+    },
+    {
+      "from": "ai.simulator-spike",
+      "kind": "requires",
+      "to": "ai.simulator-delivered"
+    }
+  ],
+  "ir_version": 1,
+  "meta": {
+    "edge_count": 8,
+    "node_count": 8,
+    "source_count": 8
+  },
+  "nodes": [
+    {
+      "aliases": [],
+      "band": "adoption",
+      "category": "event",
+      "data": {
+        "date": "2026-01-15",
+        "impact": "Baseline change that everything downstream builds on.",
+        "kind": "event"
+      },
+      "description": "Team brought AI coding assistance into the daily workflow — code generation,\nreview, and test scaffolding.\n",
+      "id": "ai.adopted-ai-tooling",
+      "pinned": false,
+      "position": {
+        "x": 12,
+        "y": 34
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Adopted AI-assisted development",
+      "track": "tooling"
+    },
+    {
+      "aliases": [],
+      "band": "expansion",
+      "category": "experiment",
+      "data": {
+        "date": "2026-05-02",
+        "hypothesis": "The freed capacity is enough to design and prove a safe automatic-update\nmechanism (staged rollout + rollback) for the product.\n",
+        "impact": "Validated — staged rollout with rollback proven on a test fleet.",
+        "kind": "experiment"
+      },
+      "id": "ai.auto-update-spike",
+      "pinned": false,
+      "position": {
+        "x": 1212,
+        "y": 268
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Spike — automatic update mechanism",
+      "track": "platform"
+    },
+    {
+      "aliases": [],
+      "band": "expansion",
+      "category": "milestone",
+      "data": {
+        "date": "2026-05-28",
+        "impact": "Reduced manual release toil; faster, safer delivery to users.",
+        "kind": "milestone"
+      },
+      "description": "Automatic updates went to production with staged rollout and rollback — a\ncapability that would normally never have cleared the backlog.\n",
+      "id": "ai.auto-updates-shipped",
+      "pinned": false,
+      "position": {
+        "x": 1512,
+        "y": 268
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Shipped automatic updates",
+      "track": "platform"
+    },
+    {
+      "aliases": [],
+      "band": "adoption",
+      "category": "milestone",
+      "data": {
+        "date": "2026-02-10",
+        "impact": "Created budget headroom without adding headcount.",
+        "kind": "milestone"
+      },
+      "description": "Cycle time from idea to working change dropped sharply once AI assistance was\nembedded in the loop. This is the slack that funded everything in the later\nphases.\n",
+      "id": "ai.faster-iteration",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 34
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Iteration speed roughly tripled",
+      "track": "tooling"
+    },
+    {
+      "aliases": [],
+      "band": "acceleration",
+      "category": "event",
+      "data": {
+        "date": "2026-04-20",
+        "impact": "Made the expansion-phase platform work possible.",
+        "kind": "event"
+      },
+      "description": "With the core roadmap ahead of schedule, engineers had time to invest in\nfoundational work that is usually deferred indefinitely.\n",
+      "id": "ai.freed-capacity",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 268
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Freed engineering capacity",
+      "track": "platform"
+    },
+    {
+      "aliases": [],
+      "band": "acceleration",
+      "category": "event",
+      "data": {
+        "date": "2026-03-01",
+        "impact": "De-risked the automatic-update experiment before it started.",
+        "kind": "event"
+      },
+      "description": "Used AI to generate a broad regression suite quickly, raising confidence\nenough to attempt riskier platform work later.\n",
+      "id": "ai.regression-harness",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 12
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "AI-generated regression harness",
+      "track": "tooling"
+    },
+    {
+      "aliases": [],
+      "band": "acceleration",
+      "category": "milestone",
+      "data": {
+        "date": "2026-04-12",
+        "impact": "New capability delivered at no incremental budget.",
+        "kind": "milestone"
+      },
+      "description": "Shipped a working simulator that was originally cut from scope for budget\nreasons. The AI-driven iteration speed is what made it affordable.\n",
+      "id": "ai.simulator-delivered",
+      "pinned": false,
+      "position": {
+        "x": 912,
+        "y": 140
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Delivered the simulator",
+      "track": "product"
+    },
+    {
+      "aliases": [],
+      "band": "acceleration",
+      "category": "experiment",
+      "data": {
+        "date": "2026-03-05",
+        "hypothesis": "With AI-accelerated development, a simulator we previously scoped out as too\nexpensive can be prototyped within the existing budget.\n",
+        "impact": "Validated — prototype came together in days, not the projected weeks.",
+        "kind": "experiment"
+      },
+      "id": "ai.simulator-spike",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 140
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Spike — is a hardware simulator feasible now?",
+      "track": "product"
+    }
+  ],
+  "tracks": [
+    {
+      "description": "Foundational capabilities unlocked by freed capacity.",
+      "id": "platform",
+      "title": "Platform"
+    },
+    {
+      "description": "User-facing deliverables.",
+      "id": "product",
+      "title": "Product"
+    },
+    {
+      "description": "Developer tooling and AI-assisted workflow.",
+      "id": "tooling",
+      "title": "Tooling"
+    }
+  ],
+  "tree": {
+    "default_theme": "civ-iv",
+    "description": "A delivery-narrative graph: how adopting AI-assisted development let one\nproject iterate fast enough to deliver a simulator that was originally out\nof budget, and freed capacity to explore automatic updates. Nodes are\nevents, experiments, and milestones — not skills. Same engine, different\nprofile (see docs/overview.md). Compile with `--profile delivery`.\n",
+    "id": "ai-delivery",
+    "title": "AI-Accelerated Delivery",
+    "version": "2026.1"
+  }
+}

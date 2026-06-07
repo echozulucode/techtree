@@ -1,0 +1,18 @@
+id: personal.foundations/git-basics
+title: Git Basics
+description: Branch, commit, rebase, and resolve conflicts without panic.
+category: tools
+tags: [git, vcs, foundational]
+era: foundational
+difficulty: 2
+estimated_hours: 6
+owner: self
+validation_criteria:
+  - Can create a branch, commit, and open a PR end-to-end
+  - Can resolve a non-trivial merge conflict
+evidence_requirements:
+  - A merged pull request in any repo
+learning_resources:
+  - label: Pro Git book
+    url: https://git-scm.com/book/en/v2
+    kind: book

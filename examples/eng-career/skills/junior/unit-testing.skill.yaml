@@ -1,0 +1,15 @@
+id: eng.junior/unit-testing
+title: Unit Testing
+description: Write tests that catch the bugs that matter.
+category: skills
+tags: [testing, quality]
+era: junior
+path: backend
+difficulty: 2
+estimated_hours: 25
+requires:
+  - eng.junior/debugging
+owner: tech-lead
+validation_criteria:
+  - Wrote tests that caught a regression before deploy
+  - Refactored tests that were testing implementation, not behavior

@@ -1,0 +1,15 @@
+id: personal.advanced/algorithms
+title: Algorithms
+description: Recognize and apply core algorithms — sort, search, graph, dp.
+category: programming
+tags: [programming, fundamentals]
+era: advanced
+path: programming
+difficulty: 4
+estimated_hours: 80
+requires:
+  - personal.intermediate/data-structures
+owner: self
+validation_criteria:
+  - Can implement Dijkstra and explain its complexity without notes
+  - Recognized a known algorithm in a real production problem

@@ -1,0 +1,4 @@
+id: fixture.cycle/b
+title: B
+requires:
+  - fixture.cycle/a

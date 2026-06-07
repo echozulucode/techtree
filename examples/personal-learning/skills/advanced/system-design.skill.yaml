@@ -1,0 +1,16 @@
+id: personal.advanced/system-design
+title: System Design
+description: Design systems that are testable, observable, and survive growth.
+category: programming
+tags: [systems, design]
+era: advanced
+path: programming
+difficulty: 4
+estimated_hours: 100
+requires:
+  - personal.advanced/algorithms
+  - personal.intermediate/testing
+owner: self
+validation_criteria:
+  - Designed a system that survived a 10x traffic increase without redesign
+  - Wrote a design doc that surfaced a non-obvious bottleneck before code was written

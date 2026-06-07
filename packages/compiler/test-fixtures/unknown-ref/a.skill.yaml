@@ -1,0 +1,4 @@
+id: fixture.unknown-ref/skill
+title: Skill referencing a non-existent prereq
+requires:
+  - fixture.unknown-ref/does-not-exist

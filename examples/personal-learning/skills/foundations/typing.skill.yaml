@@ -1,0 +1,12 @@
+id: personal.foundations/typing
+title: Touch Typing
+description: 60+ wpm with low error rate. Foundation for everything else.
+category: foundations
+tags: [foundational]
+era: foundational
+path: communication
+difficulty: 1
+estimated_hours: 20
+owner: self
+validation_criteria:
+  - Sustained 60+ wpm at <2% error rate on a one-minute typing test

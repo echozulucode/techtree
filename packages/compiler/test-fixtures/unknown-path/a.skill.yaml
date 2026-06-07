@@ -1,0 +1,3 @@
+id: fixture.unknown-path/skill
+title: Skill on undeclared path
+path: not-declared

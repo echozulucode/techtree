@@ -1,0 +1,17 @@
+id: eng.senior/system-design
+title: System Design
+description: Design systems that survive ambiguity, growth, and failure modes.
+category: design
+tags: [systems, design]
+era: senior
+path: backend
+difficulty: 4
+estimated_hours: 300
+requires:
+  - eng.mid/api-design
+  - eng.mid/database-fluency
+owner: principal-engineer
+validation_criteria:
+  - Led design of a system used by 3+ teams
+  - Anticipated and mitigated a non-obvious failure mode before deploy
+approver_role: principal-engineer

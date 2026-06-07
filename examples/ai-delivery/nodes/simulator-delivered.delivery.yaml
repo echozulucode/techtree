@@ -1,0 +1,12 @@
+id: ai.simulator-delivered
+title: Delivered the simulator
+kind: milestone
+phase: acceleration
+stream: product
+date: '2026-04-12'
+enabled_by:
+  - ai.simulator-spike
+description: |
+  Shipped a working simulator that was originally cut from scope for budget
+  reasons. The AI-driven iteration speed is what made it affordable.
+impact: New capability delivered at no incremental budget.

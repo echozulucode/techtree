@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@echozedlabs/techtree-ir",
+      "@echozedlabs/techtree-schema",
+      "@echozedlabs/techtree-compiler",
+      "@echozedlabs/techtree-state",
+      "@echozedlabs/techtree-themes",
+      "@echozedlabs/techtree-viewer",
+      "@echozedlabs/techtree-server"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

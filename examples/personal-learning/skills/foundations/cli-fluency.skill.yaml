@@ -1,0 +1,13 @@
+id: personal.foundations/cli-fluency
+title: Command-Line Fluency
+description: Work comfortably in a shell — pipes, redirection, find, grep, ssh.
+category: tools
+tags: [cli, shell, foundational]
+era: foundational
+difficulty: 2
+estimated_hours: 10
+requires:
+  - personal.foundations/git-basics
+owner: self
+validation_criteria:
+  - Comfortable composing pipelines of 3+ tools without reaching for a GUI

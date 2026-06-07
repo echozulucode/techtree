@@ -1,0 +1,17 @@
+id: personal.intermediate/testing
+title: Testing Discipline
+description: Write tests that catch regressions and don't rot.
+category: programming
+tags: [testing, quality]
+era: intermediate
+path: programming
+difficulty: 3
+estimated_hours: 30
+requires:
+  - personal.intermediate/programming-language
+recommends:
+  - personal.intermediate/data-structures
+owner: self
+validation_criteria:
+  - Wrote a test suite that caught a regression in someone else's PR
+  - Refactored a brittle test to be resilient without losing coverage

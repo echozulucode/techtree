@@ -1,0 +1,12 @@
+id: ai.freed-capacity
+title: Freed engineering capacity
+kind: event
+phase: acceleration
+stream: platform
+date: '2026-04-20'
+enabled_by:
+  - ai.faster-iteration
+description: |
+  With the core roadmap ahead of schedule, engineers had time to invest in
+  foundational work that is usually deferred indefinitely.
+impact: Made the expansion-phase platform work possible.

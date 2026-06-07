@@ -1,0 +1,3 @@
+id: fixture.unknown-era/skill
+title: Skill in undeclared era
+era: not-declared

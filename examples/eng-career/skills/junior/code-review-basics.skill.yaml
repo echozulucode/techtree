@@ -1,0 +1,16 @@
+id: eng.junior/code-review-basics
+title: Code Review Basics
+description: Give and receive code review productively.
+category: process
+tags: [code-review, process]
+era: junior
+path: backend
+difficulty: 2
+estimated_hours: 20
+requires:
+  - eng.junior/onboarding
+owner: tech-lead
+validation_criteria:
+  - Reviewed 10+ PRs from peers with constructive feedback
+  - Demonstrated ability to incorporate review feedback without defensiveness
+approver_role: tech-lead

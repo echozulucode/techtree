@@ -1,0 +1,14 @@
+id: ai.regression-harness
+title: AI-generated regression harness
+kind: event
+phase: acceleration
+stream: tooling
+date: '2026-03-01'
+enabled_by:
+  - ai.faster-iteration
+led_to:
+  - ai.auto-update-spike
+description: |
+  Used AI to generate a broad regression suite quickly, raising confidence
+  enough to attempt riskier platform work later.
+impact: De-risked the automatic-update experiment before it started.

@@ -1,0 +1,15 @@
+id: personal.intermediate/technical-writing
+title: Technical Writing
+description: Write design docs, postmortems, RFCs, and engineering blog posts.
+category: writing
+tags: [writing, communication]
+era: intermediate
+path: communication
+difficulty: 3
+estimated_hours: 50
+requires:
+  - personal.foundations/markdown-writing
+owner: self
+validation_criteria:
+  - Authored a design doc that another engineer implemented from
+  - Wrote a postmortem that produced a concrete action item adopted by the team

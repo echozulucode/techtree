@@ -1,0 +1,15 @@
+id: eng.mid/api-design
+title: API Design
+description: Design APIs that are usable, evolvable, and well-documented.
+category: design
+tags: [api, design]
+era: mid
+path: backend
+difficulty: 3
+estimated_hours: 80
+requires:
+  - eng.mid/feature-ownership
+owner: tech-lead
+validation_criteria:
+  - Designed an API that survived 3+ feature iterations without breaking changes
+  - Authored API documentation that consumers used without asking questions

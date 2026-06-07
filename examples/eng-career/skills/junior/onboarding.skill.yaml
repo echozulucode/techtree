@@ -1,0 +1,17 @@
+id: eng.junior/onboarding
+title: Onboarding Complete
+description: Local dev environment working, first PR merged, on-call shadow done.
+category: foundations
+tags: [onboarding]
+era: junior
+path: backend
+difficulty: 1
+estimated_hours: 40
+owner: hiring-manager
+validation_criteria:
+  - First PR merged to main
+  - On-call shadow shift completed
+  - Read and acknowledged engineering handbook
+evidence_requirements:
+  - Link to first merged PR
+approver_role: hiring-manager

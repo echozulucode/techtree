@@ -1,0 +1,5 @@
+tree:
+  id: unknown-path-fixture
+  title: Unknown Path Fixture
+paths:
+  - id: known-path

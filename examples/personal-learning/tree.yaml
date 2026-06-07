@@ -1,0 +1,31 @@
+schema_version: 1
+tree:
+  id: personal-learning
+  title: Personal Continuous Learning
+  version: '2026.1'
+  description: |
+    A personal growth tree for software-engineering continuous learning.
+    Authored as an example for the @skill-tree platform.
+  owners:
+    - self
+  default_theme: civ-iv
+  namespace: personal
+
+eras:
+  - id: foundational
+    title: Foundations
+    order: 0
+  - id: intermediate
+    title: Intermediate
+    order: 1
+  - id: advanced
+    title: Advanced
+    order: 2
+
+paths:
+  - id: programming
+    title: Programming Mastery
+    description: Core programming progression from basics to systems thinking.
+  - id: communication
+    title: Communication and Writing
+    description: Written and verbal communication for engineers.

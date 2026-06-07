@@ -1,0 +1,12 @@
+id: ai.simulator-spike
+title: Spike — is a hardware simulator feasible now?
+kind: experiment
+phase: acceleration
+stream: product
+date: '2026-03-05'
+enabled_by:
+  - ai.faster-iteration
+hypothesis: |
+  With AI-accelerated development, a simulator we previously scoped out as too
+  expensive can be prototyped within the existing budget.
+impact: Validated — prototype came together in days, not the projected weeks.

@@ -1,0 +1,16 @@
+id: eng.mid/mentoring
+title: Mentoring Juniors
+description: Help newer engineers grow without doing the work for them.
+category: leadership
+tags: [mentoring, leadership]
+era: mid
+path: leadership
+difficulty: 3
+estimated_hours: 100
+requires:
+  - eng.junior/code-review-basics
+owner: engineering-manager
+validation_criteria:
+  - Mentored at least one engineer through a promotion cycle
+  - Solicited feedback on mentoring style from mentees
+approver_role: engineering-manager
