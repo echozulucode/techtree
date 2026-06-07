@@ -1,0 +1,30 @@
+{
+  "name": "@echozedlabs/dev-harness",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "setup-ir": "node scripts/setup-ir.mjs",
+    "dev": "pnpm setup-ir && vite",
+    "build": "pnpm setup-ir && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "echo \"Run pnpm --filter @echozedlabs/dev-harness test:e2e for browser smoke coverage.\"",
+    "test:e2e": "pnpm setup-ir && playwright test",
+    "test:bdd": "pnpm setup-ir && bddgen --config playwright.bdd.config.ts && playwright test --config playwright.bdd.config.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@echozedlabs/techtree-viewer": "workspace:*",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "playwright-bdd": "^9.0.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.0"
+  }
+}

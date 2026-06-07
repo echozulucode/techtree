@@ -1,0 +1,28 @@
+# Scenario -> automated-test traceability manifest.
+#
+# Maps every scenario in features/*.feature to the tests that verify it. `status`
+# is one of: covered | partial | none. A CI gate (scripts/check-feature-coverage.mjs)
+# reads this file: every scenario must resolve to a status != none (or be tagged
+# @manual), and every scenario in the feature files must appear here.
+#
+# e2e refs use spec-file::test-title. `bdd: true` means the scenario is also
+# executed directly via playwright-bdd.
+
+meta:
+  generated: '2026-06-07'
+  totals: { scenarios: 3, covered: 3, partial: 0, none: 0 }
+
+features:
+  graph_navigation:
+    - scenario: 'The graph renders its nodes'
+      status: covered
+      e2e: ['graph::renders the delivery graph nodes']
+      bdd: true
+    - scenario: 'Inspecting a node reveals its detail'
+      status: covered
+      e2e: ['graph::selecting a node opens its detail panel']
+      bdd: true
+    - scenario: 'A different profile renders in the same viewer'
+      status: covered
+      e2e: ['graph::the bundled skill tree also renders']
+      bdd: true

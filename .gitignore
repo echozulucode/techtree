@@ -2,3 +2,12 @@ node_modules
 dist
 *.tsbuildinfo
 .DS_Store
+
+# Playwright / BDD generated artifacts
+test-results
+playwright-report
+.features-gen
+.cache
+
+# Generated harness IR (copied from examples/*/dist by setup-ir)
+examples/dev-harness/public/ir
