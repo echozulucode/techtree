@@ -234,6 +234,7 @@ export function App() {
 
   return (
     <div
+      data-testid="viewer-root"
       style={{
         width: '100vw',
         height: '100vh',

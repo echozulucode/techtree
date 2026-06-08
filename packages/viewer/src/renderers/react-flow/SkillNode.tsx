@@ -97,6 +97,7 @@ export function SkillNode({ data }: NodeProps<Node<SkillNodeData>>) {
     <div
       data-testid="graph-node"
       data-node-id={irNode.id}
+      data-status={status}
       style={{
         position: 'relative',
         width: irNode.size.width,

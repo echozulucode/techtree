@@ -103,6 +103,7 @@ export function SidePanel({
     <aside
       data-testid="side-panel"
       data-node-id={node.id}
+      data-status={status}
       style={{
         position: 'absolute',
         right: 0,

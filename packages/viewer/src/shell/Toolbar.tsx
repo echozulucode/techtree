@@ -123,7 +123,12 @@ export function Toolbar(props: ToolbarProps) {
       </label>
       <label>
         Theme{' '}
-        <select value={themeId} onChange={(e) => onThemeChange(e.target.value)} style={select}>
+        <select
+          data-testid="theme-select"
+          value={themeId}
+          onChange={(e) => onThemeChange(e.target.value)}
+          style={select}
+        >
           {themes.map((t) => (
             <option key={t.id} value={t.id}>
               {t.title ?? t.id}

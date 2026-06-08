@@ -14,4 +14,14 @@ pnpm dev:harness   # the viewer + Playwright target
 
 Packages: `@echozedlabs/techtree-ir`, `@echozedlabs/techtree-schema`, `@echozedlabs/techtree-compiler`, `@echozedlabs/techtree-state`, `@echozedlabs/techtree-themes`, `@echozedlabs/techtree-viewer`, `@echozedlabs/techtree-server`.
 
+## Documentation
+
+`doc-map.yaml` (root) indexes where authoritative information lives.
+
+- **What it is** — [`docs/overview.md`](docs/overview.md): boundaries, tech stack, capabilities.
+- **Decisions** — [`design/adr/`](design/adr/README.md): renderer, profile seam, server store, licensing, versioning.
+- **Conventions & runbook** — [`docs/techtree-extraction.md`](docs/techtree-extraction.md): toolchain, CI/release, testing strategy.
+- **Living docs** — [`features/`](features/README.md): Gherkin specs executed by Playwright.
+- `ai/` is a low-authority scratch area for AI-generated drafts.
+
 License: Apache-2.0.

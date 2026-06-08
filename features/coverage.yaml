@@ -6,11 +6,12 @@
 # @manual), and every scenario in the feature files must appear here.
 #
 # e2e refs use spec-file::test-title. `bdd: true` means the scenario is also
-# executed directly via playwright-bdd.
+# executed directly via playwright-bdd. @manual scenarios are documentation-only
+# (excluded from the executable run) and are intentionally omitted here.
 
 meta:
   generated: '2026-06-07'
-  totals: { scenarios: 3, covered: 3, partial: 0, none: 0 }
+  totals: { scenarios: 13, covered: 13, partial: 0, none: 0, manual: 1 }
 
 features:
   graph_navigation:
@@ -25,4 +26,40 @@ features:
     - scenario: 'A different profile renders in the same viewer'
       status: covered
       e2e: ['graph::the bundled skill tree also renders']
+      bdd: true
+
+  status_overlay:
+    - scenario: 'A node with no prerequisites is ready to start'
+      status: covered
+      bdd: true
+    - scenario: 'A node with unmet prerequisites is locked'
+      status: covered
+      bdd: true
+    - scenario: 'Completing a node unlocks what depends on it'
+      status: covered
+      bdd: true
+    - scenario: 'A learner can begin working on an available node'
+      status: covered
+      bdd: true
+
+  theming:
+    - scenario: 'The graph opens in its declared default theme'
+      status: covered
+      bdd: true
+    - scenario: 'A reader can switch to a different theme'
+      status: covered
+      bdd: true
+    - scenario: 'Switching theme keeps the open node in view'
+      status: covered
+      bdd: true
+
+  state_round_trip:
+    - scenario: 'Progress survives reopening the graph'
+      status: covered
+      bdd: true
+    - scenario: 'A learner can export their progress'
+      status: covered
+      bdd: true
+    - scenario: 'Progress belonging to a different graph is refused'
+      status: covered
       bdd: true

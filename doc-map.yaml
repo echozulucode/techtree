@@ -1,0 +1,33 @@
+version: 1
+project:
+  name: techtree
+  description: Compile, render, and govern typed dependency graphs that change state over time.
+  primary_language: typescript
+  scale: medium
+
+# Where authoritative information lives, by authority. AI agents and developers
+# should trust these in order. Docs stay in docs/ (heavily referenced by their
+# docs/… paths from source comments + example data); this map records authority
+# without relocating them.
+authority:
+  architecture: docs/overview.md # what TechTree is: boundaries, tech stack, capabilities
+
+design:
+  adr_index: design/adr/README.md
+  adrs:
+    renderer: design/adr/0001-react-flow-renderer.md
+    profile-seam: design/adr/0002-profile-corenode-seam.md
+    server-store: design/adr/0003-node-sqlite-server-store.md
+    licensing: design/adr/0004-apache-2-oss-core.md
+    versioning: design/adr/0005-version-locked-packages.md
+
+procedures:
+  # No dedicated setup/build/deploy docs yet — quick start lives in README.md.
+  conventions: docs/techtree-extraction.md # toolchain, CI/release, testing strategy, publish runbook
+  bdd_living_docs: features/README.md
+  research: docs/research/ # research outputs / investigations
+  archive: docs/archive/ # superseded material (never deleted)
+
+ai:
+  working_area: ai/drafts/
+  draft_policy: 'AI-generated docs start in ai/drafts/; promote validated content into docs/ or design/, then move the superseded draft to docs/archive/. Research outputs go in docs/research/.'
