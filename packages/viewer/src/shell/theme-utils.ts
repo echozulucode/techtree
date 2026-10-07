@@ -55,23 +55,53 @@ export function eraLabelColor(theme: Theme): string {
   return theme.eras?.label_color ?? '#d9c977';
 }
 
+function parseHex(hex: string): [number, number, number] | null {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return null;
+  const n = parseInt(m[1]!, 16);
+  return [(n >> 16) & 0xff, (n >> 8) & 0xff, n & 0xff];
+}
+
+/** WCAG 2 relative luminance of a `#rrggbb` colour (null for anything else). */
+export function relativeLuminance(hex: string): number | null {
+  const rgb = parseHex(hex);
+  if (!rgb) return null;
+  const [r, g, b] = rgb.map((c) => {
+    const v = c / 255;
+    return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  }) as [number, number, number];
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** WCAG 2 contrast ratio of two `#rrggbb` colours (null if either is not hex). */
+export function contrastRatio(a: string, b: string): number | null {
+  const la = relativeLuminance(a);
+  const lb = relativeLuminance(b);
+  if (la === null || lb === null) return null;
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** True for a measurable `#rrggbb` colour. */
+export function isHexColor(value: string): boolean {
+  return parseHex(value) !== null;
+}
+
 /**
  * Pick a foreground color (dark or light) that has sufficient contrast against
  * an arbitrary background hex. Used for status badges, status pills, and filter
  * chips where the background is a status color and we need legible text/icons
- * across both themes.
+ * across both themes. Prefers the theme-friendly pair (#1a1f2e / #f2efe4) and
+ * falls back to black / white when neither reaches WCAG AA (4.5:1).
  */
 export function contrastTextOn(hex: string): string {
-  const m = /^#([0-9a-f]{6})$/i.exec(hex.trim());
   // Non-hex colours (CSS variables, named colours) can't be measured here; let
   // the host decide via a variable, defaulting to white.
-  if (!m) return 'var(--techtree-on-status, #ffffff)';
-  const n = parseInt(m[1]!, 16);
-  const r = ((n >> 16) & 0xff) / 255;
-  const g = ((n >> 8) & 0xff) / 255;
-  const b = (n & 0xff) / 255;
-  // Perceptual luminance approximation (Rec. 601). Good enough for choosing
-  // between a light and a dark foreground.
-  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-  return luminance > 0.55 ? '#1a1f2e' : '#f2efe4';
+  if (!isHexColor(hex)) return 'var(--techtree-on-status, #ffffff)';
+  const best = (candidates: string[]): [string, number] =>
+    candidates
+      .map((c): [string, number] => [c, contrastRatio(c, hex) ?? 0])
+      .reduce((a, b) => (b[1] > a[1] ? b : a));
+  const [soft, softRatio] = best(['#1a1f2e', '#f2efe4']);
+  if (softRatio >= 4.5) return soft;
+  return best(['#000000', '#ffffff'])[0];
 }

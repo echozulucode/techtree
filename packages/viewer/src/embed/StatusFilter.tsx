@@ -1,7 +1,7 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
 import type { StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { statusIcon } from '../shell/status-icons.js';
-import { statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
+import { onStatusColor, statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
 
 export interface StatusFilterProps {
   statusModel: StatusModel;
@@ -46,7 +46,10 @@ export function StatusFilter({ statusModel, theme, value, onChange, counts, tota
             data-status={id}
             disabled={count === 0 && !active.has(id)}
             onClick={() => toggle(id)}
-            style={{ ['--tt-chip-color' as string]: statusColor(theme, id, statusModel) }}
+            style={{
+              ['--tt-chip-color' as string]: statusColor(theme, id, statusModel),
+              ['--tt-chip-on' as string]: onStatusColor(theme, id, statusModel),
+            }}
           >
             {Icon ? <Icon size={12} strokeWidth={2.5} aria-hidden /> : <span className="tt-chip-dot" aria-hidden />}
             <span>{statusLabel(id, statusModel, theme)}</span>

@@ -172,7 +172,7 @@ export function ReactFlowRenderer({
           strokeDasharray: anyOf ? '2 5' : edgeDashed(theme, e.kind) ? '6 4' : undefined,
           // Constant on-screen width: edges stay legible when a large tree is zoomed out.
           vectorEffect: 'non-scaling-stroke',
-          opacity: isDim(e.from) || isDim(e.to) ? 0.12 : 0.85,
+          opacity: isDim(e.from) || isDim(e.to) ? 'var(--techtree-dim-edge-opacity, 0.12)' : 0.85,
         },
       };
     });

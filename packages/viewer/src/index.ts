@@ -35,7 +35,7 @@ export { FilterChips, type FilterValue } from './shell/FilterChips.js';
 
 // Helpers
 export { computeRelated, type HighlightDirection, type RelatedSets } from './shell/graph.js';
-export { statusColor, statusLabel, statusIconName, statusVisual } from './shell/status-style.js';
+export { statusColor, statusLabel, statusIconName, statusVisual, onStatusColor } from './shell/status-style.js';
 export { STATUS_ICONS, KIND_ICONS, statusIcon } from './shell/status-icons.js';
 
 // Renderer contract

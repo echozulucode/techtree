@@ -1,5 +1,6 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
 import { skillStatusModel, statusDef, type StatusModel } from '@echozedlabs/techtree-state/status-model';
+import { contrastTextOn, isHexColor } from './theme-utils.js';
 
 /**
  * Status presentation, generic over the profile's status model. Lookup order
@@ -32,6 +33,25 @@ export function statusColor(theme: Theme, status: string, model: StatusModel = s
     statusDef(model, status)?.color ??
     FALLBACK_COLOR
   );
+}
+
+/** A status id as it appears in a CSS custom property name. */
+export function statusVarId(status: string): string {
+  return status.replace(/[^a-zA-Z0-9_-]/g, '_');
+}
+
+/**
+ * Text / icon colour on a status fill (pill, pressed filter chip, node badge).
+ * Lookup: `--techtree-on-status-<status>` → the legacy single
+ * `--techtree-on-status` → for a measurable hex fill (theme objects) the
+ * AA-contrasting dark / light colour, otherwise the stylesheet's per-scheme AA
+ * default for that status (or white).
+ */
+export function onStatusColor(theme: Theme, status: string, model: StatusModel = skillStatusModel): string {
+  const id = statusVarId(status);
+  const fill = statusColor(theme, status, model);
+  const fallback = isHexColor(fill) ? contrastTextOn(fill) : `var(--tt-on-status-${id}, var(--tt-on-status-default, #ffffff))`;
+  return `var(--techtree-on-status-${id}, var(--techtree-on-status, ${fallback}))`;
 }
 
 /** Short human-readable label (side-panel pill, filter chips, outline). */

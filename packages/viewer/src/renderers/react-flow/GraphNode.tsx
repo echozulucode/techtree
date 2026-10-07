@@ -6,14 +6,14 @@ import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state/
 import { difficultyPips, iconFor } from '../../shell/icons.js';
 import { KIND_ICONS, statusIcon } from '../../shell/status-icons.js';
 import {
+  canvasBackground,
   categoryFill,
-  contrastTextOn,
   fontFamily,
   nodeBorder,
   nodeText,
   selectedBorder,
 } from '../../shell/theme-utils.js';
-import { statusColor, statusIconName, statusLabel, statusVisual } from '../../shell/status-style.js';
+import { onStatusColor, statusColor, statusIconName, statusLabel, statusVisual } from '../../shell/status-style.js';
 
 export type GraphNodeData = {
   irNode: IRNode;
@@ -51,7 +51,7 @@ function StatusBadge({
     height: 22,
     borderRadius: '50%',
     background: color,
-    color: contrastTextOn(color),
+    color: onStatusColor(theme, status, model),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -79,9 +79,21 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
   const pips = difficultyPips(skill.difficulty);
   const sv = statusVisual(theme, status, model);
   const locked = status === model.locked.id;
+  // Dimmed (off the highlighted path, or filtered with filterMode 'dim'):
+  // muted with colours, not opacity, so the text keeps AA contrast. Every value
+  // is a CSS variable with a theme-derived default — hosts restyle dimming by
+  // setting --techtree-dim-* on .techtree-root (see style.css).
+  const canvas = canvasBackground(theme);
+  const text = dim
+    ? `var(--techtree-dim-node-text, color-mix(in srgb, ${nodeText(theme)} 75%, ${canvas}))`
+    : nodeText(theme);
+  const background = dim ? `var(--techtree-dim-node-bg, ${canvas})` : fill;
+  const dimBorder = `var(--techtree-dim-node-border, color-mix(in srgb, ${nodeBorder(theme)} 50%, ${canvas}))`;
   const border = selected
     ? `3px solid ${selectedBorder(theme)}`
-    : `${sv.borderWidth ?? 2}px solid ${sv.border ?? nodeBorder(theme)}`;
+    : dim
+      ? `${sv.borderWidth ?? 2}px solid ${dimBorder}`
+      : `${sv.borderWidth ?? 2}px solid ${sv.border ?? nodeBorder(theme)}`;
   const footer =
     model.id === skillStatusModel.id
       ? (irNode.category ?? '')
@@ -89,6 +101,7 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
 
   return (
     <div
+      className={dim ? 'tt-graph-node tt-graph-node-dim' : 'tt-graph-node'}
       data-testid="graph-node"
       data-node-id={irNode.id}
       data-status={status}
@@ -101,22 +114,22 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
         position: 'relative',
         width: irNode.size.width,
         height: irNode.size.height,
-        background: fill,
+        background,
         border,
         borderRadius: irNode.category === 'milestone' || irNode.category === 'wonder' ? 10 : 4,
         padding: '6px 10px',
         boxSizing: 'border-box',
-        color: nodeText(theme),
+        color: text,
         fontFamily: fontFamily(theme),
-        boxShadow: '2px 2px 0 var(--techtree-node-shadow, rgba(0,0,0,0.4))',
-        opacity: dim ? 0.18 : sv.opacity,
+        boxShadow: dim ? 'none' : '2px 2px 0 var(--techtree-node-shadow, rgba(0,0,0,0.4))',
+        opacity: dim ? 'var(--techtree-dim-opacity, 1)' : sv.opacity,
         cursor: 'pointer',
         display: 'grid',
         gridTemplateColumns: '36px 1fr',
         gridTemplateRows: 'auto 1fr auto',
         columnGap: 8,
         rowGap: 2,
-        filter: locked ? 'saturate(0.7)' : undefined,
+        filter: dim ? 'var(--techtree-dim-filter, grayscale(1))' : locked ? 'saturate(0.7)' : undefined,
       }}
     >
       <Handle type="target" position={Position.Left} style={{ background: nodeBorder(theme) }} />
@@ -125,13 +138,13 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
           gridRow: '1 / span 3',
           alignSelf: 'center',
           justifySelf: 'center',
-          color: nodeText(theme),
-          opacity: 0.9,
+          color: text,
+          opacity: dim ? 1 : 0.9,
         }}
       >
         <Icon size={28} strokeWidth={1.6} />
       </div>
-      <div style={{ fontSize: 10, opacity: 0.75, letterSpacing: 0.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      <div style={{ fontSize: 10, opacity: dim ? 1 : 0.75, letterSpacing: 0.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
         {(bandTitle ?? irNode.band ?? '').toUpperCase()}
       </div>
       <div
@@ -151,7 +164,7 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
       <div
         style={{
           fontSize: 10,
-          opacity: 0.75,
+          opacity: dim ? 1 : 0.75,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',

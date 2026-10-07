@@ -11,7 +11,11 @@ import { TechTreeView } from '@echozedlabs/techtree-viewer';
 import { SAU, demoState, ir } from './fixtures.js';
 import { installReactFlowStubs } from './jsdom-stubs.js';
 
-beforeAll(installReactFlowStubs);
+beforeAll(() => {
+  installReactFlowStubs();
+  // axe probes icon ligatures with a canvas; jsdom has none (and says so loudly).
+  HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;
+});
 afterEach(cleanup);
 
 const ROLLBACK = 'eng.platform/rollback-support';

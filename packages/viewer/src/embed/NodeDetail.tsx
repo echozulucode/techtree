@@ -3,7 +3,7 @@ import type { IRNode } from '@echozedlabs/techtree-ir';
 import { CAPABILITY_LINK_RELATIONS } from '@echozedlabs/techtree-schema/capability-data';
 import { statusDef } from '@echozedlabs/techtree-state/status-model';
 import { KIND_ICONS, statusIcon } from '../shell/status-icons.js';
-import { statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
+import { onStatusColor, statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
 import type { HighlightDirection } from '../shell/graph.js';
 import { headingTag } from './heading.js';
 import type { HeadingLevel, NodeDetailContext, TechTreeLinkRef } from './types.js';
@@ -158,7 +158,10 @@ export function NodeDetail({ ctx, headingLevel }: { ctx: NodeDetailContext; head
           className="tt-pill"
           data-testid="detail-status"
           data-status={shownStatus}
-          style={{ ['--tt-pill-color' as string]: pillColor }}
+          style={{
+            ['--tt-pill-color' as string]: pillColor,
+            ['--tt-pill-on' as string]: onStatusColor(theme, shownStatus, statusModel),
+          }}
         >
           {PillIcon && <PillIcon size={12} strokeWidth={2.5} aria-hidden />}
           {statusLabel(shownStatus, statusModel, theme)}
@@ -252,7 +255,9 @@ export function NodeDetail({ ctx, headingLevel }: { ctx: NodeDetailContext; head
           <ul className="tt-list tt-eurekas">
             {cap!.eurekas.map((e) => (
               <li key={e.id} data-achieved={achieved.has(e.id) ? 'true' : 'false'}>
-                <span aria-hidden>{achieved.has(e.id) ? '✓ ' : '○ '}</span>
+                <span className="tt-eureka-mark" aria-hidden>
+                  {achieved.has(e.id) ? '✓ ' : '○ '}
+                </span>
                 {e.statement}
                 {achieved.has(e.id) && <span className="tt-visually-hidden"> (achieved)</span>}
               </li>
