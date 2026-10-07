@@ -5,13 +5,13 @@
 # reads this file: every scenario must resolve to a status != none (or be tagged
 # @manual), and every scenario in the feature files must appear here.
 #
-# e2e refs use spec-file::test-title. `bdd: true` means the scenario is also
+# e2e refs use spec-file::test-title; unit refs use package/path::test-title. `bdd: true` means the scenario is also
 # executed directly via playwright-bdd. @manual scenarios are documentation-only
 # (excluded from the executable run) and are intentionally omitted here.
 
 meta:
-  generated: '2026-06-07'
-  totals: { scenarios: 13, covered: 13, partial: 0, none: 0, manual: 1 }
+  generated: '2026-10-07'
+  totals: { scenarios: 32, covered: 32, partial: 0, none: 0, manual: 1 }
 
 features:
   graph_navigation:
@@ -63,3 +63,90 @@ features:
     - scenario: 'Progress belonging to a different graph is refused'
       status: covered
       bdd: true
+
+  capability_tree:
+    - scenario: 'Capabilities appear in era columns and branch lanes'
+      status: covered
+      unit:
+        - 'compiler/src/capability.test.ts::places every node inside its track lane, lanes in declared order, without overlaps'
+        - 'viewer/src/viewer.test.tsx::renders every node with its effective status and the era headers'
+      e2e: ['embed::renders lanes, era headers and every capability']
+      bdd: true
+    - scenario: 'Highlighting what a capability needs'
+      status: covered
+      unit: ['viewer/src/viewer.test.tsx::ancestors = what a node needs, descendants = what it unlocks']
+      bdd: true
+    - scenario: 'Highlighting what a capability unlocks'
+      status: covered
+      unit:
+        - 'viewer/src/viewer.test.tsx::ancestors = what a node needs, descendants = what it unlocks'
+        - 'react19-host/src/dom.test.tsx::"what does X unlock" highlights downstream nodes and dims the rest'
+      bdd: true
+    - scenario: 'Filtering by maturity keeps eras and branches in place'
+      status: covered
+      unit: ['react19-host/src/dom.test.tsx::a status filter hides other nodes and reports the change']
+      bdd: true
+    - scenario: 'An outline lists every capability for keyboard and screen-reader users'
+      status: covered
+      unit:
+        - 'viewer/src/viewer.test.tsx::outline view lists nodes under their branch and era with prerequisite links'
+        - 'react19-host/src/dom.test.tsx::switches to the outline view'
+      bdd: true
+    - scenario: 'The capability card shows maturity, prerequisites and eureka goals'
+      status: covered
+      unit: ['react19-host/src/dom.test.tsx::clicking a node calls onSelectNode and opens the drawer']
+      bdd: true
+    - scenario: 'Links the host withholds are neither shown nor counted'
+      status: covered
+      unit: ['viewer/src/viewer.test.tsx::drawer resolves links through renderLink and omits (and does not count) withheld ones']
+      bdd: true
+
+  embedding:
+    - scenario: "The view follows the host's light or dark scheme"
+      status: covered
+      bdd: true
+    - scenario: 'The view server-renders and runs under React 19'
+      status: covered
+      unit:
+        - 'react19-host/src/ssr.test.tsx::renders the tree, statuses, and a selected node drawer to HTML'
+        - 'react19-host/src/dom.test.tsx::clicking a node calls onSelectNode and opens the drawer'
+    - scenario: 'The view never touches the browser while being imported'
+      status: covered
+      unit:
+        - 'react19-host/src/ssr.test.tsx::runs on React 19 in a DOM-less environment'
+        - 'react19-host/src/ssr.test.tsx::the published entry is a "use client" module and ships style.css'
+
+  any_of_prerequisites:
+    - scenario: 'One satisfied alternative makes a node available'
+      status: covered
+      unit:
+        - 'state/src/status-model.test.ts::becomes available when all-of prerequisites are >= demonstrated and ONE any-of member is'
+        - 'state/src/status-model.test.ts::any-of: one achieved member unlocks the dependent'
+    - scenario: 'No satisfied alternative keeps a node locked'
+      status: covered
+      unit: ['state/src/status-model.test.ts::treats unset nodes as not_started and derives available / locked for display']
+    - scenario: 'An unknown alternative is rejected when the tree is compiled'
+      status: covered
+      unit: ['compiler/src/capability.test.ts::unknown references inside a group are errors with a did-you-mean hint']
+    - scenario: 'A cycle through an alternative is rejected'
+      status: covered
+      unit: ['compiler/src/capability.test.ts::a cycle through an any-of member is still a cycle, naming both nodes']
+
+  capability_validation:
+    - scenario: 'A prerequisite in a later era is rejected'
+      status: covered
+      unit: ['compiler/src/capability.test.ts::era-regression: a prerequisite in a later era is an error that names both nodes']
+    - scenario: 'A wonder must state its benefit'
+      status: covered
+      unit: ['compiler/src/capability.test.ts::wonder-missing-benefit: wonders must state a benefit']
+    - scenario: 'A milestone that nothing leads to is reported'
+      status: covered
+      unit: ['compiler/src/capability.test.ts::unreachable-milestone: a milestone with no prerequisites is flagged']
+    - scenario: 'A capability becomes available once its prerequisites are demonstrated'
+      status: covered
+      unit:
+        - 'state/src/status-model.test.ts::becomes available when all-of prerequisites are >= demonstrated and ONE any-of member is'
+        - 'state/src/status-model.test.ts::investigating does not satisfy a prerequisite; legacy and retiring still do'
+    - scenario: 'The demo tree compiles to the same output every time'
+      status: covered
+      unit: ['compiler/src/capability.test.ts::is byte-stable and matches the committed IR']

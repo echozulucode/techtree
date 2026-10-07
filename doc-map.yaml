@@ -20,6 +20,8 @@ design:
     server-store: design/adr/0003-node-sqlite-server-store.md
     licensing: design/adr/0004-apache-2-oss-core.md
     versioning: design/adr/0005-version-locked-packages.md
+    any-of-groups: design/adr/0006-any-of-prerequisite-groups.md
+    embeddable-viewer: design/adr/0007-embeddable-viewer-and-status-models.md
 
 procedures:
   # No dedicated setup/build/deploy docs yet — quick start lives in README.md.

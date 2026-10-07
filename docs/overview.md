@@ -16,8 +16,11 @@ adds role-gated state transitions, an append-only audit log, and an approval
 workflow.
 
 The defining choice: TechTree knows nothing about *what* your nodes mean. Skills,
-project milestones, experiments, roadmap items, certification paths, incident
-timelines — all are **profiles** layered over one engine. A profile supplies the
+project milestones, capability tech trees, experiments, roadmap items,
+certification paths, incident timelines — all are **profiles** layered over one
+engine. Built-in profiles: `skill`, `delivery`, and `capability` (a
+Civilization-style tree of engineering capabilities, milestones and wonders with
+maturity states — see the README). A profile supplies the
 node schema, the status model, and the presentation; the engine supplies
 everything else.
 
@@ -48,13 +51,18 @@ deterministic layout seed) — so it diffs cleanly in git and caches safely.
 
 **TechTree owns (in scope):**
 
-- The graph IR: typed nodes, typed edges, phase **bands**, named **tracks**,
-  computed positions/sizes.
+- The graph IR: typed nodes, typed edges (with **any-of prerequisite groups**,
+  ADR-0006), phase **bands**, named **tracks** (optionally laid out as
+  swimlanes), computed positions/sizes, and the compiling profile's id.
 - The compiler pipeline: parse → validate → resolve → layout → emit, with
   `file:line:col` diagnostics and did-you-mean suggestions.
 - Generic graph validation: duplicate IDs, unknown references, cycle detection,
   orphan detection, stable-ID/alias enforcement.
 - The renderer contract and a reference React Flow renderer.
+- The **embeddable view** (`<TechTreeView>`): a React 18/19 client component for
+  host apps (Next.js App Router ready) that takes IR + host-owned state and
+  exposes selection, path highlighting, status filters, an accessible outline
+  and a detail drawer with host-resolved links (ADR-0007).
 - The renderer-agnostic viewer shell: pan/zoom/fit, selection,
   ancestor/descendant highlighting, side panel, filter chips, band banners,
   focus-on-frontier, theme switcher, hot-reload.
@@ -67,8 +75,9 @@ deterministic layout seed) — so it diffs cleanly in git and caches safely.
 **A profile owns (configured on top of TechTree):**
 
 - The node Zod schema and the set of valid edge kinds.
-- The status model — the enum, which states are derived vs. stored, and the
-  transition rules.
+- The status model (`StatusModel` in the state package) — stored statuses with
+  labels / colours / icons, which of them satisfy a prerequisite, and the
+  derived available / locked. Transition rules stay with the host or server.
 - Node presentation — declarative field descriptors (no React required for most
   profiles) or a custom node component.
 - Domain-specific lint rules layered over the generic ones.
@@ -112,6 +121,10 @@ deterministic layout seed) — so it diffs cleanly in git and caches safely.
 - Deterministic, byte-stable IR emission.
 - Rich diagnostics: source snippet, caret, `file:line:col`, did-you-mean for
   misspelled references.
+- Profile lint hooks (`Profile.lint`) — e.g. the capability profile's era
+  monotonicity, unreachable milestones and wonder benefits.
+- Any-of prerequisite groups ("one of these suffices") validated, laid out and
+  derived generically.
 - Scaffolding (`new <node>` / `new theme`), safe **rename with auto-aliasing**
   (never silently breaks references), watch-mode serve with SSE hot reload.
 - JSON Schema export for IDE autocomplete + CI validation; auto-generated schema
@@ -120,8 +133,13 @@ deterministic layout seed) — so it diffs cleanly in git and caches safely.
 
 **Rendering & interaction**
 
-- Layered band layout (tech eras / time / phases) with author position overrides.
-- Pan, zoom, fit-to-view; click-to-select with ancestor/descendant highlighting.
+- Layered band layout (tech eras / time / phases) with author position overrides;
+  optional swimlanes per track (`layout.lanes: true`) for an eras × branches grid.
+- Pan, zoom, fit-to-view; click-to-select with ancestor ("what does X need") /
+  descendant ("what does X unlock") / both highlighting.
+- Embeddable `<TechTreeView>` with CSS-variable theming (light / dark / host
+  tokens), an outline view for keyboard and screen-reader users, and
+  host-resolved opaque links (withheld links are neither shown nor counted).
 - Side panel surfacing any profile-declared fields.
 - Filter chips with live counts; focus-on-frontier initial camera.
 - One-click theme switching; declarative themes as data.
@@ -131,7 +149,8 @@ deterministic layout seed) — so it diffs cleanly in git and caches safely.
 **State, governance & reporting**
 
 - Per-node status overlay computed from the dependency graph + stored progress
-  (locked/available derived automatically).
+  under the profile's status model (locked/available derived automatically,
+  any-of aware).
 - Storage-adapter seam — identical viewer code against local files, localStorage,
   or a remote server (a single config flag).
 - Save/load state round-trip with schema validation and tree-ID matching.
