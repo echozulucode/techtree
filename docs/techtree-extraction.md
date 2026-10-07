@@ -365,44 +365,39 @@ jobs:
         run: pnpm test:bdd
 ```
 
-### `.github/workflows/release.yml` (Changesets + OIDC trusted publishing)
+### `.github/workflows/release.yml` (Changesets + `NPM_TOKEN`)
 
-```yaml
-name: Release
-on:
-  push: { branches: [main] }
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write # npm provenance + OIDC trusted publishing (tokenless)
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 10.34.1 }
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
-      - name: Create Release PR or publish
-        uses: changesets/action@v1
-        with:
-          version: pnpm version-packages
-          publish: pnpm release
-          commit: "chore: version packages"
-          title: "chore: version packages"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: "true"
-```
+The live workflow is [`.github/workflows/release.yml`](../.github/workflows/release.yml):
+on every push to `main` it installs, builds, typechecks and tests, then runs
+`changesets/action` — while changesets are pending it opens / updates the
+**"chore: version packages"** PR (`pnpm version-packages`); once that PR is merged
+it runs `pnpm release` (`pnpm -r build && changeset publish`), which publishes
+every package whose version is not on npm yet, with provenance.
 
-> First publish must be manual (`npm login` + `pnpm release`) so the package names
-> exist on npm; then configure a **trusted publisher per package** (org
-> `echozulucode`, repo `techtree`, workflow `release.yml`) and OIDC takes over.
-> The markdown-editor `PUBLISHING.md` is a complete runbook for this — copy it and
-> swap the repo/package names.
+#### Publishing runbook
+
+1. **npm side (once):** the `@echozedlabs` scope exists on npm and an
+   **automation token** (or a granular token with publish rights on the scope)
+   is stored as the repository secret **`NPM_TOKEN`** (Settings → Secrets and
+   variables → Actions). The workflow passes it as `NPM_TOKEN` /
+   `NODE_AUTH_TOKEN`; `setup-node` writes the `.npmrc`.
+2. **Every change:** add a changeset (`pnpm changeset`; the seven packages are one
+   `fixed` group, so one entry bumps them all) and merge to `main`.
+3. **Release:** merge the "chore: version packages" PR → the workflow publishes.
+   A locally versioned commit (`pnpm version-packages` committed by hand, as on a
+   feature branch) publishes on its first push to `main` the same way.
+4. **Check:** `npm view @echozedlabs/techtree-viewer versions`; the GitHub run
+   shows one "New tag" line per package.
+
+Every package ships `dist/`, `README.md`, `LICENSE` and `CHANGELOG.md`
+(`files` + npm defaults) with `publishConfig.access: public`. Workspace ranges
+(`workspace:*`) become the exact sibling version at pack/publish time — the
+fixed group's compatibility rule. Until the packages are on npm, consumers that
+install the packed tarballs (`file:…tgz`) need `pnpm.overrides` pointing every
+`@echozedlabs/techtree-*` at its tarball.
+
+Optional later: switch to npm trusted publishing (OIDC) per package — then drop
+`NPM_TOKEN` and keep `id-token: write`.
 
 ## Testing strategy (three layers + a gate)
 
@@ -421,4 +416,4 @@ derivation, mark progress), `theming.feature`, `state_round_trip.feature`.
 - `pnpm test:bdd` green against the dev-harness.
 - Both a skill profile and the delivery-narrative profile render in the dev-harness with **zero** core-package edits.
 - `skill-tree` consumes `@echozedlabs/techtree-*` and still passes its suite.
-- First `0.1.0` published; trusted publishers configured; CI + Release workflows green on `main`.
+- First release published by the Release workflow (`NPM_TOKEN`); CI + Release workflows green on `main`.

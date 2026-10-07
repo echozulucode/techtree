@@ -28,7 +28,7 @@
       "import": "./dist/capability-data.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "CHANGELOG.md"],
   "publishConfig": {
     "access": "public"
   },

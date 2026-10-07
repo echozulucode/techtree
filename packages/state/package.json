@@ -28,7 +28,7 @@
       "import": "./dist/status-model-entry.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "CHANGELOG.md"],
   "publishConfig": {
     "access": "public"
   },

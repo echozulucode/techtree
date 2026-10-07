@@ -30,7 +30,7 @@
   "bin": {
     "techtree-server": "./dist/cli.js"
   },
-  "files": ["dist"],
+  "files": ["dist", "CHANGELOG.md"],
   "publishConfig": {
     "access": "public"
   },
