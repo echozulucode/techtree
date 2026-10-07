@@ -22,6 +22,10 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL ?? 'http://localhost:5173',
     trace: 'on-first-retry',
+    // A preinstalled Chromium (e.g. offline CI images) instead of Playwright's download.
+    ...(process.env.PW_CHROMIUM_EXECUTABLE
+      ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_EXECUTABLE } }
+      : {}),
   },
   projects: [
     {
