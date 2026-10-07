@@ -1,0 +1,22 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/recorded-data-replay
+title: "Recorded Data Replay"
+kind: capability
+era: platformization
+branch: sim-test
+summary: "Recorded bus and sensor traffic can be replayed into the software on a desk."
+description: "The write-up's \"Recorded I/O\"."
+requires:
+  - eng.platform/test-metadata
+  - eng.platform/standard-message-bus
+eurekas:
+  - id: replay-bug
+    statement: "A field bug is reproduced on a desk by replaying recorded traffic."
+implementations:
+  - technology:can-bus
+  - feature:high-speed-data-recording
+links:
+  - { type: example, ref: can-replay-bench, relation: demonstrates }
+  - { type: example, ref: can-decoder-from-dbc, relation: demonstrates }
+owner: "Test Engineering"

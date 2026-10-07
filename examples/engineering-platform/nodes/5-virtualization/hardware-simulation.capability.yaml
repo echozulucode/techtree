@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/hardware-simulation
+title: "Hardware Simulation"
+kind: capability
+era: virtualization
+branch: sim-test
+summary: "The software runs against simulated peripherals and boards."
+requires:
+  - eng.platform/hardware-abstraction
+  - eng.platform/recorded-data-replay
+eurekas:
+  - id: boot-in-sim
+    statement: "The platform image boots against simulated peripherals."
+owner: "Test Engineering"
+target_status: demonstrated

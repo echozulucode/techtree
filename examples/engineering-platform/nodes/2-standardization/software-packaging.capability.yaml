@@ -1,0 +1,18 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/software-packaging
+title: "Software Packaging"
+kind: capability
+era: standardization
+branch: deployment
+summary: "Software is delivered as versioned packages with declared dependencies."
+description: "The write-up calls this \"Package Management\". Packages are the unit that signing, update and rollback build on."
+requires:
+  - eng.platform/scripted-platform-build
+  - eng.platform/repeatable-release
+implementations:
+  - technology:conan
+  - feature:dependency-pinning
+links:
+  - { type: example, ref: conan-lockfiles-cross, relation: demonstrates }
+owner: "Platform Ops"

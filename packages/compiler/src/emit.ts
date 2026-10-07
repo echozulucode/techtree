@@ -9,7 +9,7 @@ import {
 import type { ValidatedTree } from './validate.js';
 import type { LayoutResult } from './layout.js';
 
-export function buildIR(v: ValidatedTree, layout: LayoutResult): IR {
+export function buildIR(v: ValidatedTree, layout: LayoutResult, profileId?: string): IR {
   // Map alias → canonical id for edge emission.
   const aliasToId = new Map<string, string>();
   for (const s of v.nodes) {
@@ -45,6 +45,12 @@ export function buildIR(v: ValidatedTree, layout: LayoutResult): IR {
     for (const ref of s.node.requires) {
       edges.push({ from: canon(ref), to: s.node.id, kind: 'requires' });
     }
+    // Any-of groups (ADR-0006): ids are positional per dependent node.
+    (s.node.requiresAnyOf ?? []).forEach((group, i) => {
+      for (const ref of group) {
+        edges.push({ from: canon(ref), to: s.node.id, kind: 'requires', group: `any-${i + 1}` });
+      }
+    });
     for (const ref of s.node.recommends) {
       edges.push({ from: canon(ref), to: s.node.id, kind: 'recommends' });
     }
@@ -54,7 +60,9 @@ export function buildIR(v: ValidatedTree, layout: LayoutResult): IR {
     if (x !== 0) return x;
     const y = a.to.localeCompare(b.to);
     if (y !== 0) return y;
-    return a.kind.localeCompare(b.kind);
+    const k = a.kind.localeCompare(b.kind);
+    if (k !== 0) return k;
+    return (a.group ?? '').localeCompare(b.group ?? '');
   });
 
   const bands: IRBand[] = [...(v.tree.eras ?? [])]
@@ -66,11 +74,17 @@ export function buildIR(v: ValidatedTree, layout: LayoutResult): IR {
     .sort((a, b) => a.order - b.order);
 
   const tracks: IRTrack[] = [...(v.tree.paths ?? [])]
-    .map((p) => ({
-      id: p.id,
-      ...(p.title !== undefined ? { title: p.title } : {}),
-      ...(p.description !== undefined ? { description: p.description } : {}),
-    }))
+    .map((p, order) => {
+      const lane = layout.lanes?.get(p.id);
+      return {
+        id: p.id,
+        ...(p.title !== undefined ? { title: p.title } : {}),
+        ...(p.description !== undefined ? { description: p.description } : {}),
+        order,
+        ...(p.color !== undefined ? { color: p.color } : {}),
+        ...(lane !== undefined ? { lane: { y: lane.y, height: lane.height } } : {}),
+      };
+    })
     .sort((a, b) => a.id.localeCompare(b.id));
 
   const ir: IR = {
@@ -83,6 +97,7 @@ export function buildIR(v: ValidatedTree, layout: LayoutResult): IR {
       ...(v.tree.tree.default_theme !== undefined
         ? { default_theme: v.tree.tree.default_theme }
         : {}),
+      ...(profileId !== undefined ? { profile: profileId } : {}),
     },
     nodes,
     edges,

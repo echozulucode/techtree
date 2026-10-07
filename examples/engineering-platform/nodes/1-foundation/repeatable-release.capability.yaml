@@ -1,0 +1,10 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/repeatable-release
+title: "Repeatable Release Procedure"
+kind: capability
+era: foundation
+branch: deployment
+summary: "Releases follow a written checklist that produces the same result each time."
+description: "The manual checklist that predates packaging and push-button releases. In the demo state it is marked retiring: it is being replaced, not removed overnight."
+owner: "Platform Ops"

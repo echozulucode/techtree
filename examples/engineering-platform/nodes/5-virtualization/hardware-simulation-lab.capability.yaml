@@ -1,0 +1,14 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/hardware-simulation-lab
+title: "Hardware Simulation Lab"
+kind: wonder
+era: virtualization
+branch: sim-test
+summary: "A shared lab of simulated and real hardware, booked and driven by automation."
+requires:
+  - eng.platform/hardware-simulation
+  - eng.platform/hil-regression
+  - eng.platform/automated-board-qualification
+benefit: "Every team tests against every supported board, continuously, without owning the boards."
+owner: "Test Engineering"

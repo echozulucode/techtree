@@ -1,0 +1,18 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/ai-assisted-development
+title: "AI-Assisted Development"
+kind: capability
+era: intelligent
+branch: dev-scripting
+summary: "AI assistants work from the organisation's own examples, standards and checks."
+requires:
+  - eng.platform/example-catalog
+  - eng.platform/continuous-integration
+  - eng.platform/static-analysis
+implementations:
+  - feature:mcp-server-integration
+  - technology:model-context-protocol
+links:
+  - { type: example, ref: mcp-server-test-results, relation: demonstrates }
+owner: "Developer Experience"

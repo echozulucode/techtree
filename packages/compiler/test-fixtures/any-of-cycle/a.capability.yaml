@@ -1,0 +1,5 @@
+id: t.cap/platform-api
+title: Platform API
+kind: capability
+requires:
+  - any_of: [t.cap/product-platform, t.cap/other]

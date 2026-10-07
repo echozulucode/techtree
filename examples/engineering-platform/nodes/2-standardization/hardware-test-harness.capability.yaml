@@ -1,0 +1,17 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/hardware-test-harness
+title: "Hardware Test Harness"
+kind: capability
+era: standardization
+branch: sim-test
+summary: "Tests can drive and observe real hardware through a scripted harness."
+requires:
+  - eng.platform/board-bring-up
+  - eng.platform/unit-testing
+implementations:
+  - technology:robot-framework
+  - feature:keyword-driven-testing
+links:
+  - { type: example, ref: robot-hil-can-harness, relation: demonstrates }
+owner: "Test Engineering"

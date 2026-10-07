@@ -1,0 +1,12 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/predictive-maintenance
+title: "Predictive Fleet Maintenance"
+kind: capability
+era: intelligent
+branch: deployment
+summary: "Fleet data predicts failures and schedules updates or service before they happen."
+requires:
+  - eng.platform/trusted-fleet-update
+  - eng.platform/fleet-health-monitoring
+owner: "Platform Ops"

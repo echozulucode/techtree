@@ -1,0 +1,7 @@
+id: t.cap/twice
+title: Twice
+kind: capability
+branch: lane
+eurekas:
+  - { id: same, statement: First }
+  - { id: same, statement: Second }

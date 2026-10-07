@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/hardware-abstraction
+title: "Hardware Abstraction Layer"
+kind: capability
+era: platformization
+branch: hardware-bsp
+summary: "Applications use stable device interfaces instead of board-specific code."
+requires:
+  - eng.platform/reusable-bsp
+  - eng.platform/versioned-apis
+eurekas:
+  - id: port-one-driver
+    statement: "One driver runs unchanged on two different boards."
+owner: "Embedded Platforms"
+target_status: operational

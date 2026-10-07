@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import type { Diagnostic } from './diagnostics.js';
 
 /**
  * The domain-agnostic node the engine pipeline operates on. A Profile maps its
@@ -18,8 +19,13 @@ export interface CoreNode {
   band?: string;
   /** Named progression (skill "path", delivery "stream"). */
   track?: string;
-  /** Hard prerequisites (ids or aliases). */
+  /** Hard prerequisites (ids or aliases). Each one is required. */
   requires: string[];
+  /**
+   * Any-of prerequisite groups (ids or aliases): ONE member of each group is
+   * required. Optional so existing profiles need not set it. See ADR-0006.
+   */
+  requiresAnyOf?: string[][];
   /** Soft follow-ons (ids or aliases). */
   recommends: string[];
   aliases: string[];
@@ -44,4 +50,28 @@ export interface Profile {
   nodeSchema: z.ZodTypeAny;
   /** Normalize a validated raw node (the output of nodeSchema) into a CoreNode. */
   mapNode(raw: unknown): CoreNode;
+  /**
+   * Optional domain lint rules, run after the generic graph rules (so ids,
+   * references and cycles are already checked). Return extra diagnostics.
+   */
+  lint?(ctx: ProfileLintContext): Diagnostic[];
+}
+
+/** Read-only view of a validated tree handed to `Profile.lint`. */
+export interface ProfileLintContext {
+  /** Every validated node with the source file it came from (relative path). */
+  nodes: readonly { node: CoreNode; file: string }[];
+  /** Canonical node by id (first definition wins on duplicates). */
+  byId: ReadonlyMap<string, CoreNode>;
+  /** Resolve an id or alias to a canonical id; undefined when unknown. */
+  resolve(ref: string): string | undefined;
+  /** Declared bands (tree.yaml `eras`), with their order. */
+  bands: readonly { id: string; title?: string; order: number }[];
+  /** Declared tracks (tree.yaml `paths`). */
+  tracks: readonly { id: string; title?: string }[];
+}
+
+/** All prerequisite refs of a node — `requires` plus every any-of member. */
+export function allPrerequisiteRefs(node: CoreNode): string[] {
+  return [...node.requires, ...(node.requiresAnyOf ?? []).flat()];
 }

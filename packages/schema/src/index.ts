@@ -12,9 +12,32 @@ export {
   type SkillLearningResource,
 } from './skill-data.js';
 
+export {
+  capabilitySchema,
+  CAPABILITY_SCHEMA_VERSION,
+  CAPABILITY_STATUSES,
+  CAPABILITY_KINDS,
+  CAPABILITY_LINK_RELATIONS,
+  capabilityStatusEnum,
+  capabilityKindEnum,
+  capabilityLinkRelationEnum,
+  type Capability,
+  type CapabilityPrerequisite,
+  type CapabilityStatus,
+  type CapabilityKind,
+  type CapabilityLinkRelation,
+} from './capability.js';
+
+export {
+  capabilityData,
+  type CapabilityData,
+  type CapabilityEureka,
+  type CapabilityLink,
+} from './capability-data.js';
+
 export { themeSchema, THEME_SCHEMA_VERSION, type Theme } from './theme.js';
 
-export { treeSchema, TREE_SCHEMA_VERSION, type Tree, type EraDef, type PathDef } from './tree.js';
+export { treeSchema, TREE_SCHEMA_VERSION, type Tree, type EraDef, type PathDef, type LayoutDef } from './tree.js';
 
 export { skillId, isValidSkillId, type SkillId } from './ids.js';
 

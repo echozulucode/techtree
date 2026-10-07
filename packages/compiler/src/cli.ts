@@ -5,16 +5,18 @@ import { dirname, isAbsolute, resolve } from 'node:path';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import {
-  deriveStatuses,
+  deriveStatusView,
   emptyState,
+  getStatusModel,
+  statusDef,
   treeStateSchema,
-  type NodeStatus,
   type TreeState,
 } from '@echozedlabs/techtree-state';
 import { parse as parseYaml } from 'yaml';
 import { jsonSchemas, themeSchema } from '@echozedlabs/techtree-schema';
 import {
   compile,
+  detectTreeProfile,
   errorCount,
   formatDiagnostic,
   generateSchemaDocs,
@@ -35,7 +37,7 @@ import {
 import { DEFAULT_PROFILE_ID, getProfile, PROFILES } from './profiles/index.js';
 
 const program = new Command();
-program.name('skilltree').description('Skill tree compiler and linter').version('0.1.0');
+program.name('techtree').description('TechTree compiler and linter').version('0.2.0');
 
 function colorize(d: Diagnostic, line: string): string {
   if (d.severity === 'error') return chalk.red(line);
@@ -66,8 +68,10 @@ function resolveInputDir(input: string): string {
   return isAbsolute(input) ? input : resolve(invocationCwd(), input);
 }
 
-function resolveProfile(id: string | undefined): Profile {
-  const profile = getProfile(id ?? DEFAULT_PROFILE_ID);
+/** --profile wins; otherwise tree.yaml's `tree.profile`; otherwise the default. */
+function resolveProfile(id: string | undefined, inputDir?: string): Profile {
+  id = id ?? (inputDir ? detectTreeProfile(inputDir) : undefined) ?? DEFAULT_PROFILE_ID;
+  const profile = getProfile(id);
   if (!profile) {
     process.stderr.write(
       `unknown profile "${id}". Available: ${Object.keys(PROFILES).join(', ')}.\n`,
@@ -92,7 +96,7 @@ program
   .action(async (input: string, opts: { out?: string; profile?: string; color: boolean }) => {
     const inputDir = resolveInputDir(input);
     const outPath = resolveOutPath(opts.out, resolve(inputDir, 'dist', 'tree.ir.json'));
-    const profile = resolveProfile(opts.profile);
+    const profile = resolveProfile(opts.profile, inputDir);
 
     const result = await compile(inputDir, profile);
     printDiagnostics(result.diagnostics, opts.color);
@@ -105,7 +109,7 @@ program
     mkdirSync(dirname(outPath), { recursive: true });
     writeFileSync(outPath, stableStringify(result.ir) + '\n', 'utf8');
     process.stdout.write(`wrote ${outPath}\n`);
-    process.stdout.write(`  skills: ${result.ir.nodes.length}, edges: ${result.ir.edges.length}\n`);
+    process.stdout.write(`  nodes: ${result.ir.nodes.length}, edges: ${result.ir.edges.length}\n`);
   });
 
 program
@@ -123,8 +127,13 @@ program
     process.stdout.write(`  nodes: ${ir.nodes.length}, edges: ${ir.edges.length}\n`);
   });
 
-async function runBuild(inputDir: string, outPath: string, useColor: boolean): Promise<boolean> {
-  const result = await compile(inputDir);
+async function runBuild(
+  inputDir: string,
+  outPath: string,
+  useColor: boolean,
+  profile: Profile,
+): Promise<boolean> {
+  const result = await compile(inputDir, profile);
   printDiagnostics(result.diagnostics, useColor);
   if (!result.ir) {
     process.stderr.write('build failed — no IR emitted\n');
@@ -133,7 +142,7 @@ async function runBuild(inputDir: string, outPath: string, useColor: boolean): P
   mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, stableStringify(result.ir) + '\n', 'utf8');
   process.stdout.write(
-    `wrote ${outPath} (${result.ir.nodes.length} skills, ${result.ir.edges.length} edges)\n`,
+    `wrote ${outPath} (${result.ir.nodes.length} nodes, ${result.ir.edges.length} edges)\n`,
   );
   return true;
 }
@@ -148,6 +157,7 @@ program
   .option('--debounce <ms>', 'debounce window for rebuilds in ms', (v) => parseInt(v, 10), 250)
   .option('--port <port>', 'hot-reload HTTP+SSE server port', (v) => parseInt(v, 10), 7747)
   .option('--no-server', 'disable the hot-reload server (file-only watch mode)')
+  .option('-p, --profile <id>', `domain profile (${Object.keys(PROFILES).join(' | ')})`)
   .option('--no-color', 'disable colored output')
   .action(
     async (
@@ -157,14 +167,16 @@ program
         debounce: number;
         port: number;
         server: boolean;
+        profile?: string;
         color: boolean;
       },
     ) => {
       const inputDir = resolveInputDir(input);
       const outPath = resolveOutPath(opts.out, resolve(inputDir, 'dist', 'tree.ir.json'));
+      const profile = resolveProfile(opts.profile, inputDir);
 
       process.stdout.write(`watching ${inputDir}\n`);
-      await runBuild(inputDir, outPath, opts.color);
+      await runBuild(inputDir, outPath, opts.color, profile);
 
       // --- SSE clients + hot-reload HTTP server ---------------------------
       const sseClients = new Set<ServerResponse>();
@@ -249,7 +261,7 @@ program
         timer = setTimeout(async () => {
           inFlight = true;
           try {
-            const ok = await runBuild(inputDir, outPath, opts.color);
+            const ok = await runBuild(inputDir, outPath, opts.color, profile);
             if (ok) notifyClients();
           } finally {
             inFlight = false;
@@ -284,11 +296,12 @@ program
 program
   .command('lint')
   .description('Validate and lint a skill tree without emitting IR')
-  .argument('<input-dir>', 'directory containing tree.yaml and *.skill.yaml files')
+  .argument('<input-dir>', 'directory containing tree.yaml and node files')
+  .option('-p, --profile <id>', `domain profile (${Object.keys(PROFILES).join(' | ')})`)
   .option('--no-color', 'disable colored output')
-  .action((input: string, opts: { color: boolean }) => {
+  .action((input: string, opts: { profile?: string; color: boolean }) => {
     const inputDir = resolveInputDir(input);
-    const diags = lint(inputDir);
+    const diags = lint(inputDir, resolveProfile(opts.profile, inputDir));
     printDiagnostics(diags, opts.color);
     if (errorCount(diags) > 0) process.exit(1);
   });
@@ -311,7 +324,7 @@ stateCmd
       opts: { user: string; out?: string; primaryPath?: string; force: boolean },
     ) => {
       const inputDir = resolveInputDir(input);
-      const result = await compile(inputDir);
+      const result = await compile(inputDir, resolveProfile(undefined, inputDir));
       if (!result.ir) {
         process.stderr.write('build failed — cannot derive tree_id\n');
         process.exit(1);
@@ -322,7 +335,7 @@ stateCmd
         process.stderr.write(`refusing to overwrite ${outPath} (use --force)\n`);
         process.exit(1);
       }
-      const initial = emptyState(opts.user, treeId, opts.primaryPath);
+      const initial = emptyState(opts.user, treeId, opts.primaryPath, result.ir.tree.profile);
       mkdirSync(dirname(outPath), { recursive: true });
       writeFileSync(outPath, stableStringify(initial) + '\n', 'utf8');
       process.stdout.write(`wrote ${outPath}\n`);
@@ -331,52 +344,41 @@ stateCmd
 
 stateCmd
   .command('list')
-  .description('Show derived status (locked/available/in_progress/submitted/achieved) per skill')
+  .description('Show the derived status of every node (stored status, or available / locked)')
   .argument('<tree-dir>', 'directory containing tree.yaml')
   .requiredOption('-s, --state <path>', 'state file path')
-  .option('--filter <status>', 'show only one status (e.g. in_progress)')
+  .option('--filter <status>', 'show only one status (e.g. in_progress, operational, available)')
+  .option('-p, --profile <id>', `domain profile (${Object.keys(PROFILES).join(' | ')})`)
   .option('--no-color', 'disable colored output')
-  .action(async (input: string, opts: { state: string; filter?: string; color: boolean }) => {
-    const inputDir = resolveInputDir(input);
-    const statePath = isAbsolute(opts.state) ? opts.state : resolve(invocationCwd(), opts.state);
-    const result = await compile(inputDir);
-    if (!result.ir) {
-      process.stderr.write('build failed\n');
-      process.exit(1);
-    }
-    let userState: TreeState | null = null;
-    if (existsSync(statePath)) {
-      const raw = JSON.parse(readFileSync(statePath, 'utf8')) as unknown;
-      userState = treeStateSchema.parse(raw);
-    }
-    const statuses = deriveStatuses(result.ir, userState);
-    const filter = opts.filter as NodeStatus | undefined;
-    const statusColor = (s: NodeStatus): ((x: string) => string) => {
-      if (!opts.color) return (x) => x;
-      switch (s) {
-        case 'achieved':
-          return chalk.green;
-        case 'in_progress':
-          return chalk.yellow;
-        case 'submitted':
-          return chalk.magenta;
-        case 'pending_approval':
-          return chalk.blueBright;
-        case 'rejected':
-          return chalk.red;
-        case 'available':
-          return chalk.cyan;
-        case 'locked':
-          return chalk.gray;
+  .action(
+    async (
+      input: string,
+      opts: { state: string; filter?: string; profile?: string; color: boolean },
+    ) => {
+      const inputDir = resolveInputDir(input);
+      const statePath = isAbsolute(opts.state) ? opts.state : resolve(invocationCwd(), opts.state);
+      const result = await compile(inputDir, resolveProfile(opts.profile, inputDir));
+      if (!result.ir) {
+        process.stderr.write('build failed\n');
+        process.exit(1);
       }
-    };
-    for (const n of result.ir.nodes) {
-      const s = statuses.get(n.id) ?? 'available';
-      if (filter && s !== filter) continue;
-      const tag = statusColor(s)(`[${s}]`.padEnd(14));
-      process.stdout.write(`${tag} ${n.id}  ${n.title}\n`);
-    }
-  });
+      let userState: TreeState | null = null;
+      if (existsSync(statePath)) {
+        const raw = JSON.parse(readFileSync(statePath, 'utf8')) as unknown;
+        userState = treeStateSchema.parse(raw);
+      }
+      const model = getStatusModel(result.ir.tree.profile);
+      const views = deriveStatusView(result.ir, userState?.skills ?? null, model);
+      for (const n of result.ir.nodes) {
+        const s = views.get(n.id)?.status ?? model.available.id;
+        if (opts.filter && s !== opts.filter) continue;
+        const color = statusDef(model, s)?.color;
+        const paint = opts.color && color ? chalk.hex(color) : (x: string) => x;
+        const tag = paint(`[${s}]`.padEnd(20));
+        process.stdout.write(`${tag} ${n.id}  ${n.title}\n`);
+      }
+    },
+  );
 
 // --- skilltree new ----------------------------------------------------------
 
@@ -558,6 +560,10 @@ schemaCmd
       JSON.stringify(jsonSchemas.skill, null, 2) + '\n',
     );
     writeFileSync(
+      resolve(outDir, 'capability.schema.json'),
+      JSON.stringify(jsonSchemas.capability, null, 2) + '\n',
+    );
+    writeFileSync(
       resolve(outDir, 'theme.schema.json'),
       JSON.stringify(jsonSchemas.theme, null, 2) + '\n',
     );
@@ -582,6 +588,7 @@ Install the YAML extension (\`redhat.vscode-yaml\`) and add to your workspace
 {
   "yaml.schemas": {
     "./schemas/skill.schema.json": ["**/*.skill.yaml", "**/*.skill.yml"],
+    "./schemas/capability.schema.json": ["**/*.capability.yaml", "**/*.capability.yml"],
     "./schemas/theme.schema.json": ["**/*.theme.yaml", "**/*.theme.yml"],
     "./schemas/tree.schema.json":  ["**/tree.yaml", "**/tree.yml"]
   }

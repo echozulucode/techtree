@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/developer-portal
+title: "Developer Portal"
+kind: wonder
+era: virtualization
+branch: knowledge
+summary: "One front door to SDKs, APIs, examples, pipelines and their owners."
+requires:
+  - eng.platform/example-catalog
+  - eng.platform/platform-sdk
+  - any_of:
+      - eng.platform/automated-traceability
+      - eng.platform/generated-clients
+benefit: "Engineers find, reuse and build on what exists instead of rebuilding it."
+owner: "Developer Experience"

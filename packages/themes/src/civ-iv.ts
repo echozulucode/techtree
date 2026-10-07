@@ -36,6 +36,21 @@ export const civIv: Theme = {
     process: { shape: 'rounded', fill: '#6d8aa0', elevation: 'medium' },
     leadership: { shape: 'rounded', fill: '#c48f6d', elevation: 'high' },
     operations: { shape: 'rounded', fill: '#a47a7a', elevation: 'medium' },
+    // capability profile
+    capability: { shape: 'rounded', fill: '#4a5a78', elevation: 'low' },
+    milestone: { shape: 'hex', fill: '#7a5f2e', elevation: 'high' },
+    wonder: { shape: 'diamond', fill: '#5e3f6e', elevation: 'high' },
+  },
+  // Capability maturity states (capabilityStatusModel). Skill statuses keep
+  // using the node_*_fill colours above.
+  statuses: {
+    not_started: { color: '#7d8597', icon: 'circle' },
+    investigating: { color: '#6d8fc4', icon: 'search' },
+    demonstrated: { color: '#4fa3a5', icon: 'circle-half' },
+    operational: { color: '#8fae5d', icon: 'circle-check' },
+    strategic_standard: { color: '#e0b84c', icon: 'star' },
+    legacy: { color: '#c4865a', icon: 'alert-triangle' },
+    retiring: { color: '#a85a5a', icon: 'x-circle' },
   },
   edges: {
     requires: { stroke: '#8c9ab0', width: 2, style: 'solid' },

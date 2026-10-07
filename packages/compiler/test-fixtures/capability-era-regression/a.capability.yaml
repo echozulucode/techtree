@@ -1,0 +1,5 @@
+id: t.cap/early-thing
+title: Early Thing
+kind: capability
+era: early
+requires: [t.cap/late-thing]

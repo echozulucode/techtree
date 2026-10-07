@@ -1,0 +1,4 @@
+id: t.cap/grand-wonder
+title: Grand Wonder
+kind: wonder
+requires: [t.cap/base]

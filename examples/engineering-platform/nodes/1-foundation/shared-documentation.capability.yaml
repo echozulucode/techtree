@@ -1,0 +1,9 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/shared-documentation
+title: "Shared Engineering Documentation"
+kind: capability
+era: foundation
+branch: knowledge
+summary: "Engineering knowledge is written down somewhere everyone can find it."
+owner: "Systems Engineering"

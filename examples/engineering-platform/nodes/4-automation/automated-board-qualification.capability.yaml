@@ -1,0 +1,13 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/automated-board-qualification
+title: "Automated Board Qualification"
+kind: capability
+era: automation
+branch: hardware-bsp
+summary: "A new board build is qualified by an automated test run, not a manual campaign."
+requires:
+  - eng.platform/reusable-bsp
+  - eng.platform/continuous-integration
+  - eng.platform/hardware-test-harness
+owner: "Test Engineering"

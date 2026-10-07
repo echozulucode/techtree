@@ -1,5 +1,6 @@
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { skillSchema } from './skill.js';
+import { capabilitySchema } from './capability.js';
 import { themeSchema } from './theme.js';
 import { treeSchema } from './tree.js';
 
@@ -10,6 +11,7 @@ import { treeSchema } from './tree.js';
  */
 export const jsonSchemas = {
   skill: zodToJsonSchema(skillSchema, { name: 'Skill', target: 'jsonSchema7' }),
+  capability: zodToJsonSchema(capabilitySchema, { name: 'Capability', target: 'jsonSchema7' }),
   theme: zodToJsonSchema(themeSchema, { name: 'Theme', target: 'jsonSchema7' }),
   tree: zodToJsonSchema(treeSchema, { name: 'Tree', target: 'jsonSchema7' }),
 } as const;

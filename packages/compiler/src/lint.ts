@@ -1,5 +1,6 @@
 import type { Diagnostic } from './diagnostics.js';
 import { nearestMatch } from './did-you-mean.js';
+import { allPrerequisiteRefs } from './profile.js';
 import type { ValidatedNode, ValidatedTree } from './validate.js';
 
 function diagAtNode(
@@ -96,6 +97,21 @@ export function lintValidated(v: ValidatedTree): Diagnostic[] {
         );
       }
     }
+    for (const group of s.node.requiresAnyOf ?? []) {
+      for (const ref of group) {
+        if (!resolveRef(ref)) {
+          diags.push(
+            diagAtNode(
+              s,
+              'error',
+              'unknown-ref',
+              `Node "${s.node.id}" lists unknown node "${ref}" in an any-of prerequisite group.`,
+              refHint(ref),
+            ),
+          );
+        }
+      }
+    }
     for (const ref of s.node.recommends) {
       if (!resolveRef(ref)) {
         diags.push(
@@ -111,11 +127,46 @@ export function lintValidated(v: ValidatedTree): Diagnostic[] {
     }
   }
 
+  // Pass 3b: any-of group hygiene (ADR-0006). A one-member group is just a
+  // plain prerequisite; a member that is also a plain prerequisite (or appears
+  // twice) makes the alternative meaningless.
+  for (const s of v.nodes) {
+    const plain = new Set(s.node.requires.map((r) => resolveRef(r) ?? r));
+    (s.node.requiresAnyOf ?? []).forEach((group, i) => {
+      const canon = group.map((r) => resolveRef(r) ?? r);
+      if (new Set(canon).size < 2) {
+        diags.push(
+          diagAtNode(
+            s,
+            'warning',
+            'any-of-singleton',
+            `Node "${s.node.id}" has an any-of group #${i + 1} with fewer than two distinct members.`,
+            'List the member as a plain prerequisite instead, or add the alternatives.',
+          ),
+        );
+      }
+      const redundant = canon.filter((r) => plain.has(r));
+      if (redundant.length > 0) {
+        diags.push(
+          diagAtNode(
+            s,
+            'warning',
+            'any-of-redundant',
+            `Node "${s.node.id}" lists "${redundant.join('", "')}" both as a required prerequisite and in any-of group #${i + 1}.`,
+            'A required member already satisfies the group; drop one of the two.',
+          ),
+        );
+      }
+    });
+  }
+
   // Pass 4: cycles in the requires graph (DFS with white/gray/black coloring).
+  // Any-of members count: a group that can only be satisfied through the node
+  // itself is still a cycle.
   const adj = new Map<string, string[]>();
   for (const s of v.nodes) {
     const outs: string[] = [];
-    for (const ref of s.node.requires) {
+    for (const ref of allPrerequisiteRefs(s.node)) {
       const canon = resolveRef(ref);
       if (canon) outs.push(canon);
     }
@@ -163,7 +214,7 @@ export function lintValidated(v: ValidatedTree): Diagnostic[] {
   const hasInEdge = new Set<string>();
   const hasOutEdge = new Set<string>();
   for (const s of v.nodes) {
-    const refs = [...s.node.requires, ...s.node.recommends];
+    const refs = [...allPrerequisiteRefs(s.node), ...s.node.recommends];
     if (refs.length > 0) hasOutEdge.add(s.node.id);
     for (const ref of refs) {
       const canon = resolveRef(ref);

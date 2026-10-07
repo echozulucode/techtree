@@ -1,0 +1,13 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/static-analysis
+title: "Coding Standards and Static Analysis"
+kind: capability
+era: standardization
+branch: dev-scripting
+summary: "Agreed coding standards are checked automatically on every change."
+requires:
+  - eng.platform/version-control
+implementations:
+  - feature:pre-commit-check
+owner: "Developer Experience"

@@ -1,0 +1,15 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/scripted-platform-build
+title: "Scripted Platform Build"
+kind: capability
+era: foundation
+branch: platform-os
+summary: "The Linux platform image is built by a script anyone can run, not by hand."
+unlocks:
+  - "Builds that do not depend on one person's workstation"
+implementations:
+  - technology:yocto-project
+  - technology:petalinux
+  - feature:linux-image-build
+owner: "Embedded Platforms"

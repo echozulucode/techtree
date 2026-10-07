@@ -15,6 +15,19 @@ const pathDef = z
     id: z.string().min(1),
     title: z.string().optional(),
     description: z.string().optional(),
+    /** Optional lane / chip colour (any CSS colour). */
+    color: z.string().min(1).optional(),
+  })
+  .strict();
+
+/**
+ * Tree-level layout options. `lanes: true` turns every declared track (`paths`)
+ * into a horizontal swimlane, in declared order, while bands (`eras`) stay the
+ * columns — the Civilization-style "eras × branches" grid.
+ */
+const layoutDef = z
+  .object({
+    lanes: z.boolean().optional(),
   })
   .strict();
 
@@ -38,6 +51,12 @@ export const treeSchema = z
         owners: z.array(z.string().min(1)).optional(),
         effective_date: z.string().optional(),
         default_theme: z.string().optional(),
+        /**
+         * Profile this tree is authored for (e.g. 'skill', 'delivery',
+         * 'capability'). The CLI uses it when `--profile` is not given; the
+         * compiler warns when it disagrees with the profile actually used.
+         */
+        profile: z.string().min(1).optional(),
         namespace: z
           .string()
           .regex(
@@ -50,9 +69,11 @@ export const treeSchema = z
     imports: z.array(z.string().min(1)).optional(),
     eras: z.array(eraDef).optional(),
     paths: z.array(pathDef).optional(),
+    layout: layoutDef.optional(),
   })
   .strict();
 
 export type Tree = z.infer<typeof treeSchema>;
 export type EraDef = z.infer<typeof eraDef>;
 export type PathDef = z.infer<typeof pathDef>;
+export type LayoutDef = z.infer<typeof layoutDef>;

@@ -1,0 +1,12 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/structured-requirements
+title: "Structured Requirements"
+kind: capability
+era: standardization
+branch: knowledge
+summary: "Requirements have stable ids and live next to the work that satisfies them."
+requires:
+  - eng.platform/shared-documentation
+owner: "Systems Engineering"
+target_status: operational

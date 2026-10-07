@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/sbom-scanning
+title: "SBOM and Vulnerability Scanning"
+kind: capability
+era: automation
+branch: security
+summary: "Every build publishes a software bill of materials that is scanned for known vulnerabilities."
+requires:
+  - eng.platform/software-packaging
+  - eng.platform/continuous-integration
+implementations:
+  - feature:sbom-generation
+links:
+  - { type: example, ref: sbom-in-ci, relation: demonstrates }
+owner: "Platform Ops"

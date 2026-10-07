@@ -1,0 +1,12 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/service-virtualization
+title: "Service Virtualization"
+kind: capability
+era: virtualization
+branch: architecture
+summary: "Dependent services can be replaced by faithful virtual stand-ins in tests."
+requires:
+  - eng.platform/platform-api
+  - eng.platform/generated-clients
+owner: "Mission Software"

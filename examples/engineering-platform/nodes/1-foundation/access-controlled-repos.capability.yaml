@@ -1,0 +1,13 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/access-controlled-repos
+title: "Access-Controlled Source Repositories"
+kind: capability
+era: foundation
+branch: security
+summary: "Who can read and change which source is controlled and auditable."
+requires:
+  - eng.platform/version-control
+implementations:
+  - feature:role-based-access-control
+owner: "Platform Ops"

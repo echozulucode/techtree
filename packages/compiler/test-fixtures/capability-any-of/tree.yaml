@@ -1,0 +1,8 @@
+tree: { id: any-of-demo, title: Any-of demo, profile: capability }
+layout: { lanes: true }
+eras:
+  - { id: one, title: One, order: 0 }
+  - { id: two, title: Two, order: 1 }
+paths:
+  - { id: top, title: Top, color: '#336699' }
+  - { id: bottom, title: Bottom }

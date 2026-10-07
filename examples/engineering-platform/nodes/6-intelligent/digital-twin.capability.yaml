@@ -1,0 +1,15 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/digital-twin
+title: "Digital Twin"
+kind: wonder
+era: intelligent
+branch: sim-test
+summary: "A live, faithful model of the deployed system that runs the real software."
+description: "Simulation + hardware abstraction + recorded I/O, from the write-up."
+requires:
+  - eng.platform/hardware-simulation
+  - eng.platform/hardware-abstraction
+  - eng.platform/recorded-data-replay
+benefit: "Changes are proven against a twin of the fielded system before they reach a single device."
+owner: "Systems Engineering"

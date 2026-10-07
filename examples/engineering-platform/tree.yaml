@@ -1,0 +1,77 @@
+schema_version: 1
+tree:
+  id: engineering-platform
+  title: Engineering Platform
+  version: '2026.10-demo'
+  description: |
+    DEMO / FICTIONAL. A Civilization-style capability tech tree for an embedded
+    Linux engineering platform: six eras (columns) by eight branches (swimlanes),
+    with capabilities, milestones and wonders joined by prerequisites. Capability
+    names and structure come from Eric's write-up; owners, links, eurekas and the
+    statuses in demo.state.json are invented for demonstration and describe no
+    real organisation. Links are opaque `{type, ref, relation}` references that a
+    host application resolves (e.g. against its example catalog).
+  owners:
+    - demo
+  default_theme: civ-iv
+  namespace: eng.platform
+  profile: capability
+
+layout:
+  lanes: true
+
+# Eras = columns (platform maturity order).
+eras:
+  - id: foundation
+    title: I · Foundation
+    order: 0
+  - id: standardization
+    title: II · Standardization
+    order: 1
+  - id: platformization
+    title: III · Platformization
+    order: 2
+  - id: automation
+    title: IV · Automation
+    order: 3
+  - id: virtualization
+    title: V · Virtualization
+    order: 4
+  - id: intelligent
+    title: VI · Intelligent Engineering
+    order: 5
+
+# Branches = swimlanes, top to bottom.
+paths:
+  - id: platform-os
+    title: Platform & OS
+    description: Linux platform image, build, boot and update mechanics.
+    color: '#5a7399'
+  - id: hardware-bsp
+    title: Hardware & Board Support
+    description: Board bring-up, BSP layers, hardware abstraction.
+    color: '#8a6d4f'
+  - id: architecture
+    title: Software Architecture
+    description: Interfaces, messaging, APIs and their evolution.
+    color: '#6d5a99'
+  - id: dev-scripting
+    title: Development & Scripting
+    description: How engineers build, check and release software.
+    color: '#4f8a6d'
+  - id: sim-test
+    title: Simulation & Test
+    description: Testing with and without hardware; simulation and replay.
+    color: '#99825a'
+  - id: deployment
+    title: Deployment & Update
+    description: Packaging, delivery and fleet update.
+    color: '#5a8a99'
+  - id: security
+    title: Security & Identity
+    description: Signing, secure boot, identity and supply-chain assurance.
+    color: '#995a5a'
+  - id: knowledge
+    title: Knowledge & Traceability
+    description: Requirements, documentation, examples and traceability.
+    color: '#7a7f8c'
