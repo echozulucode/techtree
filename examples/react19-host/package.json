@@ -1,7 +1,7 @@
 {
   "name": "@echozedlabs/react19-host",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "Dev-only smoke test: a React 19 host embedding @echozedlabs/techtree-viewer (server render + DOM interaction).",
   "scripts": {

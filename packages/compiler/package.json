@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-compiler",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TechTree compiler and CLI: parse → validate → lint → layout → emit deterministic IR.",
   "type": "module",
   "license": "Apache-2.0",
@@ -14,7 +14,13 @@
   "bugs": {
     "url": "https://github.com/echozulucode/techtree/issues"
   },
-  "keywords": ["tech-tree", "compiler", "cli", "graph", "dag"],
+  "keywords": [
+    "tech-tree",
+    "compiler",
+    "cli",
+    "graph",
+    "dag"
+  ],
   "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,7 +33,10 @@
   "bin": {
     "techtree": "./dist/cli.js"
   },
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "publishConfig": {
     "access": "public"
   },

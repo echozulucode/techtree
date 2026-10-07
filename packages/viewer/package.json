@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-viewer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TechTree viewer: embeddable React component (<TechTreeView>, React 18/19, Next.js App Router ready), renderer contract, React Flow renderer, and the standalone viewer shell.",
   "type": "module",
   "license": "Apache-2.0",
@@ -14,8 +14,17 @@
   "bugs": {
     "url": "https://github.com/echozulucode/techtree/issues"
   },
-  "keywords": ["tech-tree", "react", "viewer", "graph", "dag", "react-flow"],
-  "sideEffects": ["*.css"],
+  "keywords": [
+    "tech-tree",
+    "react",
+    "viewer",
+    "graph",
+    "dag",
+    "react-flow"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -30,7 +39,10 @@
     },
     "./package.json": "./package.json"
   },
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "publishConfig": {
     "access": "public"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-state",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "User-state schema, status derivation, and storage adapters (file / localStorage / API) for TechTree.",
   "type": "module",
   "license": "Apache-2.0",
@@ -14,7 +14,12 @@
   "bugs": {
     "url": "https://github.com/echozulucode/techtree/issues"
   },
-  "keywords": ["tech-tree", "state", "status", "overlay"],
+  "keywords": [
+    "tech-tree",
+    "state",
+    "status",
+    "overlay"
+  ],
   "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,7 +33,10 @@
       "import": "./dist/status-model-entry.js"
     }
   },
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "publishConfig": {
     "access": "public"
   },

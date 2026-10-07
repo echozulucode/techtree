@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Thin governance server for TechTree: role-gated state mutations, append-only audit log, approval workflow.",
   "type": "module",
   "license": "Apache-2.0",
@@ -14,7 +14,13 @@
   "bugs": {
     "url": "https://github.com/echozulucode/techtree/issues"
   },
-  "keywords": ["tech-tree", "server", "fastify", "audit", "approval"],
+  "keywords": [
+    "tech-tree",
+    "server",
+    "fastify",
+    "audit",
+    "approval"
+  ],
   "engines": {
     "node": ">=22.5.0"
   },
@@ -30,7 +36,10 @@
   "bin": {
     "techtree-server": "./dist/cli.js"
   },
-  "files": ["dist", "CHANGELOG.md"],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "publishConfig": {
     "access": "public"
   },
