@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, watch, writeFileSync } from 'node:fs';
 import { createServer, type ServerResponse } from 'node:http';
 import { dirname, isAbsolute, resolve } from 'node:path';

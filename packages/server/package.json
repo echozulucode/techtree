@@ -1,21 +1,45 @@
 {
   "name": "@echozedlabs/techtree-server",
   "version": "0.1.0",
-  "private": true,
+  "description": "Thin governance server for TechTree: role-gated state mutations, append-only audit log, approval workflow.",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "license": "Apache-2.0",
+  "author": "Eric Zimmerman (https://echozed.com)",
+  "homepage": "https://echozed.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echozulucode/techtree.git",
+    "directory": "packages/server"
+  },
+  "bugs": {
+    "url": "https://github.com/echozulucode/techtree/issues"
+  },
+  "keywords": ["tech-tree", "server", "fastify", "audit", "approval"],
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "bin": {
-    "skilltree-server": "./src/cli.ts"
+    "techtree-server": "./dist/cli.js"
+  },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "tsc --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
-    "dev": "tsx src/cli.ts"
+    "dev": "tsx src/cli.ts",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@echozedlabs/techtree-ir": "workspace:*",

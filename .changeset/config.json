@@ -9,7 +9,6 @@
       "@echozedlabs/techtree-compiler",
       "@echozedlabs/techtree-state",
       "@echozedlabs/techtree-themes",
-      "@echozedlabs/techtree-viewer",
       "@echozedlabs/techtree-server"
     ]
   ],
