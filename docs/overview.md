@@ -62,7 +62,11 @@ deterministic layout seed) — so it diffs cleanly in git and caches safely.
 - The **embeddable view** (`<TechTreeView>`): a React 18/19 client component for
   host apps (Next.js App Router ready) that takes IR + host-owned state and
   exposes selection, path highlighting, status filters, an accessible outline
-  and a detail drawer with host-resolved links (ADR-0007).
+  and a detail drawer with host-resolved links (ADR-0007); WCAG 2.2 AA by
+  default — contrast tokens, landmarks, heading levels, focus management,
+  target sizes — and a small-screen initial camera (ADR-0008). Client code
+  uses the zod-free entries `@echozedlabs/techtree-schema/capability-data` and
+  `@echozedlabs/techtree-state/status-model`.
 - The renderer-agnostic viewer shell: pan/zoom/fit, selection,
   ancestor/descendant highlighting, side panel, filter chips, band banners,
   focus-on-frontier, theme switcher, hot-reload.

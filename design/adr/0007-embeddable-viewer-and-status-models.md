@@ -99,3 +99,4 @@ availability derived from prerequisites).
 - `packages/state/src/status-model.ts`
 - `examples/react19-host/` (React 19 smoke)
 - ADR-0001 (renderer), ADR-0005 (fixed versioning), ADR-0006 (any-of groups)
+- ADR-0008 (accessible-by-default embedding, zod-free client entries) builds on this

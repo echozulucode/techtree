@@ -22,6 +22,7 @@ design:
     versioning: design/adr/0005-version-locked-packages.md
     any-of-groups: design/adr/0006-any-of-prerequisite-groups.md
     embeddable-viewer: design/adr/0007-embeddable-viewer-and-status-models.md
+    accessible-embedding: design/adr/0008-accessible-embedding-defaults.md
 
 procedures:
   # No dedicated setup/build/deploy docs yet — quick start lives in README.md.
