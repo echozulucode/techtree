@@ -13,8 +13,14 @@ export interface StatusVisual {
   border?: string;
   /** Border width override. */
   borderWidth?: number;
-  /** Opacity multiplier; lower = more dimmed. */
+  /**
+   * Opacity multiplier. Always 1 for the built-in statuses since 0.2: node text
+   * must keep WCAG AA contrast, so states are shown with colour (see `muted`)
+   * and borders instead of transparency.
+   */
   opacity: number;
+  /** Render the node muted (locked): a background faded toward the canvas, dashed border. */
+  muted?: boolean;
   /** Optional fill tint applied over the category fill. */
   fillOverlay?: string;
 }
@@ -73,9 +79,9 @@ export function statusVisual(
   status: string,
   model: StatusModel = skillStatusModel,
 ): StatusVisual {
-  if (status === model.locked.id) return { opacity: 0.6 };
+  if (status === model.locked.id) return { opacity: 1, muted: true };
   const border = statusColor(theme, status, model);
   if (status === model.available.id) return { border, borderWidth: 2, opacity: 1 };
-  if (status === 'rejected' || status === 'retiring') return { border, borderWidth: 3, opacity: 0.85 };
+  if (status === 'rejected' || status === 'retiring') return { border, borderWidth: 3, opacity: 1 };
   return { border, borderWidth: 3, opacity: 1 };
 }

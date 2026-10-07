@@ -87,13 +87,18 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
   const text = dim
     ? `var(--techtree-dim-node-text, color-mix(in srgb, ${nodeText(theme)} 75%, ${canvas}))`
     : nodeText(theme);
-  const background = dim ? `var(--techtree-dim-node-bg, ${canvas})` : fill;
+  // Locked: faded toward the canvas through the background (text stays AA).
+  const background = dim
+    ? `var(--techtree-dim-node-bg, ${canvas})`
+    : sv.muted
+      ? `var(--techtree-locked-node-bg, color-mix(in srgb, ${fill} 55%, ${canvas}))`
+      : fill;
   const dimBorder = `var(--techtree-dim-node-border, color-mix(in srgb, ${nodeBorder(theme)} 50%, ${canvas}))`;
   const border = selected
     ? `3px solid ${selectedBorder(theme)}`
     : dim
       ? `${sv.borderWidth ?? 2}px solid ${dimBorder}`
-      : `${sv.borderWidth ?? 2}px solid ${sv.border ?? nodeBorder(theme)}`;
+      : `${sv.borderWidth ?? 2}px ${sv.muted ? 'dashed' : 'solid'} ${sv.border ?? nodeBorder(theme)}`;
   const footer =
     model.id === skillStatusModel.id
       ? (irNode.category ?? '')
@@ -122,7 +127,7 @@ export function GraphNode({ data }: NodeProps<Node<GraphNodeData>>) {
         color: text,
         fontFamily: fontFamily(theme),
         boxShadow: dim ? 'none' : '2px 2px 0 var(--techtree-node-shadow, rgba(0,0,0,0.4))',
-        opacity: dim ? 'var(--techtree-dim-opacity, 1)' : sv.opacity,
+        opacity: dim ? 'var(--techtree-dim-opacity, 1)' : sv.muted ? 'var(--techtree-locked-opacity, 1)' : sv.opacity,
         cursor: 'pointer',
         display: 'grid',
         gridTemplateColumns: '36px 1fr',

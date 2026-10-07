@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { capabilityStatusModel, skillStatusModel } from '@echozedlabs/techtree-state';
 import { BUILT_IN_THEMES } from '@echozedlabs/techtree-themes';
 import { contrastRatio, contrastTextOn, isHexColor } from './shell/theme-utils.js';
-import { onStatusColor, statusColor } from './index.js';
+import { onStatusColor, statusColor, statusVisual } from './index.js';
 
 const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'style.css'), 'utf8').replace(
   /\/\*[\s\S]*?\*\//g,
@@ -113,6 +113,14 @@ describe.each(Object.entries(SCHEMES))('%s scheme defaults meet WCAG AA', (_, v)
     }
   });
 
+  it('locked nodes (background muted toward the canvas, no opacity) keep ≥ 4.5:1 incl. secondary labels', () => {
+    const canvas = v['--techtree-canvas-bg']!;
+    for (const fill of ['--techtree-node-bg', '--techtree-kind-milestone', '--techtree-kind-wonder']) {
+      const bg = mix(v[fill]!, canvas, 0.55); // GraphNode default --techtree-locked-node-bg
+      expect(ratio(mix(v['--techtree-node-text']!, bg, 0.75), bg), fill).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
   it('dimmed nodes (colour-muted, no opacity) keep ≥ 4.5:1', () => {
     const canvas = v['--techtree-canvas-bg']!;
     const dimText = mix(v['--techtree-node-text']!, canvas, 0.75); // GraphNode default
@@ -122,6 +130,19 @@ describe.each(Object.entries(SCHEMES))('%s scheme defaults meet WCAG AA', (_, v)
   it('era and edge labels on the canvas ≥ 4.5:1', () => {
     expect(ratio(v['--techtree-era-label']!, v['--techtree-canvas-bg']!)).toBeGreaterThanOrEqual(4.5);
     expect(ratio(v['--techtree-edge-label']!, v['--techtree-canvas-bg']!)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+describe('node states use colour, not transparency', () => {
+  it('statusVisual().opacity is 1 for every built-in status (locked is `muted`)', () => {
+    for (const theme of BUILT_IN_THEMES) {
+      for (const model of [skillStatusModel, capabilityStatusModel]) {
+        for (const id of [...model.filterOrder, 'retiring', 'rejected']) {
+          expect(statusVisual(theme, id, model).opacity, `${theme.id} ${id}`).toBe(1);
+        }
+        expect(statusVisual(theme, model.locked.id, model).muted).toBe(true);
+      }
+    }
   });
 });
 
