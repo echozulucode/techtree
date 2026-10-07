@@ -1,0 +1,31 @@
+/*
+ * Reference token mapping for a host page (not loaded by the tests). Map the
+ * host's tokens onto --techtree-* on .techtree-root; set the on-colour of every
+ * fill you override so pills, pressed chips and badges keep WCAG AA.
+ */
+.capability-map .techtree-root[data-color-scheme] {
+  --techtree-font: var(--font-sans);
+  --techtree-canvas-bg: var(--bg);
+  --techtree-node-bg: var(--surface-2);
+  --techtree-node-text: var(--text);
+  --techtree-panel-bg: var(--surface-1);
+  --techtree-panel-text: var(--text);
+  --techtree-panel-muted: var(--text-2);
+  --techtree-link: var(--accent-text);
+  --techtree-focus: var(--focus);
+
+  /* accent + the text drawn on it (pressed "All" chip, segmented buttons) */
+  --techtree-accent: var(--accent);
+  --techtree-on-accent: var(--on-accent);
+
+  /* a status fill and its on-colour, per status you restyle */
+  --techtree-status-operational: var(--status-operational);
+  --techtree-on-status-operational: var(--on-status-operational);
+  /* …or one on-colour for every status fill the host defines */
+  --techtree-on-status: var(--on-status);
+
+  /* dimmed nodes (path highlight, filterMode 'dim'): colours, not opacity */
+  --techtree-dim-node-bg: var(--bg);
+  --techtree-dim-node-text: var(--text-2);
+  --techtree-dim-node-border: var(--border-subtle);
+}
