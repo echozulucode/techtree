@@ -13,6 +13,21 @@ export type ColorScheme = 'light' | 'dark' | 'system';
 export type TechTreeViewMode = 'graph' | 'outline';
 
 /**
+ * Level of the top headings the view renders (drawer title, outline branches);
+ * their sub-headings use the next level. Pick the level that continues the
+ * host page's outline (e.g. 2 under the page's h1).
+ */
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5;
+
+/**
+ * Element of the detail drawer. `section` (default) and `div` are exposed as a
+ * labelled `region` landmark, which may nest inside the view's own region;
+ * `aside` (complementary) is only valid when the view is NOT inside another
+ * landmark — axe `landmark-complementary-is-top-level`.
+ */
+export type DrawerElement = 'section' | 'div' | 'aside';
+
+/**
  * An opaque reference the HOST resolves: a capability `link` (`{type, ref,
  * relation}` from the IR) or an `implementation` ref (parsed from
  * "type:ref"; plain strings become `{type: 'implementation', ref}`).
@@ -57,6 +72,8 @@ export interface NodeDetailContext {
   select: (id: string | null) => void;
   close: () => void;
   renderLink?: (link: TechTreeLinkRef, ctx: LinkRenderContext) => ReactNode;
+  /** Heading level of the drawer title (sections use the next level). Default 3. */
+  headingLevel?: HeadingLevel;
 }
 
 export interface TechTreeViewProps {
@@ -114,6 +131,24 @@ export interface TechTreeViewProps {
   // detail
   /** 'drawer' (default) renders the built-in drawer; 'none' leaves detail to the host. */
   detailPanel?: 'drawer' | 'none';
+  /**
+   * Element of the drawer: 'section' (default) or 'div' — a labelled region —
+   * or 'aside' (complementary; only when the view is not inside a landmark).
+   */
+  drawerElement?: DrawerElement;
+  /**
+   * Level of the drawer title and of the outline's branch headings; their
+   * sub-headings use the next level. Default 3.
+   */
+  headingLevel?: HeadingLevel;
+  /**
+   * Move keyboard focus to the drawer heading when the selection changes from
+   * inside the view (a node, a drawer link) and back to the canvas node / the
+   * previously focused control when the drawer closes. Escape closes the
+   * drawer. Initial selection and selection driven from outside the view never
+   * move focus. Default true.
+   */
+  focusDetailOnSelect?: boolean;
   /** Replace the drawer's content (wrap <NodeDetail ctx/> to extend it). */
   renderNodeDetail?: (ctx: NodeDetailContext) => ReactNode;
   /**

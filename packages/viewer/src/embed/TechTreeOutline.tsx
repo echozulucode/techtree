@@ -2,6 +2,8 @@ import type { IR, IRNode } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
 import { prerequisiteIndex, type NodeStatusView, type StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { statusLabel } from '../shell/status-style.js';
+import { headingTag } from './heading.js';
+import type { HeadingLevel } from './types.js';
 
 export interface TechTreeOutlineProps {
   ir: IR;
@@ -12,6 +14,8 @@ export interface TechTreeOutlineProps {
   onSelect: (id: string) => void;
   /** Nodes to list; null = all. */
   visibleIds?: ReadonlySet<string> | null;
+  /** Level of the branch headings; era headings use the next level. Default 3. */
+  headingLevel?: HeadingLevel;
 }
 
 /** DOM id of a node's entry in the outline (for in-page focus / links). */
@@ -33,7 +37,10 @@ export function TechTreeOutline({
   selectedId,
   onSelect,
   visibleIds = null,
+  headingLevel = 3,
 }: TechTreeOutlineProps) {
+  const TrackHeading = headingTag(headingLevel);
+  const BandHeading = headingTag(headingLevel + 1);
   const byId = new Map(ir.nodes.map((n) => [n.id, n]));
   const prereqs = prerequisiteIndex(ir);
   const dependents = new Map<string, string[]>();
@@ -82,10 +89,12 @@ export function TechTreeOutline({
           );
           return (
             <section key={g.id} className="tt-outline-track" data-track-id={g.id}>
-              <h3>{g.title}</h3>
+              <TrackHeading className="tt-outline-track-title">{g.title}</TrackHeading>
               {bandKeys.map((bk) => (
                 <div key={bk} className="tt-outline-band" data-band-id={bk}>
-                  <h4>{ir.bands.find((b) => b.id === bk)?.title ?? (bk || 'Unassigned')}</h4>
+                  <BandHeading className="tt-outline-band-title">
+                    {ir.bands.find((b) => b.id === bk)?.title ?? (bk || 'Unassigned')}
+                  </BandHeading>
                   <ul>
                     {bands
                       .get(bk)!

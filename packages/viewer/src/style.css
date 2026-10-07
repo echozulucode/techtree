@@ -321,6 +321,10 @@
   font-size: 18px;
   line-height: 1.2;
 }
+/* Focus moves here on selection (tabindex=-1): ring only for keyboard users. */
+.techtree-root .tt-detail-title:focus:not(:focus-visible) {
+  outline: none;
+}
 .techtree-root .tt-icon-button {
   position: absolute;
   top: 0;
@@ -440,11 +444,11 @@
   color: var(--techtree-panel-text);
   font-size: 14px;
 }
-.techtree-root .tt-outline h3 {
+.techtree-root .tt-outline-track-title {
   margin: 18px 0 4px;
   font-size: 16px;
 }
-.techtree-root .tt-outline h4 {
+.techtree-root .tt-outline-band-title {
   margin: 10px 0 4px;
   font-size: 12px;
   letter-spacing: 0.05em;

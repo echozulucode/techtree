@@ -19,6 +19,8 @@ export type {
   TechTreeViewProps,
   TechTreeViewMode,
   ColorScheme,
+  HeadingLevel,
+  DrawerElement,
   NodeDetailContext,
   TechTreeLinkRef,
   LinkRenderContext,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import type { IR, IRNode } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
 import { capabilityData } from '@echozedlabs/techtree-schema/capability-data';
@@ -53,6 +53,9 @@ export function TechTreeView(props: TechTreeViewProps) {
     showMiniMap = true,
     showControls = true,
     detailPanel = 'drawer',
+    drawerElement = 'section',
+    headingLevel = 3,
+    focusDetailOnSelect = true,
     renderNodeDetail,
     renderLink,
     onSelectNode,
@@ -158,8 +161,9 @@ export function TechTreeView(props: TechTreeViewProps) {
       select,
       close: () => select(null),
       ...(renderLink ? { renderLink } : {}),
+      headingLevel,
     };
-  }, [selectedNode, ir, byId, views, statusModel, theme, state, direction, setDirection, select, renderLink]);
+  }, [selectedNode, ir, byId, views, statusModel, theme, state, direction, setDirection, select, renderLink, headingLevel]);
 
   // Escape closes the drawer.
   const onKeyDown = useCallback(
@@ -169,15 +173,65 @@ export function TechTreeView(props: TechTreeViewProps) {
     [selectedId, select],
   );
 
+  // Focus management: a selection made inside the view moves focus to the
+  // drawer heading (so a drawer link that re-renders the drawer never drops
+  // focus to <body> and Escape keeps working); closing returns focus.
+  const rootRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLElement | null>(null);
+  const setDrawerEl = useCallback((el: HTMLElement | null) => {
+    drawerRef.current = el;
+  }, []);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+  const prevSelectedRef = useRef<string | null>(selectedId);
+  const drawerShown = detailPanel === 'drawer' && detailCtx !== null;
+  useEffect(() => {
+    const prev = prevSelectedRef.current;
+    prevSelectedRef.current = selectedId;
+    if (prev === selectedId || !focusDetailOnSelect) return;
+    const root = rootRef.current;
+    if (!root || typeof document === 'undefined') return;
+    const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const lost = active === null || active === document.body || !active.isConnected;
+    const inside = active !== null && root.contains(active);
+    // Selection driven from outside the view (host controls) never moves focus;
+    // the outline manages its own focus (it moves to the chosen entry).
+    if (!lost && (!inside || active?.closest('.tt-outline'))) return;
+
+    if (selectedId && drawerShown) {
+      const drawer = drawerRef.current;
+      if (!drawer) return;
+      if (prev === null && inside && active && !drawer.contains(active)) returnFocusRef.current = active;
+      const target =
+        drawer.querySelector<HTMLElement>('[data-techtree-autofocus]') ??
+        drawer.querySelector<HTMLElement>('h1, h2, h3, h4, h5, h6') ??
+        drawer;
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus();
+    } else if (!selectedId) {
+      const back = returnFocusRef.current;
+      returnFocusRef.current = null;
+      if (back && back.isConnected && root.contains(back)) {
+        back.focus();
+        return;
+      }
+      if (prev) {
+        const q = prev.replace(/["\\]/g, '\\$&');
+        root.querySelector<HTMLElement>(`.react-flow__node[data-id="${q}"]`)?.focus();
+      }
+    }
+  }, [selectedId, drawerShown, focusDetailOnSelect]);
+
   // A focus request re-centres the camera once per change.
   const [focusTick, setFocusTick] = useState<string | null>(null);
   useEffect(() => setFocusTick(focusNodeId), [focusNodeId]);
 
   const onViewportChange = useCallback((v: Viewport) => setViewport(v), []);
+  const Drawer = drawerElement === 'aside' ? 'aside' : drawerElement === 'div' ? 'div' : 'section';
   const showToolbar = showStatusFilter || showViewToggle;
 
   return (
     <div
+      ref={rootRef}
       className={className ? `techtree-root ${className}` : 'techtree-root'}
       data-color-scheme={colorScheme}
       data-testid="techtree-view"
@@ -242,18 +296,23 @@ export function TechTreeView(props: TechTreeViewProps) {
             selectedId={selectedId}
             onSelect={select}
             visibleIds={filterMode === 'hide' ? visibleIds : null}
+            headingLevel={headingLevel}
           />
         )}
         {detailPanel === 'drawer' && detailCtx && (
-          <aside
+          <Drawer
+            ref={setDrawerEl}
             className="tt-drawer"
             data-testid="techtree-detail"
             data-node-id={detailCtx.node.id}
             data-status={detailCtx.status.status}
+            // section / div: a labelled region (may nest in the view's region);
+            // aside keeps its complementary role (top-level views only).
+            role={drawerElement === 'aside' ? undefined : 'region'}
             aria-label={`${detailCtx.node.title} details`}
           >
             {renderNodeDetail ? renderNodeDetail(detailCtx) : <NodeDetail ctx={detailCtx} />}
-          </aside>
+          </Drawer>
         )}
       </div>
     </div>

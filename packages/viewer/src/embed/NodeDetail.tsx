@@ -5,7 +5,8 @@ import { statusDef } from '@echozedlabs/techtree-state/status-model';
 import { KIND_ICONS, statusIcon } from '../shell/status-icons.js';
 import { statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
 import type { HighlightDirection } from '../shell/graph.js';
-import type { NodeDetailContext, TechTreeLinkRef } from './types.js';
+import { headingTag } from './heading.js';
+import type { HeadingLevel, NodeDetailContext, TechTreeLinkRef } from './types.js';
 
 const RELATION_TITLES: Record<string, string> = {
   demonstrates: 'Demonstrated by',
@@ -44,10 +45,21 @@ function DefaultLink({ link }: { link: TechTreeLinkRef }) {
   );
 }
 
-function Section({ title, children, testId }: { title: string; children: ReactNode; testId?: string }) {
+function Section({
+  title,
+  children,
+  testId,
+  level,
+}: {
+  title: string;
+  children: ReactNode;
+  testId?: string;
+  level: number;
+}) {
+  const H = headingTag(level);
   return (
     <section className="tt-section" data-testid={testId}>
-      <h4 className="tt-section-title">{title}</h4>
+      <H className="tt-section-title">{title}</H>
       {children}
     </section>
   );
@@ -71,9 +83,17 @@ const DIRECTIONS: { id: HighlightDirection; label: string; title: string }[] = [
  * The built-in detail drawer content. Generic for every profile; capability
  * nodes add maturity (current / target), availability, benefit, eurekas,
  * implementations and opaque links resolved by `renderLink`.
+ *
+ * Headings: the title is `h<headingLevel>` (prop, else `ctx.headingLevel`,
+ * else 3) and section titles one level below. The title carries
+ * `data-techtree-autofocus` and `tabIndex={-1}`: the view moves focus to it on
+ * selection.
  */
-export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
+export function NodeDetail({ ctx, headingLevel }: { ctx: NodeDetailContext; headingLevel?: HeadingLevel }) {
   const { node, status, statusModel, theme, capability: cap } = ctx;
+  const level = headingLevel ?? ctx.headingLevel ?? 3;
+  const Title = headingTag(level);
+  const sub = level + 1;
   const select = (id: string): void => ctx.select(id);
   const shownStatus =
     status.stored !== null && !statusModel.derivedWhen.includes(status.stored) ? status.stored : status.status;
@@ -125,7 +145,9 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
           {ctx.bandTitle && <span data-testid="detail-era"> · {ctx.bandTitle}</span>}
           {ctx.trackTitle && <span data-testid="detail-branch"> · {ctx.trackTitle}</span>}
         </div>
-        <h3 className="tt-detail-title">{node.title}</h3>
+        <Title className="tt-detail-title" tabIndex={-1} data-techtree-autofocus="">
+          {node.title}
+        </Title>
         <button type="button" className="tt-icon-button" aria-label="Close" onClick={ctx.close}>
           ×
         </button>
@@ -170,13 +192,13 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
       {cap?.summary && <p className="tt-summary">{cap.summary}</p>}
       {node.description && <p className="tt-description">{node.description}</p>}
       {cap?.benefit && (
-        <Section title="Benefit" testId="detail-benefit">
+        <Section level={sub} title="Benefit" testId="detail-benefit">
           <p>{cap.benefit}</p>
         </Section>
       )}
 
       {(ctx.prerequisites.all.length > 0 || ctx.prerequisites.anyOf.length > 0) && (
-        <Section title="Prerequisites" testId="detail-prerequisites">
+        <Section level={sub} title="Prerequisites" testId="detail-prerequisites">
           <ul className="tt-list">
             {ctx.prerequisites.all.map((p) => (
               <li key={p.id}>
@@ -199,7 +221,7 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
       )}
 
       {(ctx.dependents.length > 0 || (cap?.unlocks.length ?? 0) > 0) && (
-        <Section title="Unlocks" testId="detail-unlocks">
+        <Section level={sub} title="Unlocks" testId="detail-unlocks">
           <ul className="tt-list">
             {ctx.dependents.map((d) => (
               <li key={d.id}>
@@ -216,7 +238,7 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
       )}
 
       {implementations.length > 0 && (
-        <Section title="Implementations" testId="detail-implementations">
+        <Section level={sub} title="Implementations" testId="detail-implementations">
           <ul className="tt-list">
             {implementations.map((x) => (
               <li key={x.key}>{x.el}</li>
@@ -226,7 +248,7 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
       )}
 
       {(cap?.eurekas.length ?? 0) > 0 && (
-        <Section title="Eureka goals" testId="detail-eurekas">
+        <Section level={sub} title="Eureka goals" testId="detail-eurekas">
           <ul className="tt-list tt-eurekas">
             {cap!.eurekas.map((e) => (
               <li key={e.id} data-achieved={achieved.has(e.id) ? 'true' : 'false'}>
@@ -242,6 +264,7 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
       {linkGroups.map((g) => (
         <Section
           key={g.rel}
+          level={sub}
           title={`${RELATION_TITLES[g.rel] ?? g.rel} (${g.items.length})`}
           testId={`detail-links-${g.rel}`}
         >
@@ -254,7 +277,7 @@ export function NodeDetail({ ctx }: { ctx: NodeDetailContext }) {
       ))}
 
       {cap?.owner && (
-        <Section title="Owner">
+        <Section level={sub} title="Owner">
           <p>{cap.owner}</p>
         </Section>
       )}
