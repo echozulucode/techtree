@@ -37,6 +37,11 @@ describe('React 19 host — server render', () => {
       />,
     );
     expect(html).toContain('data-color-scheme="dark"');
+    // React Flow's container class follows the scheme (no bare "light" in dark mode).
+    expect(html).toMatch(/class="react-flow dark"/);
+    expect(html).not.toMatch(/class="react-flow light"/);
+    // The drawer is a labelled region, not a nested <aside>.
+    expect(html).toMatch(/<section[^>]*class="tt-drawer"[^>]*role="region"/);
     expect(html).toContain(`data-node-id="${SAU}"`);
     expect(html).toContain('data-testid="techtree-detail"');
     expect(html).toContain('/examples/offline-update-bundle-zynq');

@@ -14,6 +14,7 @@ import { useControllable } from '../shell/use-controllable.js';
 import { NodeDetail } from './NodeDetail.js';
 import { StatusFilter } from './StatusFilter.js';
 import { TechTreeOutline } from './TechTreeOutline.js';
+import { useResolvedColorScheme } from './use-resolved-scheme.js';
 import type { NodeDetailContext, TechTreeViewMode, TechTreeViewProps } from './types.js';
 
 /** Resolve the `theme` prop: object, built-in id, the IR's default, or civ-iv. */
@@ -61,6 +62,8 @@ export function TechTreeView(props: TechTreeViewProps) {
     onSelectNode,
   } = props;
 
+  const rootRef = useRef<HTMLDivElement>(null);
+  const colorMode = useResolvedColorScheme(colorScheme, rootRef);
   const statusModel = props.statusModel ?? getStatusModel(ir.tree.profile);
   const theme = resolveTheme(props.theme, ir);
 
@@ -176,7 +179,7 @@ export function TechTreeView(props: TechTreeViewProps) {
   // Focus management: a selection made inside the view moves focus to the
   // drawer heading (so a drawer link that re-renders the drawer never drops
   // focus to <body> and Escape keeps working); closing returns focus.
-  const rootRef = useRef<HTMLDivElement>(null);
+
   const drawerRef = useRef<HTMLElement | null>(null);
   const setDrawerEl = useCallback((el: HTMLElement | null) => {
     drawerRef.current = el;
@@ -278,6 +281,7 @@ export function TechTreeView(props: TechTreeViewProps) {
               visibleIds={visibleIds}
               filterMode={filterMode}
               theme={theme}
+              colorMode={colorMode}
               focusOnNodeId={focusTick}
               onSelectNode={select}
               onClearSelection={() => select(null)}

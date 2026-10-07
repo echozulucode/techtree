@@ -75,6 +75,7 @@ export function ReactFlowRenderer({
   onViewportChange,
   showMiniMap = true,
   showControls = true,
+  colorMode = 'light',
 }: RendererProps) {
   const irNodeById = useMemo(() => {
     const m = new Map<string, { x: number; y: number; w: number; h: number }>();
@@ -195,6 +196,7 @@ export function ReactFlowRenderer({
       nodesDraggable={false}
       nodesConnectable={false}
       proOptions={{ hideAttribution: true }}
+      colorMode={colorMode}
       style={{ background: canvasBackground(theme) }}
     >
       <Background color={canvasGrid(theme)} gap={32} />

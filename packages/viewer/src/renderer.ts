@@ -42,6 +42,13 @@ export interface RendererProps {
   showMiniMap?: boolean;
   showControls?: boolean;
   theme: Theme;
+  /**
+   * Light / dark mode for the renderer's own chrome (React Flow's `colorMode`,
+   * which also puts a `light` / `dark` class on its container). Resolve
+   * 'system' before passing it so the class matches the host's theme.
+   * Default 'light'.
+   */
+  colorMode?: 'light' | 'dark';
   /** Node id to center the viewport on (initial focus / state-mutation re-focus). */
   focusOnNodeId: string | null;
   onSelectNode: (id: string) => void;
