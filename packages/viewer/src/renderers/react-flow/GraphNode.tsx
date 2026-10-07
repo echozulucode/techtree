@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { Handle, Position, type Node, type NodeProps } from '@xyflow/react';
 import type { IRNode } from '@echozedlabs/techtree-ir';
 import type { SkillData, Theme } from '@echozedlabs/techtree-schema';
-import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state';
+import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { difficultyPips, iconFor } from '../../shell/icons.js';
 import { KIND_ICONS, statusIcon } from '../../shell/status-icons.js';
 import {

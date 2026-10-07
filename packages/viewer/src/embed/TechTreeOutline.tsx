@@ -1,6 +1,6 @@
 import type { IR, IRNode } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
-import { prerequisiteIndex, type NodeStatusView, type StatusModel } from '@echozedlabs/techtree-state';
+import { prerequisiteIndex, type NodeStatusView, type StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { statusLabel } from '../shell/status-style.js';
 
 export interface TechTreeOutlineProps {

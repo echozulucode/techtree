@@ -22,6 +22,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./capability-data": {
+      "types": "./dist/capability-data.d.ts",
+      "import": "./dist/capability-data.js"
     }
   },
   "files": ["dist"],

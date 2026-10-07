@@ -1,5 +1,5 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
-import type { StatusModel } from '@echozedlabs/techtree-state';
+import type { StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { statusIcon } from '../shell/status-icons.js';
 import { statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
 

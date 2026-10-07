@@ -22,6 +22,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./status-model": {
+      "types": "./dist/status-model-entry.d.ts",
+      "import": "./dist/status-model-entry.js"
     }
   },
   "files": ["dist"],

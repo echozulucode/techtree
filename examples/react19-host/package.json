@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@echozedlabs/techtree-ir": "workspace:*",
+    "@echozedlabs/techtree-schema": "workspace:*",
     "@echozedlabs/techtree-state": "workspace:*",
     "@echozedlabs/techtree-viewer": "workspace:*",
     "react": "^19.0.0",
@@ -26,6 +27,8 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "axe-core": "^4.14.0",
+    "esbuild": "^0.21.5",
     "jsdom": "^25.0.0",
     "typescript": "^5.6.3"
   }

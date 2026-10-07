@@ -9,7 +9,7 @@ import {
   type Edge,
   type Node,
 } from '@xyflow/react';
-import { skillStatusModel } from '@echozedlabs/techtree-state';
+import { skillStatusModel } from '@echozedlabs/techtree-state/status-model';
 import type { RendererProps } from '../../renderer.js';
 import {
   canvasBackground,

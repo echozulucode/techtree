@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState, type KeyboardEvent } from 'react';
 import type { IR, IRNode } from '@echozedlabs/techtree-ir';
-import { capabilityData, type Theme } from '@echozedlabs/techtree-schema';
-import { deriveStatusView, getStatusModel, prerequisiteIndex } from '@echozedlabs/techtree-state';
+import type { Theme } from '@echozedlabs/techtree-schema';
+import { capabilityData } from '@echozedlabs/techtree-schema/capability-data';
+import { deriveStatusView, getStatusModel, prerequisiteIndex } from '@echozedlabs/techtree-state/status-model';
 import { BUILT_IN_THEMES, themeById } from '@echozedlabs/techtree-themes';
 import type { Viewport } from '../renderer.js';
 import { ReactFlowRenderer } from '../renderers/react-flow/index.js';

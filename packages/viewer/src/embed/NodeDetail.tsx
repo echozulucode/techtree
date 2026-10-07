@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { IRNode } from '@echozedlabs/techtree-ir';
-import { CAPABILITY_LINK_RELATIONS } from '@echozedlabs/techtree-schema';
-import { statusDef } from '@echozedlabs/techtree-state';
+import { CAPABILITY_LINK_RELATIONS } from '@echozedlabs/techtree-schema/capability-data';
+import { statusDef } from '@echozedlabs/techtree-state/status-model';
 import { KIND_ICONS, statusIcon } from '../shell/status-icons.js';
 import { statusColor, statusIconName, statusLabel } from '../shell/status-style.js';
 import type { HighlightDirection } from '../shell/graph.js';

@@ -1,5 +1,5 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
-import { skillStatusModel, statusDef, type StatusModel } from '@echozedlabs/techtree-state';
+import { skillStatusModel, statusDef, type StatusModel } from '@echozedlabs/techtree-state/status-model';
 
 /**
  * Status presentation, generic over the profile's status model. Lookup order

@@ -6,7 +6,7 @@ import type {
   NodeStates,
   NodeStatusView,
   StatusModel,
-} from '@echozedlabs/techtree-state';
+} from '@echozedlabs/techtree-state/status-model';
 import type { HighlightDirection } from '../shell/graph.js';
 
 export type ColorScheme = 'light' | 'dark' | 'system';

@@ -1,5 +1,5 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
-import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state';
+import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { statusColor, statusLabel } from './status-style.js';
 import { contrastTextOn } from './theme-utils.js';
 

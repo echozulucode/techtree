@@ -1,5 +1,6 @@
 import type { IR } from '@echozedlabs/techtree-ir';
-import { CAPABILITY_STATUSES } from '@echozedlabs/techtree-schema';
+// The zod-free light entry: this module must stay free of zod (client bundles).
+import { CAPABILITY_STATUSES } from '@echozedlabs/techtree-schema/capability-data';
 
 /**
  * Status models — the profile-owned half of the state overlay.

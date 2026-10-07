@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
 import type { IR } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
-import type { StatusModel } from '@echozedlabs/techtree-state';
+import type { StatusModel } from '@echozedlabs/techtree-state/status-model';
 
 export interface Viewport {
   x: number;

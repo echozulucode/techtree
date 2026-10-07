@@ -1,39 +1,26 @@
 import { z } from 'zod';
 import { skillId } from './ids.js';
+import {
+  CAPABILITY_KINDS,
+  CAPABILITY_LINK_RELATIONS,
+  CAPABILITY_STATUSES,
+  type CapabilityKind,
+  type CapabilityLinkRelation,
+  type CapabilityStatus,
+} from './capability-data.js';
+
+// The constants (and their types) live in the zod-free capability-data.ts so
+// client bundles can use them without zod; re-exported here for compatibility.
+export { CAPABILITY_KINDS, CAPABILITY_LINK_RELATIONS, CAPABILITY_STATUSES };
+export type { CapabilityKind, CapabilityLinkRelation, CapabilityStatus };
 
 export const CAPABILITY_SCHEMA_VERSION = 1 as const;
 
-/**
- * Stored maturity states of a capability, in maturity order. These are the
- * values a person sets (with evidence, in the host app); `available` / `locked`
- * are never stored — they are derived from the prerequisite graph (see
- * `capabilityStatusModel` in @echozedlabs/techtree-state).
- *
- * Write-up glyphs: ○ not started, ◔ investigating, ◑ demonstrated,
- * ● operational, ★ strategic standard, ⚠ legacy, ✕ retiring.
- */
-export const CAPABILITY_STATUSES = [
-  'not_started',
-  'investigating',
-  'demonstrated',
-  'operational',
-  'strategic_standard',
-  'legacy',
-  'retiring',
-] as const;
-
 export const capabilityStatusEnum = z.enum(CAPABILITY_STATUSES);
-export type CapabilityStatus = z.infer<typeof capabilityStatusEnum>;
 
-/** Node kinds of the capability profile. Drives `IRNode.category`. */
-export const CAPABILITY_KINDS = ['capability', 'milestone', 'wonder'] as const;
 export const capabilityKindEnum = z.enum(CAPABILITY_KINDS);
-export type CapabilityKind = z.infer<typeof capabilityKindEnum>;
 
-/** Relation of an opaque link to its capability. The host resolves the ref. */
-export const CAPABILITY_LINK_RELATIONS = ['demonstrates', 'implements', 'evidence', 'eureka'] as const;
 export const capabilityLinkRelationEnum = z.enum(CAPABILITY_LINK_RELATIONS);
-export type CapabilityLinkRelation = z.infer<typeof capabilityLinkRelationEnum>;
 
 const slug = z
   .string()

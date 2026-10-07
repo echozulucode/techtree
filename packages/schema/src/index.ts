@@ -15,21 +15,22 @@ export {
 export {
   capabilitySchema,
   CAPABILITY_SCHEMA_VERSION,
-  CAPABILITY_STATUSES,
-  CAPABILITY_KINDS,
-  CAPABILITY_LINK_RELATIONS,
   capabilityStatusEnum,
   capabilityKindEnum,
   capabilityLinkRelationEnum,
   type Capability,
   type CapabilityPrerequisite,
+} from './capability.js';
+
+// Zod-free (also the light entry `@echozedlabs/techtree-schema/capability-data`).
+export {
+  CAPABILITY_STATUSES,
+  CAPABILITY_KINDS,
+  CAPABILITY_LINK_RELATIONS,
+  capabilityData,
   type CapabilityStatus,
   type CapabilityKind,
   type CapabilityLinkRelation,
-} from './capability.js';
-
-export {
-  capabilityData,
   type CapabilityData,
   type CapabilityEureka,
   type CapabilityLink,
