@@ -27,6 +27,16 @@ const sources = [
     from: join(repoRoot, 'examples', 'ai-delivery', 'dist', 'tree.ir.json'),
     to: 'ai-delivery.ir.json',
   },
+  {
+    // Capability profile demo (tree.yaml declares `profile: capability`).
+    from: join(repoRoot, 'examples', 'engineering-platform', 'dist', 'tree.ir.json'),
+    to: 'engineering-platform.ir.json',
+  },
+  {
+    // Fictional demo state for the capability tree (seeded by the SPA).
+    from: join(repoRoot, 'examples', 'engineering-platform', 'demo.state.json'),
+    to: 'engineering-platform.state.json',
+  },
 ];
 
 let copied = 0;

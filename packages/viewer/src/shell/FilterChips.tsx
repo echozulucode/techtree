@@ -1,27 +1,37 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
-import type { NodeStatus } from '@echozedlabs/techtree-state';
+import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state';
 import { statusColor, statusLabel } from './status-style.js';
 import { contrastTextOn } from './theme-utils.js';
 
-export type FilterValue = 'all' | NodeStatus;
-
-const ORDER: FilterValue[] = ['all', 'in_progress', 'available', 'achieved', 'submitted', 'locked'];
+/** 'all' or one effective status id of the active status model. */
+export type FilterValue = 'all' | (string & {});
 
 export interface FilterChipsProps {
   value: FilterValue;
   onChange: (v: FilterValue) => void;
-  counts: ReadonlyMap<NodeStatus, number>;
+  counts: ReadonlyMap<string, number>;
   totalCount: number;
   theme: Theme;
+  /** Status model whose filterOrder / labels / colours drive the chips (default skill). */
+  statusModel?: StatusModel;
 }
 
-export function FilterChips({ value, onChange, counts, totalCount, theme }: FilterChipsProps) {
+/** Single-select status chips used by the SPA shell. See StatusFilter for the multi-select embed. */
+export function FilterChips({
+  value,
+  onChange,
+  counts,
+  totalCount,
+  theme,
+  statusModel = skillStatusModel,
+}: FilterChipsProps) {
+  const order: FilterValue[] = ['all', ...statusModel.filterOrder];
   return (
     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-      {ORDER.map((v) => {
-        const count = v === 'all' ? totalCount : (counts.get(v as NodeStatus) ?? 0);
+      {order.map((v) => {
+        const count = v === 'all' ? totalCount : (counts.get(v) ?? 0);
         const active = v === value;
-        const color = v === 'all' ? '#5aa9e6' : statusColor(theme, v as NodeStatus);
+        const color = v === 'all' ? '#5aa9e6' : statusColor(theme, v, statusModel);
         const dimWhenZero = count === 0 && v !== 'all';
         return (
           <button
@@ -45,7 +55,7 @@ export function FilterChips({ value, onChange, counts, totalCount, theme }: Filt
               opacity: dimWhenZero ? 0.5 : 1,
             }}
           >
-            <span>{v === 'all' ? 'All' : statusLabel(v as NodeStatus)}</span>
+            <span>{v === 'all' ? 'All' : statusLabel(v, statusModel, theme)}</span>
             <span style={{ fontSize: 10, opacity: 0.75 }}>{count}</span>
           </button>
         );

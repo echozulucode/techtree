@@ -32,10 +32,7 @@ jobs:
       - name: Build packages
         run: pnpm -r build
       - name: Build example IR
-        run: |
-          pnpm --filter @echozedlabs/techtree-compiler cli build examples/personal-learning
-          pnpm --filter @echozedlabs/techtree-compiler cli build examples/eng-career
-          pnpm --filter @echozedlabs/techtree-compiler cli build examples/ai-delivery --profile delivery
+        run: pnpm build:examples
       - name: Install Playwright browser
         run: pnpm --filter @echozedlabs/dev-harness exec playwright install --with-deps chromium
       - name: Run executable BDD feature tests

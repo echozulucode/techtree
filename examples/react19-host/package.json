@@ -1,0 +1,32 @@
+{
+  "name": "@echozedlabs/react19-host",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Dev-only smoke test: a React 19 host embedding @echozedlabs/techtree-viewer (server render + DOM interaction).",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@echozedlabs/techtree-ir": "workspace:*",
+    "@echozedlabs/techtree-state": "workspace:*",
+    "@echozedlabs/techtree-viewer": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependenciesMeta": {
+    "@echozedlabs/techtree-viewer": {
+      "injected": true
+    }
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "jsdom": "^25.0.0",
+    "typescript": "^5.6.3"
+  }
+}

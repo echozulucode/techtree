@@ -63,7 +63,9 @@ export function eraLabelColor(theme: Theme): string {
  */
 export function contrastTextOn(hex: string): string {
   const m = /^#([0-9a-f]{6})$/i.exec(hex.trim());
-  if (!m) return '#f2efe4';
+  // Non-hex colours (CSS variables, named colours) can't be measured here; let
+  // the host decide via a variable, defaulting to white.
+  if (!m) return 'var(--techtree-on-status, #ffffff)';
   const n = parseInt(m[1]!, 16);
   const r = ((n >> 16) & 0xff) / 255;
   const g = ((n >> 8) & 0xff) / 255;

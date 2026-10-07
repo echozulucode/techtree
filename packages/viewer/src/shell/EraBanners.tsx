@@ -36,10 +36,17 @@ function computeEraSpans(ir: IR): EraSpan[] {
     spans.push({ id, title: meta?.title, order: meta?.order ?? 0, ...range });
   }
   spans.sort((a, b) => a.order - b.order || a.minX - b.minX);
-  return spans;
+  // Give each label the room up to the next band (not just its own nodes), so
+  // narrow single-column bands don't truncate their titles.
+  return spans.map((span, i) => {
+    const next = spans[i + 1];
+    const room = next && next.minX > span.maxX ? next.minX - 24 : span.maxX;
+    return { ...span, maxX: Math.max(span.maxX, room) };
+  });
 }
 
 export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
+  // (Rendered as an overlay so headers stay pinned while the canvas pans.)
   if (theme.eras?.show_labels === false) return null;
   const spans = computeEraSpans(ir);
   if (spans.length === 0) return null;
@@ -49,6 +56,7 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
 
   return (
     <div
+      data-testid="era-banners"
       style={{
         position: 'absolute',
         top: 0,
@@ -58,7 +66,8 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
         pointerEvents: 'none',
         zIndex: 5,
         overflow: 'hidden',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0))',
+        background:
+          'var(--techtree-era-banner-bg, linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0)))',
       }}
     >
       {spans.map((era) => {
@@ -67,6 +76,7 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
         return (
           <div
             key={era.id}
+            data-band-id={era.id}
             style={{
               position: 'absolute',
               left: screenLeft,

@@ -1,11 +1,13 @@
+'use client';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { IR } from '@echozedlabs/techtree-ir';
 import {
   LocalStorageStateAdapter,
-  deriveStatuses,
+  deriveEffectiveStatuses,
+  getStatusModel,
   pickFrontierNodeId,
   treeStateSchema,
-  type NodeStatus,
   type SetStatus,
   type StateAdapter,
   type TreeState,
@@ -18,11 +20,24 @@ import { FilterChips, type FilterValue } from './shell/FilterChips.js';
 import { computeRelated } from './shell/graph.js';
 import type { Viewport } from './renderer.js';
 import { DEFAULT_RENDERER_ID, RENDERERS } from './renderers/index.js';
+import { TechTreeView } from './embed/TechTreeView.js';
 
-const DEFAULT_IR_OPTIONS = [
+interface IrOption {
+  label: string;
+  url: string;
+  /** Optional seed state (used when the browser has no saved state for the tree). */
+  stateUrl?: string;
+}
+
+const DEFAULT_IR_OPTIONS: IrOption[] = [
   { label: 'personal-learning', url: '/ir/personal-learning.ir.json' },
   { label: 'eng-career', url: '/ir/eng-career.ir.json' },
   { label: 'ai-delivery (delivery profile)', url: '/ir/ai-delivery.ir.json' },
+  {
+    label: 'engineering-platform (capability profile, demo)',
+    url: '/ir/engineering-platform.ir.json',
+    stateUrl: '/ir/engineering-platform.state.json',
+  },
 ];
 
 function readUrlParam(name: string): string | null {
@@ -43,13 +58,30 @@ function watchConfig(): { port: number; irUrl: string; eventsUrl: string } | nul
   return { port, irUrl: `${origin}/tree.ir.json`, eventsUrl: `${origin}/events` };
 }
 
-function makeAdapter(treeId: string, userId = 'local'): StateAdapter {
-  return new LocalStorageStateAdapter(`skill-tree:state:${treeId}:${userId}`, userId, treeId);
+function makeAdapter(treeId: string, profile?: string, userId = 'local'): StateAdapter {
+  return new LocalStorageStateAdapter(
+    `skill-tree:state:${treeId}:${userId}`,
+    userId,
+    treeId,
+    undefined,
+    profile,
+  );
+}
+
+async function fetchSeedState(url: string, treeId: string): Promise<TreeState | null> {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    const parsed = treeStateSchema.parse(await r.json());
+    return parsed.tree_id === treeId ? parsed : null;
+  } catch {
+    return null;
+  }
 }
 
 export function App() {
   const watch = useMemo(() => watchConfig(), []);
-  const irOptions = useMemo(
+  const irOptions = useMemo<IrOption[]>(
     () =>
       watch ? [{ label: `Watching (port ${watch.port})`, url: watch.irUrl }] : DEFAULT_IR_OPTIONS,
     [watch],
@@ -94,9 +126,13 @@ export function App() {
       .then(async (data) => {
         setIr(data);
         setLoadMs(performance.now() - t0);
-        const adapter = makeAdapter(data.tree.id);
+        const adapter = makeAdapter(data.tree.id, data.tree.profile);
         adapterRef.current = adapter;
-        const loaded = await adapter.load();
+        let loaded = await adapter.load();
+        const seedUrl = irOptions.find((o) => o.url === irUrl)?.stateUrl;
+        if (loaded && Object.keys(loaded.skills).length === 0 && seedUrl) {
+          loaded = (await fetchSeedState(seedUrl, data.tree.id)) ?? loaded;
+        }
         setState(loaded);
       })
       .catch((err: unknown) => {
@@ -134,13 +170,14 @@ export function App() {
   const theme = themeById(themeId) ?? BUILT_IN_THEMES[0]!;
   const renderer = RENDERERS.find((r) => r.id === rendererId) ?? RENDERERS[0]!;
 
-  const nodeStatus = useMemo<ReadonlyMap<string, NodeStatus>>(
-    () => (ir ? deriveStatuses(ir, state) : new Map()),
-    [ir, state],
+  const statusModel = useMemo(() => getStatusModel(ir?.tree.profile), [ir]);
+  const nodeStatus = useMemo<ReadonlyMap<string, string>>(
+    () => (ir ? deriveEffectiveStatuses(ir, state?.skills ?? null, statusModel) : new Map()),
+    [ir, state, statusModel],
   );
 
-  const statusCounts = useMemo<ReadonlyMap<NodeStatus, number>>(() => {
-    const m = new Map<NodeStatus, number>();
+  const statusCounts = useMemo<ReadonlyMap<string, number>>(() => {
+    const m = new Map<string, number>();
     for (const s of nodeStatus.values()) m.set(s, (m.get(s) ?? 0) + 1);
     return m;
   }, [nodeStatus]);
@@ -231,6 +268,9 @@ export function App() {
   }, [focusOnNodeId]);
 
   const Renderer = renderer.Component;
+  // The capability profile is shown through the embeddable view — the same
+  // component host apps use (read-only; state comes from the seed / local file).
+  const embedded = ir?.tree.profile === 'capability';
 
   return (
     <div
@@ -263,7 +303,17 @@ export function App() {
         onDownloadState={handleDownloadState}
         onLoadStateFile={handleLoadStateFile}
       />
-      {ir && (
+      {ir && embedded && state && (
+        <div style={{ position: 'absolute', top: 56, left: 0, right: 0, bottom: 0 }}>
+          <TechTreeView
+            ir={ir}
+            state={state.skills}
+            theme={theme}
+            colorScheme={theme.id === 'css-variables' ? 'system' : 'dark'}
+          />
+        </div>
+      )}
+      {ir && !embedded && (
         <div
           style={{
             position: 'absolute',
@@ -281,16 +331,18 @@ export function App() {
             counts={statusCounts}
             totalCount={ir.nodes.length}
             theme={theme}
+            statusModel={statusModel}
           />
         </div>
       )}
       {!ir && <EmptyState watchPort={watch?.port} irUrl={irUrl} loadError={loadError} />}
-      {ir && state && (
+      {ir && state && !embedded && (
         <Renderer
           ir={ir}
           selectedId={selectedId}
           relatedIds={related}
           nodeStatus={nodeStatus}
+          statusModel={statusModel}
           visibleIds={visibleIds}
           theme={theme}
           focusOnNodeId={focusOnNodeId}
@@ -299,8 +351,8 @@ export function App() {
           onViewportChange={handleViewportChange}
         />
       )}
-      {ir && <EraBanners ir={ir} theme={theme} viewport={viewport} />}
-      {ir && selectedNode && (
+      {ir && !embedded && <EraBanners ir={ir} theme={theme} viewport={viewport} />}
+      {ir && !embedded && selectedNode && (
         <SidePanel
           node={selectedNode}
           status={nodeStatus.get(selectedNode.id) ?? 'available'}

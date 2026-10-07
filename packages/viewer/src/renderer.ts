@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
 import type { IR } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
-import type { NodeStatus } from '@echozedlabs/techtree-state';
+import type { StatusModel } from '@echozedlabs/techtree-state';
 
 export interface Viewport {
   x: number;
@@ -24,10 +24,23 @@ export interface RendererProps {
   selectedId: string | null;
   /** Ancestors+descendants of selectedId. Empty when nothing selected. */
   relatedIds: ReadonlySet<string>;
-  /** Per-node status derived from user state. Renderers paint based on this. */
-  nodeStatus: ReadonlyMap<string, NodeStatus>;
-  /** Filter chip set. null = show all; otherwise dim nodes whose id is not in the set. */
+  /**
+   * Per-node EFFECTIVE status (stored, or derived available/locked) under
+   * `statusModel`. Renderers paint based on this.
+   */
+  nodeStatus: ReadonlyMap<string, string>;
+  /** The status model `nodeStatus` belongs to. Default: the skill model. */
+  statusModel?: StatusModel;
+  /** Filter set. null = show all; otherwise nodes not in the set are dimmed or hidden. */
   visibleIds: ReadonlySet<string> | null;
+  /**
+   * What happens to nodes outside `visibleIds`: 'dim' (default) or 'hide'.
+   * Either way positions, bands and lanes never move.
+   */
+  filterMode?: 'dim' | 'hide';
+  /** Show the minimap / zoom controls (default true). */
+  showMiniMap?: boolean;
+  showControls?: boolean;
   theme: Theme;
   /** Node id to center the viewport on (initial focus / state-mutation re-focus). */
   focusOnNodeId: string | null;

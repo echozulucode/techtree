@@ -1,3 +1,9 @@
 packages:
   - 'packages/*'
   - 'examples/*'
+
+# examples/react19-host consumes the viewer as an *injected* dependency (a copy
+# whose peers resolve to that host's React 19, like a real npm install). Re-sync
+# the copy whenever a workspace package's build script runs.
+syncInjectedDepsAfterScripts:
+  - build

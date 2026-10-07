@@ -7,7 +7,8 @@ const testDir = defineBddConfig({
   featuresRoot: '../../features',
   features: ['../../features/**/*.feature'],
   steps: ['bdd-steps/**/*.ts'],
-  tags: 'not @manual',
+  // @unit scenarios are verified by unit tests (features/coverage.yaml).
+  tags: 'not @manual and not @unit',
 });
 
 const externalServer = Boolean(process.env.BASE_URL);

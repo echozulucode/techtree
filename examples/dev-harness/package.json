@@ -14,6 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@echozedlabs/techtree-ir": "workspace:*",
+    "@echozedlabs/techtree-state": "workspace:*",
     "@echozedlabs/techtree-viewer": "workspace:*",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"

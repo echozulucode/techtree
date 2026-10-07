@@ -1,5 +1,11 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
-import type { NodeStatus } from '@echozedlabs/techtree-state';
+import { skillStatusModel, statusDef, type StatusModel } from '@echozedlabs/techtree-state';
+
+/**
+ * Status presentation, generic over the profile's status model. Lookup order
+ * for a status colour: `theme.statuses[id].color` → the theme's legacy
+ * `colors.node_<id>_fill` slot → the model's default colour.
+ */
 
 export interface StatusVisual {
   /** Border color override (or undefined to use node-default-border). */
@@ -12,84 +18,44 @@ export interface StatusVisual {
   fillOverlay?: string;
 }
 
-export function statusVisual(theme: Theme, status: NodeStatus): StatusVisual {
-  switch (status) {
-    case 'locked':
-      return { opacity: 0.6 };
-    case 'available':
-      return {
-        border: theme.colors?.node_available_fill ?? '#5a7399',
-        borderWidth: 2,
-        opacity: 1,
-      };
-    case 'in_progress':
-      return {
-        border: theme.colors?.node_in_progress_fill ?? '#b89a4a',
-        borderWidth: 3,
-        opacity: 1,
-      };
-    case 'submitted':
-      return {
-        border: theme.colors?.node_submitted_fill ?? '#c4986d',
-        borderWidth: 3,
-        opacity: 1,
-      };
-    case 'pending_approval':
-      return {
-        border: theme.colors?.node_pending_approval_fill ?? '#d9c977',
-        borderWidth: 3,
-        opacity: 1,
-      };
-    case 'achieved':
-      return {
-        border: theme.colors?.node_achieved_fill ?? '#8fae5d',
-        borderWidth: 3,
-        opacity: 1,
-      };
-    case 'rejected':
-      return {
-        border: theme.colors?.node_rejected_fill ?? '#a85a5a',
-        borderWidth: 3,
-        opacity: 0.85,
-      };
-  }
+const FALLBACK_COLOR = '#7d8597';
+
+function legacyColor(theme: Theme, status: string): string | undefined {
+  const colors = theme.colors as Record<string, string | undefined> | undefined;
+  return colors?.[`node_${status}_fill`];
 }
 
-/** Short human-readable label used in the side-panel status pill. */
-export function statusLabel(status: NodeStatus): string {
-  switch (status) {
-    case 'locked':
-      return 'Locked';
-    case 'available':
-      return 'Available';
-    case 'in_progress':
-      return 'In progress';
-    case 'submitted':
-      return 'Submitted';
-    case 'pending_approval':
-      return 'Pending approval';
-    case 'achieved':
-      return 'Achieved';
-    case 'rejected':
-      return 'Rejected';
-  }
+export function statusColor(theme: Theme, status: string, model: StatusModel = skillStatusModel): string {
+  return (
+    theme.statuses?.[status]?.color ??
+    legacyColor(theme, status) ??
+    statusDef(model, status)?.color ??
+    FALLBACK_COLOR
+  );
 }
 
-export function statusColor(theme: Theme, status: NodeStatus): string {
-  switch (status) {
-    case 'locked':
-      return theme.colors?.node_locked_fill ?? '#3b4353';
-    case 'available':
-      return theme.colors?.node_available_fill ?? '#5a7399';
-    case 'in_progress':
-      return theme.colors?.node_in_progress_fill ?? '#b89a4a';
-    case 'submitted':
-      return theme.colors?.node_submitted_fill ?? '#c4986d';
-    case 'pending_approval':
-      return theme.colors?.node_pending_approval_fill ?? '#d9c977';
-    case 'achieved':
-      return theme.colors?.node_achieved_fill ?? '#8fae5d';
-    case 'rejected':
-      return theme.colors?.node_rejected_fill ?? '#a85a5a';
-  }
+/** Short human-readable label (side-panel pill, filter chips, outline). */
+export function statusLabel(status: string, model: StatusModel = skillStatusModel, theme?: Theme): string {
+  return theme?.statuses?.[status]?.label ?? statusDef(model, status)?.label ?? status;
+}
+
+/** Icon name for the status badge (theme override, then model default). */
+export function statusIconName(
+  theme: Theme,
+  status: string,
+  model: StatusModel = skillStatusModel,
+): string | undefined {
+  return theme.statuses?.[status]?.icon ?? statusDef(model, status)?.icon;
+}
+
+export function statusVisual(
+  theme: Theme,
+  status: string,
+  model: StatusModel = skillStatusModel,
+): StatusVisual {
+  if (status === model.locked.id) return { opacity: 0.6 };
+  const border = statusColor(theme, status, model);
+  if (status === model.available.id) return { border, borderWidth: 2, opacity: 1 };
+  if (status === 'rejected' || status === 'retiring') return { border, borderWidth: 3, opacity: 0.85 };
+  return { border, borderWidth: 3, opacity: 1 };
 }
