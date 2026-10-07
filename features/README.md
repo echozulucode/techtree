@@ -13,6 +13,6 @@ features) describe engine behaviour with no browser surface — they are verifie
 by the unit tests listed for them in `coverage.yaml` and are excluded from the
 playwright-bdd run.
 
-Capability profile + embedding: capability_tree, embedding (browser, against the
+Capability profile + embedding: capability_tree, embedding and accessibility (browser, against the
 dev-harness `?embed=engineering-platform` host page), any_of_prerequisites and
 capability_validation (`@unit`).

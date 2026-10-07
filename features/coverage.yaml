@@ -11,7 +11,7 @@
 
 meta:
   generated: '2026-10-07'
-  totals: { scenarios: 32, covered: 32, partial: 0, none: 0, manual: 1 }
+  totals: { scenarios: 36, covered: 36, partial: 0, none: 0, manual: 1 }
 
 features:
   graph_navigation:
@@ -115,6 +115,31 @@ features:
       unit:
         - 'react19-host/src/ssr.test.tsx::runs on React 19 in a DOM-less environment'
         - 'react19-host/src/ssr.test.tsx::the published entry is a "use client" module and ships style.css'
+
+  accessibility:
+    - scenario: 'The view passes an automated accessibility audit'
+      status: covered
+      bdd: true
+      e2e: ['a11y::axe: light desktop — map, drawer + path highlight, pressed chip, outline', 'a11y::axe: dark phone — map, drawer + path highlight, pressed chip, outline']
+      unit:
+        - 'react19-host/src/a11y.test.tsx::axe: the default drawer passes; the legacy <aside> inside the region is flagged'
+        - 'viewer/src/contrast.test.ts::text on every status fill (pill, pressed chip, node badge) ≥ 4.5:1'
+    - scenario: "The card fits into the host page's structure"
+      status: covered
+      bdd: true
+      unit:
+        - 'react19-host/src/a11y.test.tsx::renders the drawer as a labelled <section role="region"> by default'
+        - 'react19-host/src/a11y.test.tsx::headingLevel={2}: drawer h2 / h3, outline h2 / h3 — no sr-only heading needed by the host'
+    - scenario: 'Keyboard focus follows the capability card'
+      status: covered
+      bdd: true
+      e2e: ['a11y::focus follows the drawer: node → heading, drawer link → new heading, Escape closes']
+      unit: ['react19-host/src/a11y.test.tsx::selecting a node from inside the drawer keeps focus in the drawer, and Escape still closes it']
+    - scenario: 'A phone starts at the frontier at a readable zoom'
+      status: covered
+      bdd: true
+      e2e: ['a11y::phone: initialFocus=frontier starts on a readable node instead of the whole tree']
+      unit: ['react19-host/src/camera.test.tsx::initialFocus="frontier" centres the leftmost node being worked on (default zoom 0.9)']
 
   any_of_prerequisites:
     - scenario: 'One satisfied alternative makes a node available'
