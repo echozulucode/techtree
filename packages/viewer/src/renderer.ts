@@ -3,6 +3,16 @@ import type { IR } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
 import type { StatusModel } from '@echozedlabs/techtree-state/status-model';
 
+/** Fit options in renderer-neutral form (node ids, not renderer node objects). */
+export interface RendererFitViewOptions {
+  padding?: number;
+  minZoom?: number;
+  maxZoom?: number;
+  duration?: number;
+  nodeIds?: readonly string[];
+  includeHiddenNodes?: boolean;
+}
+
 export interface Viewport {
   x: number;
   y: number;
@@ -49,6 +59,13 @@ export interface RendererProps {
    * Default 'light'.
    */
   colorMode?: 'light' | 'dark';
+  /** Zoom bounds (renderer defaults when omitted). */
+  minZoom?: number;
+  maxZoom?: number;
+  /** Fit options for the "fit view" control (and the initial fit, unless `initialFitViewOptions`). */
+  fitViewOptions?: RendererFitViewOptions;
+  /** Fit options for the initial camera only (e.g. one focused node at a fixed zoom). */
+  initialFitViewOptions?: RendererFitViewOptions;
   /** Node id to center the viewport on (initial focus / state-mutation re-focus). */
   focusOnNodeId: string | null;
   onSelectNode: (id: string) => void;

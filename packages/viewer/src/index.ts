@@ -21,6 +21,8 @@ export type {
   ColorScheme,
   HeadingLevel,
   DrawerElement,
+  TechTreeFitViewOptions,
+  TechTreeInitialFocus,
   NodeDetailContext,
   TechTreeLinkRef,
   LinkRenderContext,

@@ -4,9 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent }
 import type { IR, IRNode } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
 import { capabilityData } from '@echozedlabs/techtree-schema/capability-data';
-import { deriveStatusView, getStatusModel, prerequisiteIndex } from '@echozedlabs/techtree-state/status-model';
+import {
+  deriveStatusView,
+  getStatusModel,
+  pickFrontierNodeId,
+  prerequisiteIndex,
+} from '@echozedlabs/techtree-state/status-model';
 import { BUILT_IN_THEMES, themeById } from '@echozedlabs/techtree-themes';
-import type { Viewport } from '../renderer.js';
+import type { RendererFitViewOptions, Viewport } from '../renderer.js';
 import { ReactFlowRenderer } from '../renderers/react-flow/index.js';
 import { EraBanners } from '../shell/EraBanners.js';
 import { computeRelated, type HighlightDirection } from '../shell/graph.js';
@@ -51,6 +56,11 @@ export function TechTreeView(props: TechTreeViewProps) {
     showStatusFilter = true,
     showViewToggle = true,
     focusNodeId = null,
+    initialFocus,
+    initialZoom,
+    minZoom,
+    maxZoom,
+    fitViewOptions,
     showMiniMap = true,
     showControls = true,
     detailPanel = 'drawer',
@@ -224,6 +234,25 @@ export function TechTreeView(props: TechTreeViewProps) {
     }
   }, [selectedId, drawerShown, focusDetailOnSelect]);
 
+  // Initial camera: fit the whole tree (default), or centre one node — the
+  // frontier or a given id — at `initialZoom`. Computed once, on mount.
+  const [initialFit] = useState<RendererFitViewOptions | undefined>(() => {
+    const base: RendererFitViewOptions | undefined = fitViewOptions ? { ...fitViewOptions } : undefined;
+    let focusId: string | null = null;
+    if (initialFocus === 'frontier') {
+      const leftFirst = [...ir.nodes].sort((a, b) => a.position.x - b.position.x || a.position.y - b.position.y);
+      focusId = pickFrontierNodeId({ ...ir, nodes: leftFirst }, effective);
+    } else if (initialFocus && byId.has(initialFocus)) {
+      focusId = initialFocus;
+    }
+    if (focusId) {
+      const zoom = initialZoom ?? 0.9;
+      return { ...base, nodeIds: [focusId], minZoom: zoom, maxZoom: zoom, includeHiddenNodes: true };
+    }
+    if (initialZoom !== undefined) return { ...base, minZoom: initialZoom, maxZoom: initialZoom };
+    return base;
+  });
+
   // A focus request re-centres the camera once per change.
   const [focusTick, setFocusTick] = useState<string | null>(null);
   useEffect(() => setFocusTick(focusNodeId), [focusNodeId]);
@@ -282,6 +311,10 @@ export function TechTreeView(props: TechTreeViewProps) {
               filterMode={filterMode}
               theme={theme}
               colorMode={colorMode}
+              {...(minZoom !== undefined ? { minZoom } : {})}
+              {...(maxZoom !== undefined ? { maxZoom } : {})}
+              {...(fitViewOptions ? { fitViewOptions } : {})}
+              {...(initialFit ? { initialFitViewOptions: initialFit } : {})}
               focusOnNodeId={focusTick}
               onSelectNode={select}
               onClearSelection={() => select(null)}

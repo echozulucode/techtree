@@ -2,9 +2,21 @@
 // Call once per jsdom test file: `beforeAll(installReactFlowStubs)`.
 export function installReactFlowStubs(): void {
   class ResizeObserverStub {
+    private pending: Element[] = [];
     constructor(private cb: ResizeObserverCallback) {}
     observe(target: Element) {
-      this.cb([{ target } as ResizeObserverEntry], this as unknown as ResizeObserver);
+      // Asynchronous and batched like the real thing: React Flow's initial
+      // fitView runs on the first measurement, which must come after its
+      // pan/zoom is set up and include every node observed so far.
+      if (this.pending.push(target) > 1) return;
+      setTimeout(() => {
+        const targets = this.pending;
+        this.pending = [];
+        this.cb(
+          targets.map((t) => ({ target: t }) as ResizeObserverEntry),
+          this as unknown as ResizeObserver,
+        );
+      }, 0);
     }
     unobserve() {}
     disconnect() {}
@@ -17,17 +29,20 @@ export function installReactFlowStubs(): void {
     }
   }
   Object.assign(globalThis, { ResizeObserver: ResizeObserverStub, DOMMatrixReadOnly: DOMMatrixReadOnlyStub });
+  // Explicit pixel sizes (React Flow nodes) are honoured; anything else
+  // (auto, 100 %) reads as a 1200 × 800 canvas.
+  const px = (v: string, fallback: number): number => (/^[\d.]+px$/.test(v) ? parseFloat(v) : fallback);
   Object.defineProperties(HTMLElement.prototype, {
     offsetHeight: {
       configurable: true,
       get() {
-        return parseFloat((this as HTMLElement).style.height) || 800;
+        return px((this as HTMLElement).style.height, 800);
       },
     },
     offsetWidth: {
       configurable: true,
       get() {
-        return parseFloat((this as HTMLElement).style.width) || 1200;
+        return px((this as HTMLElement).style.width, 1200);
       },
     },
   });

@@ -27,6 +27,28 @@ export type HeadingLevel = 1 | 2 | 3 | 4 | 5;
  */
 export type DrawerElement = 'section' | 'div' | 'aside';
 
+/** Camera fit options (React Flow's fitView options, nodes by id). */
+export interface TechTreeFitViewOptions {
+  /** Padding around the fitted nodes, as a fraction of the viewport (default 0.1). */
+  padding?: number;
+  /** Zoom bounds for the fit (clamped to the view's minZoom / maxZoom). */
+  minZoom?: number;
+  maxZoom?: number;
+  /** Animation duration in ms (0 = jump). */
+  duration?: number;
+  /** Fit only these node ids (default: every node). */
+  nodeIds?: readonly string[];
+  /** Include nodes hidden by a filter when fitting. */
+  includeHiddenNodes?: boolean;
+}
+
+/**
+ * Where the canvas starts: 'frontier' = the first node being worked on
+ * (in progress / investigating), else the first available one, leftmost first;
+ * or a node id.
+ */
+export type TechTreeInitialFocus = 'frontier' | (string & {});
+
 /**
  * An opaque reference the HOST resolves: a capability `link` (`{type, ref,
  * relation}` from the IR) or an `implementation` ref (parsed from
@@ -125,6 +147,25 @@ export interface TechTreeViewProps {
   showViewToggle?: boolean;
   /** Center the camera on this node when it changes. */
   focusNodeId?: string | null;
+  /**
+   * Start centred on a node instead of fitting the whole tree (small screens:
+   * fit-view makes a large tree unreadable). 'frontier' or a node id; unknown
+   * ids fall back to the fit. Read once, on mount.
+   */
+  initialFocus?: TechTreeInitialFocus;
+  /**
+   * Initial zoom. With `initialFocus`: the zoom around that node (default 0.9).
+   * Alone: the whole tree centred at this zoom. Read once, on mount.
+   */
+  initialZoom?: number;
+  /** Zoom bounds of the canvas (defaults 0.04 and 2). */
+  minZoom?: number;
+  maxZoom?: number;
+  /**
+   * Options for the initial fit and the zoom controls' "fit view" button, e.g.
+   * `{ minZoom: 0.5 }` so a phone never starts below 50 %.
+   */
+  fitViewOptions?: TechTreeFitViewOptions;
   showMiniMap?: boolean;
   showControls?: boolean;
 

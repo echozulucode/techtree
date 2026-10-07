@@ -7,10 +7,11 @@ import {
   useReactFlow,
   useViewport,
   type Edge,
+  type FitViewOptions,
   type Node,
 } from '@xyflow/react';
 import { skillStatusModel } from '@echozedlabs/techtree-state/status-model';
-import type { RendererProps } from '../../renderer.js';
+import type { RendererFitViewOptions, RendererProps } from '../../renderer.js';
 import {
   canvasBackground,
   canvasGrid,
@@ -30,6 +31,12 @@ const nodeTypes = { skill: GraphNode, graph: GraphNode, lane: LaneNode };
 /** Horizontal room left of the first column for lane titles (canvas units). */
 const LANE_GUTTER = 190;
 const LANE_PAD_RIGHT = 40;
+
+function toFitViewOptions(o: RendererFitViewOptions | undefined): FitViewOptions | undefined {
+  if (!o) return undefined;
+  const { nodeIds, ...rest } = o;
+  return { ...rest, ...(nodeIds ? { nodes: nodeIds.map((id) => ({ id })) } : {}) };
+}
 
 function ViewportReporter({
   onChange,
@@ -76,7 +83,16 @@ export function ReactFlowRenderer({
   showMiniMap = true,
   showControls = true,
   colorMode = 'light',
+  minZoom = 0.04,
+  maxZoom = 2,
+  fitViewOptions,
+  initialFitViewOptions,
 }: RendererProps) {
+  const fitOptions = useMemo(() => toFitViewOptions(fitViewOptions), [fitViewOptions]);
+  const initialFit = useMemo(
+    () => toFitViewOptions(initialFitViewOptions ?? fitViewOptions),
+    [initialFitViewOptions, fitViewOptions],
+  );
   const irNodeById = useMemo(() => {
     const m = new Map<string, { x: number; y: number; w: number; h: number }>();
     for (const n of ir.nodes) {
@@ -191,8 +207,9 @@ export function ReactFlowRenderer({
       }}
       onPaneClick={() => onClearSelection()}
       fitView
-      minZoom={0.04}
-      maxZoom={2}
+      fitViewOptions={initialFit}
+      minZoom={minZoom}
+      maxZoom={maxZoom}
       nodesDraggable={false}
       nodesConnectable={false}
       proOptions={{ hideAttribution: true }}
@@ -200,7 +217,7 @@ export function ReactFlowRenderer({
       style={{ background: canvasBackground(theme) }}
     >
       <Background color={canvasGrid(theme)} gap={32} />
-      {showControls && <Controls showInteractive={false} />}
+      {showControls && <Controls showInteractive={false} {...(fitOptions ? { fitViewOptions: fitOptions } : {})} />}
       {showMiniMap && (
         <MiniMap
           nodeColor={(n) =>
