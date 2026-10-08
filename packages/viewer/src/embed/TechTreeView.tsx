@@ -11,9 +11,17 @@ import {
   prerequisiteIndex,
 } from '@echozedlabs/techtree-state/status-model';
 import { BUILT_IN_THEMES, themeById } from '@echozedlabs/techtree-themes';
-import type { RendererFitViewOptions, Viewport } from '../renderer.js';
+import type { RendererFitViewOptions, RendererInitialCamera, Viewport } from '../renderer.js';
 import { ReactFlowRenderer } from '../renderers/react-flow/index.js';
+import {
+  AUTO_CAMERA_DEFAULTS,
+  computeAutoCamera,
+  type AutoCameraDecision,
+  type AutoCameraInput,
+} from '../shell/camera.js';
 import { EraBanners } from '../shell/EraBanners.js';
+import { LaneRail } from '../shell/LaneRail.js';
+import { ERA_HEADER_HEIGHT, bandColumn, hasLanes, treeBounds } from '../shell/lane-geometry.js';
 import { computeRelated, type HighlightDirection } from '../shell/graph.js';
 import { useControllable } from '../shell/use-controllable.js';
 import { NodeDetail } from './NodeDetail.js';
@@ -33,6 +41,12 @@ export function resolveTheme(theme: Theme | string | undefined, ir: IR): Theme {
 }
 
 const NO_FILTER: readonly string[] | null = null;
+
+/** The frontier ('frontier' / 'auto'): in progress / investigating, else available — leftmost first. */
+function leftmostFrontierId(ir: IR, effective: ReadonlyMap<string, string>): string | null {
+  const leftFirst = [...ir.nodes].sort((a, b) => a.position.x - b.position.x || a.position.y - b.position.y);
+  return pickFrontierNodeId({ ...ir, nodes: leftFirst }, effective);
+}
 
 /**
  * Embeddable, read-only TechTree view for host applications (React 18 / 19,
@@ -58,6 +72,7 @@ export function TechTreeView(props: TechTreeViewProps) {
     focusNodeId = null,
     initialFocus,
     initialZoom,
+    readableZoom,
     minZoom,
     maxZoom,
     fitViewOptions,
@@ -236,12 +251,13 @@ export function TechTreeView(props: TechTreeViewProps) {
 
   // Initial camera: fit the whole tree (default), or centre one node — the
   // frontier or a given id — at `initialZoom`. Computed once, on mount.
+  // 'auto' is resolved against the canvas size by the renderer (below).
   const [initialFit] = useState<RendererFitViewOptions | undefined>(() => {
     const base: RendererFitViewOptions | undefined = fitViewOptions ? { ...fitViewOptions } : undefined;
+    if (initialFocus === 'auto') return base;
     let focusId: string | null = null;
     if (initialFocus === 'frontier') {
-      const leftFirst = [...ir.nodes].sort((a, b) => a.position.x - b.position.x || a.position.y - b.position.y);
-      focusId = pickFrontierNodeId({ ...ir, nodes: leftFirst }, effective);
+      focusId = leftmostFrontierId(ir, effective);
     } else if (initialFocus && byId.has(initialFocus)) {
       focusId = initialFocus;
     }
@@ -252,6 +268,46 @@ export function TechTreeView(props: TechTreeViewProps) {
     if (initialZoom !== undefined) return { ...base, minZoom: initialZoom, maxZoom: initialZoom };
     return base;
   });
+
+  // initialFocus="auto" (ADR-0009): fit the whole tree when that is readable,
+  // else the frontier's era at `initialZoom`, lane titles and era header in
+  // view. The tree geometry and the frontier are read once, on mount; the
+  // renderer re-applies the decision when the canvas is resized, until the
+  // reader moves the camera.
+  const eraHeader = theme.eras?.show_labels !== false && ir.nodes.some((n) => n.band);
+  const [autoInputs] = useState<Omit<AutoCameraInput, 'container'> | null>(() => {
+    if (initialFocus !== 'auto') return null;
+    const frontierId = leftmostFrontierId(ir, effective);
+    const fn = frontierId ? byId.get(frontierId) : undefined;
+    const nodeRect = fn
+      ? { x: fn.position.x, y: fn.position.y, width: fn.size.width, height: fn.size.height }
+      : null;
+    return {
+      bounds: treeBounds(ir),
+      focusColumn: fn
+        ? (bandColumn(ir, fn.band) ?? { left: nodeRect!.x, right: nodeRect!.x + nodeRect!.width })
+        : null,
+      focusNode: nodeRect,
+      readableZoom: readableZoom ?? AUTO_CAMERA_DEFAULTS.readableZoom,
+      focusZoom: initialZoom ?? AUTO_CAMERA_DEFAULTS.focusZoom,
+      minZoom: minZoom ?? 0.04,
+      maxZoom: maxZoom ?? 2,
+      fitMaxZoom: fitViewOptions?.maxZoom ?? AUTO_CAMERA_DEFAULTS.fitMaxZoom,
+      headerHeight: eraHeader ? ERA_HEADER_HEIGHT : 0,
+      laneRail: hasLanes(ir),
+    };
+  });
+  const [camera, setCamera] = useState<AutoCameraDecision | null>(null);
+  const resolveCamera = useCallback<RendererInitialCamera>(
+    (container) => {
+      const decision = computeAutoCamera({ ...autoInputs!, container });
+      setCamera(decision);
+      return decision.viewport;
+    },
+    [autoInputs],
+  );
+  // Overlays follow the viewport; with 'auto' they wait for the first camera.
+  const overlaysReady = autoInputs === null || camera !== null;
 
   // A focus request re-centres the camera once per change.
   const [focusTick, setFocusTick] = useState<string | null>(null);
@@ -269,6 +325,13 @@ export function TechTreeView(props: TechTreeViewProps) {
       data-testid="techtree-view"
       data-profile={ir.tree.profile ?? 'skill'}
       data-theme-id={theme.id}
+      {...(camera
+        ? {
+            'data-camera': camera.mode,
+            'data-camera-anchor': camera.anchor,
+            'data-camera-fit-zoom': camera.fitZoom.toFixed(3),
+          }
+        : {})}
       role="region"
       aria-label={ariaLabel ?? ir.tree.title}
       style={style}
@@ -315,6 +378,7 @@ export function TechTreeView(props: TechTreeViewProps) {
               {...(maxZoom !== undefined ? { maxZoom } : {})}
               {...(fitViewOptions ? { fitViewOptions } : {})}
               {...(initialFit ? { initialFitViewOptions: initialFit } : {})}
+              {...(autoInputs ? { initialCamera: resolveCamera } : {})}
               focusOnNodeId={focusTick}
               onSelectNode={select}
               onClearSelection={() => select(null)}
@@ -322,7 +386,8 @@ export function TechTreeView(props: TechTreeViewProps) {
               showMiniMap={showMiniMap}
               showControls={showControls}
             />
-            <EraBanners ir={ir} theme={theme} viewport={viewport} />
+            {overlaysReady && <EraBanners ir={ir} theme={theme} viewport={viewport} />}
+            {overlaysReady && <LaneRail ir={ir} viewport={viewport} />}
           </div>
         ) : (
           <TechTreeOutline

@@ -1,6 +1,7 @@
 import type { IR } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
 import type { Viewport } from '../renderer.js';
+import { ERA_HEADER_HEIGHT } from './lane-geometry.js';
 import { eraLabelColor, fontFamily } from './theme-utils.js';
 
 export interface EraBannersProps {
@@ -62,7 +63,7 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
         top: 0,
         left: 0,
         right: 0,
-        height: 44,
+        height: ERA_HEADER_HEIGHT,
         pointerEvents: 'none',
         zIndex: 5,
         overflow: 'hidden',
@@ -93,12 +94,27 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
               borderBottom: `1px solid ${color}33`,
               opacity: viewport.zoom > 0.15 ? 1 : 0.4,
               whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              // clip, not hidden: no scroll container, so the title below
+              // sticks to the edges of the header row, not of its own box.
+              overflow: 'clip',
               paddingTop: 4,
             }}
           >
-            {era.title ?? era.id}
+            {/* Sticky: a column cut by the canvas edge keeps its title in view. */}
+            <span
+              style={{
+                position: 'sticky',
+                left: 8,
+                right: 8,
+                display: 'inline-block',
+                maxWidth: '100%',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                verticalAlign: 'top',
+              }}
+            >
+              {era.title ?? era.id}
+            </span>
           </div>
         );
       })}

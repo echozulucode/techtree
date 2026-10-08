@@ -43,11 +43,17 @@ export interface TechTreeFitViewOptions {
 }
 
 /**
- * Where the canvas starts: 'frontier' = the first node being worked on
- * (in progress / investigating), else the first available one, leftmost first;
- * or a node id.
+ * Where the canvas starts:
+ * - 'auto' = the whole tree when it fits the canvas at `readableZoom` or more
+ *   (top-aligned under the era header); otherwise `initialZoom` (default 0.8)
+ *   with the lane titles and the era header in view, left-aligned at the era
+ *   column of the frontier. Re-applied when the canvas is resized until the
+ *   reader moves the camera (ADR-0009);
+ * - 'frontier' = centre the first node being worked on (in progress /
+ *   investigating), else the first available one, leftmost first;
+ * - a node id = centre that node.
  */
-export type TechTreeInitialFocus = 'frontier' | (string & {});
+export type TechTreeInitialFocus = 'auto' | 'frontier' | (string & {});
 
 /**
  * An opaque reference the HOST resolves: a capability `link` (`{type, ref,
@@ -148,22 +154,32 @@ export interface TechTreeViewProps {
   /** Center the camera on this node when it changes. */
   focusNodeId?: string | null;
   /**
-   * Start centred on a node instead of fitting the whole tree (small screens:
-   * fit-view makes a large tree unreadable). 'frontier' or a node id; unknown
-   * ids fall back to the fit. Read once, on mount.
+   * Initial camera instead of fitting the whole tree (the default): 'auto'
+   * (recommended: fit when readable, else the frontier's era with lane titles
+   * and era header in view), 'frontier' or a node id (centred). Unknown ids
+   * fall back to the fit. Read once, on mount.
    */
   initialFocus?: TechTreeInitialFocus;
   /**
-   * Initial zoom. With `initialFocus`: the zoom around that node (default 0.9).
-   * Alone: the whole tree centred at this zoom. Read once, on mount.
+   * Initial zoom. With `initialFocus="auto"`: the zoom when the tree does not
+   * fit readably (default 0.8). With 'frontier' / a node id: the zoom around
+   * that node (default 0.9). Alone: the whole tree centred at this zoom. Read
+   * once, on mount.
    */
   initialZoom?: number;
+  /**
+   * `initialFocus="auto"` only: the smallest zoom at which fitting the whole
+   * tree counts as readable (default 0.6). Read once, on mount.
+   */
+  readableZoom?: number;
   /** Zoom bounds of the canvas (defaults 0.04 and 2). */
   minZoom?: number;
   maxZoom?: number;
   /**
    * Options for the initial fit and the zoom controls' "fit view" button, e.g.
-   * `{ minZoom: 0.5 }` so a phone never starts below 50 %.
+   * `{ minZoom: 0.5 }` so a phone never starts below 50 %. With
+   * `initialFocus="auto"` only `maxZoom` applies to the initial camera (cap of
+   * a fitted small tree, default 1); the rest drive the fit button.
    */
   fitViewOptions?: TechTreeFitViewOptions;
   showMiniMap?: boolean;

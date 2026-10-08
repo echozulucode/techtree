@@ -1,17 +1,19 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import {
   Background,
   Controls,
   MiniMap,
   ReactFlow,
   useReactFlow,
+  useStore,
   useViewport,
   type Edge,
   type FitViewOptions,
   type Node,
 } from '@xyflow/react';
 import { skillStatusModel } from '@echozedlabs/techtree-state/status-model';
-import type { RendererFitViewOptions, RendererProps } from '../../renderer.js';
+import type { RendererFitViewOptions, RendererInitialCamera, RendererProps } from '../../renderer.js';
+import { laneSpan } from '../../shell/lane-geometry.js';
 import {
   canvasBackground,
   canvasGrid,
@@ -27,10 +29,6 @@ import { GraphNode, LaneNode, type GraphNodeData, type LaneNodeData } from './Gr
 // CSS imports (SSR / Node ESM safe). Hosts import the stylesheet once.
 
 const nodeTypes = { skill: GraphNode, graph: GraphNode, lane: LaneNode };
-
-/** Horizontal room left of the first column for lane titles (canvas units). */
-const LANE_GUTTER = 190;
-const LANE_PAD_RIGHT = 40;
 
 function toFitViewOptions(o: RendererFitViewOptions | undefined): FitViewOptions | undefined {
   if (!o) return undefined;
@@ -53,17 +51,62 @@ function ViewportReporter({
 function FocusOnNode({
   nodeId,
   irNodeById,
+  onFocus,
 }: {
   nodeId: string | null;
   irNodeById: Map<string, { x: number; y: number; w: number; h: number }>;
+  onFocus: () => void;
 }) {
   const rf = useReactFlow();
   useEffect(() => {
     if (!nodeId) return;
     const n = irNodeById.get(nodeId);
     if (!n) return;
+    onFocus();
     void rf.setCenter(n.x + n.w / 2, n.y + n.h / 2, { zoom: 0.9, duration: 400 });
-  }, [nodeId, irNodeById, rf]);
+  }, [nodeId, irNodeById, rf, onFocus]);
+  return null;
+}
+
+/** Events that mean "the reader is driving the camera now" (canvas, minimap, controls, keyboard). */
+const INTERACTION_EVENTS = ['pointerdown', 'wheel', 'touchstart', 'keydown', 'focusin'] as const;
+
+/**
+ * Applies `resolve(container size)` as the viewport once the canvas has a
+ * size, and again whenever that size changes — until the reader interacts
+ * with the canvas (or a focus request moves the camera). After that the
+ * camera is never moved by a resize.
+ */
+function InitialCamera({
+  resolve,
+  takenOver,
+  onApplied,
+}: {
+  resolve: RendererInitialCamera;
+  takenOver: MutableRefObject<boolean>;
+  onApplied: () => void;
+}) {
+  const rf = useReactFlow();
+  const width = useStore((s) => s.width);
+  const height = useStore((s) => s.height);
+  const domNode = useStore((s) => s.domNode);
+
+  useEffect(() => {
+    if (!domNode) return;
+    const mark = () => {
+      takenOver.current = true;
+    };
+    for (const type of INTERACTION_EVENTS) domNode.addEventListener(type, mark, { capture: true, passive: true });
+    return () => {
+      for (const type of INTERACTION_EVENTS) domNode.removeEventListener(type, mark, { capture: true });
+    };
+  }, [domNode, takenOver]);
+
+  useEffect(() => {
+    if (takenOver.current || width <= 0 || height <= 0) return;
+    void rf.setViewport(resolve({ width, height }));
+    onApplied();
+  }, [width, height, resolve, rf, takenOver, onApplied]);
   return null;
 }
 
@@ -87,7 +130,17 @@ export function ReactFlowRenderer({
   maxZoom = 2,
   fitViewOptions,
   initialFitViewOptions,
+  initialCamera,
 }: RendererProps) {
+  // `initialCamera` replaces the initial fit; the canvas stays transparent
+  // until it has been applied (no flash of the default viewport).
+  const cameraTakenOver = useRef(false);
+  const [cameraApplied, setCameraApplied] = useState(false);
+  const onCameraApplied = useCallback(() => setCameraApplied(true), []);
+  const onFocusRequest = useCallback(() => {
+    cameraTakenOver.current = true;
+  }, []);
+
   const fitOptions = useMemo(() => toFitViewOptions(fitViewOptions), [fitViewOptions]);
   const initialFit = useMemo(
     () => toFitViewOptions(initialFitViewOptions ?? fitViewOptions),
@@ -105,15 +158,9 @@ export function ReactFlowRenderer({
   // hide, so filtering keeps every branch in place.
   const laneNodes = useMemo<Node<LaneNodeData>[]>(() => {
     const lanes = ir.tracks.filter((t) => t.lane);
-    if (lanes.length === 0 || ir.nodes.length === 0) return [];
-    let minX = Infinity;
-    let maxX = -Infinity;
-    for (const n of ir.nodes) {
-      minX = Math.min(minX, n.position.x);
-      maxX = Math.max(maxX, n.position.x + n.size.width);
-    }
-    const x = minX - LANE_GUTTER;
-    const width = maxX - x + LANE_PAD_RIGHT;
+    const span = laneSpan(ir);
+    if (lanes.length === 0 || !span) return [];
+    const { x, width } = span;
     return lanes
       .slice()
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
@@ -127,7 +174,7 @@ export function ReactFlowRenderer({
         draggable: false,
         selectable: false,
         focusable: false,
-        data: { title: t.title ?? t.id, ...(t.color ? { color: t.color } : {}), theme },
+        data: { title: t.title ?? t.id, trackId: t.id, ...(t.color ? { color: t.color } : {}), theme },
       }));
   }, [ir, theme]);
 
@@ -206,8 +253,9 @@ export function ReactFlowRenderer({
         else onSelectNode(node.id);
       }}
       onPaneClick={() => onClearSelection()}
-      fitView
-      fitViewOptions={initialFit}
+      fitView={!initialCamera}
+      {...(initialCamera ? {} : { fitViewOptions: initialFit })}
+      {...(initialCamera && !cameraApplied ? { className: 'tt-camera-pending' } : {})}
       minZoom={minZoom}
       maxZoom={maxZoom}
       nodesDraggable={false}
@@ -232,7 +280,10 @@ export function ReactFlowRenderer({
         />
       )}
       <ViewportReporter onChange={onViewportChange} />
-      <FocusOnNode nodeId={focusOnNodeId} irNodeById={irNodeById} />
+      <FocusOnNode nodeId={focusOnNodeId} irNodeById={irNodeById} onFocus={onFocusRequest} />
+      {initialCamera && (
+        <InitialCamera resolve={initialCamera} takenOver={cameraTakenOver} onApplied={onCameraApplied} />
+      )}
     </ReactFlow>
   );
 }

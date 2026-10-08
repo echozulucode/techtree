@@ -33,15 +33,23 @@ export { App } from './App.js';
 export { SidePanel } from './shell/SidePanel.js';
 export { Toolbar } from './shell/Toolbar.js';
 export { EraBanners } from './shell/EraBanners.js';
+export { LaneRail, laneRailLabels, type LaneRailLabel, type LaneRailProps } from './shell/LaneRail.js';
 export { FilterChips, type FilterValue } from './shell/FilterChips.js';
 
 // Helpers
 export { computeRelated, type HighlightDirection, type RelatedSets } from './shell/graph.js';
 export { statusColor, statusLabel, statusIconName, statusVisual, onStatusColor } from './shell/status-style.js';
 export { STATUS_ICONS, KIND_ICONS, statusIcon } from './shell/status-icons.js';
+export {
+  AUTO_CAMERA_DEFAULTS,
+  computeAutoCamera,
+  type AutoCameraDecision,
+  type AutoCameraInput,
+} from './shell/camera.js';
+export { bandColumn, laneRailWidth, treeBounds, type Rect } from './shell/lane-geometry.js';
 
 // Renderer contract
 export { DEFAULT_RENDERER_ID, RENDERERS } from './renderers/index.js';
 export { ReactFlowRenderer } from './renderers/react-flow/index.js';
 export { GraphNode, SkillNode, type GraphNodeData, type SkillNodeData } from './renderers/react-flow/GraphNode.js';
-export type { Renderer, RendererInfo, RendererProps, Viewport } from './renderer.js';
+export type { Renderer, RendererInfo, RendererInitialCamera, RendererProps, Viewport } from './renderer.js';

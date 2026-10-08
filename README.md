@@ -115,8 +115,8 @@ export function CapabilityMap({ ir, states }: { ir: IR; states: Record<string, {
         theme="css-variables"                     // map your tokens onto --techtree-* variables
         colorScheme={resolvedTheme}               // 'light' | 'dark' | 'system'
         headingLevel={2}                          // drawer / outline headings continue the page outline
-        initialFocus="frontier"                   // phones: start on the frontier, not the whole tree
-        fitViewOptions={{ minZoom: 0.35 }}
+        initialFocus={nodeFromUrl ?? 'auto'}      // whole tree if readable, else the frontier's era with lane titles in view
+        fitViewOptions={{ minZoom: 0.35 }}        // the fit button never goes below 35 %
         onSelectNode={(id) => router.push(`?node=${id}`)}
         renderLink={(link) =>                     // resolve opaque links; null = withhold (not shown, not counted)
           link.type === 'example' ? <Link href={`/examples/${link.ref}`}>{titles[link.ref]}</Link> : null}
@@ -141,8 +141,14 @@ export function CapabilityMap({ ir, states }: { ir: IR; states: Record<string, {
 | `headingLevel?` (1–5, default 3) | drawer title and outline branch headings; sub-headings use the next level (also `ctx.headingLevel` / `<NodeDetail headingLevel>`) |
 | `focusDetailOnSelect?` (default `true`) | selecting inside the view moves focus to the drawer heading; closing returns it; Escape closes |
 | `focusNodeId?`, `showMiniMap?`, `showControls?` | camera and chrome |
-| `initialFocus?` (`'frontier'` \| node id), `initialZoom?` | initial camera: centre the frontier (in progress / investigating, else available; leftmost first) or a node at `initialZoom` (default 0.9); `initialZoom` alone = whole tree at that zoom |
-| `minZoom?`, `maxZoom?` (0.04 / 2), `fitViewOptions?` (`padding`, `minZoom`, `maxZoom`, `duration`, `nodeIds`, `includeHiddenNodes`) | zoom bounds; options for the initial fit and the fit button |
+| `initialFocus?` (`'auto'` \| `'frontier'` \| node id), `initialZoom?`, `readableZoom?` | initial camera; omitted = fit the whole tree (as in 0.2). **`'auto'` (recommended):** fit the whole tree when that zoom is ≥ `readableZoom` (default 0.6) — top-aligned under the era header, at most 100 % (`fitViewOptions.maxZoom`); otherwise `initialZoom` (default 0.8) top-aligned at the first lane, left-aligned at the lane titles, or — when the frontier's era column does not fit beside them — at that column with the titles pinned in a rail. Re-applied when the canvas is resized until the reader pans / zooms / clicks / uses the keyboard in it, never after ([ADR-0009](design/adr/0009-auto-initial-camera.md)). `'frontier'` / node id: centre the frontier (in progress / investigating, else available; leftmost first) or that node at `initialZoom` (default 0.9). `initialZoom` alone = whole tree at that zoom |
+| `minZoom?`, `maxZoom?` (0.04 / 2), `fitViewOptions?` (`padding`, `minZoom`, `maxZoom`, `duration`, `nodeIds`, `includeHiddenNodes`) | zoom bounds; options for the initial fit and the fit button (with `'auto'` only `maxZoom` applies to the initial camera) |
+
+Lane titles stay readable while panning: when the lane-title gutter scrolls off the left
+edge, the titles are pinned in a rail (`.tt-lane-rail`, 24 % of the canvas, 96–168 px; the
+counterpart of the pinned era header). The rail is decorative (`aria-hidden`); hide it with
+`.techtree-root .tt-lane-rail { display: none }` if you must. The decision behind `'auto'`
+is exported as a pure function, `computeAutoCamera()`, with `treeBounds()` / `bandColumn()`.
 
 The entry is a `'use client'` module with no `window`/`document` access at import time and
 no CSS imports (the stylesheet is a separate export). Server-side helpers —
@@ -180,7 +186,7 @@ Override a status fill (`--techtree-status-<status>`) or the accent → override
 `doc-map.yaml` (root) indexes where authoritative information lives.
 
 - **What it is** — [`docs/overview.md`](docs/overview.md): boundaries, tech stack, capabilities.
-- **Decisions** — [`design/adr/`](design/adr/README.md): renderer, profile seam, server store, licensing, versioning, any-of groups, embeddable viewer, accessible embedding.
+- **Decisions** — [`design/adr/`](design/adr/README.md): renderer, profile seam, server store, licensing, versioning, any-of groups, embeddable viewer, accessible embedding, auto camera.
 - **Conventions & runbook** — [`docs/techtree-extraction.md`](docs/techtree-extraction.md): toolchain, CI/release + publishing runbook, testing strategy.
 - **Living docs** — [`features/`](features/README.md): Gherkin specs executed by Playwright (`@unit` ones by unit tests).
 - `ai/` is a low-authority scratch area for AI-generated drafts.
