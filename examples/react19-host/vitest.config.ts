@@ -9,5 +9,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     include: ['src/**/*.test.{ts,tsx}'],
+    // axe-core in jsdom takes ~2–4 s per run; under `pnpm -r test` on a 2-CPU
+    // machine it shares the cores with every other package and passed the 5 s
+    // default (and a timed-out run then leaves axe "already running").
+    testTimeout: 20_000,
   },
 });
