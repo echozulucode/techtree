@@ -17,6 +17,12 @@ export interface IRTree {
   version?: string;
   description?: string;
   default_theme?: string;
+  /**
+   * Id of the profile that compiled this IR (e.g. 'skill', 'delivery',
+   * 'capability'). Lets consumers pick the matching status model and detail
+   * presentation without guessing from `data`. Additive since 0.2.
+   */
+  profile?: string;
 }
 
 export interface IRNode {
@@ -53,6 +59,16 @@ export interface IREdge {
   from: string;
   to: string;
   kind: 'requires' | 'recommends';
+  /**
+   * Any-of group id, scoped to the edge's `to` node (only on `requires` edges).
+   *
+   * `requires` edges into the same node that share a `group` form a
+   * disjunction — satisfying ONE member satisfies the group. `requires` edges
+   * without a `group` are each individually required (conjunction). A node's
+   * prerequisites are met when every ungrouped prerequisite and at least one
+   * member of every group is satisfied. See ADR-0006. Additive since 0.2.
+   */
+  group?: string;
 }
 
 export interface IRBand {
@@ -65,6 +81,16 @@ export interface IRTrack {
   id: string;
   title?: string;
   description?: string;
+  /** Declared position of the track in tree.yaml (0-based). Additive since 0.2. */
+  order?: number;
+  /** Optional author colour for the track's lane / chip (any CSS colour). */
+  color?: string;
+  /**
+   * Swimlane geometry, present when the tree opts into lane layout
+   * (`layout.lanes: true`): every node on this track sits inside
+   * [y, y + height) in canvas coordinates.
+   */
+  lane?: { y: number; height: number };
 }
 
 export interface IRMeta {

@@ -1,0 +1,535 @@
+/*
+ * @echozedlabs/techtree-viewer stylesheet.
+ *
+ * Import once in the host: `import '@echozedlabs/techtree-viewer/style.css'`.
+ * The published file inlines React Flow's base stylesheet; this source file
+ * pulls it in with @import for the dev servers.
+ *
+ * Everything is scoped to `.techtree-root` and driven by CSS custom properties,
+ * so a host maps its own tokens:
+ *
+ *   .techtree-root { --techtree-canvas-bg: var(--background); --techtree-accent: var(--primary); }
+ *
+ * `data-color-scheme` on the root (from the `colorScheme` prop) picks the
+ * light or dark defaults; 'system' follows a `.dark` / `.light` class on an
+ * ancestor (e.g. next-themes), else prefers-color-scheme.
+ *
+ * Every default text / background pair below meets WCAG 2.2 AA (4.5:1) in both
+ * schemes — the viewer's contrast test checks them. When you override a status
+ * fill (--techtree-status-<id>) or the accent, override its on-colour too
+ * (--techtree-on-status-<id>, --techtree-on-accent).
+ *
+ * Private defaults (--tt-*) are internal: set the public --techtree-* names.
+ *   --techtree-on-status-<id>  text/icon on a status fill (pill, pressed chip,
+ *                              node badge); falls back to the legacy single
+ *                              --techtree-on-status, then the AA default
+ *   --techtree-on-accent       text on the accent (pressed "All" chip, pressed
+ *                              segmented buttons)
+ *   --techtree-dim-node-bg / -node-text / -node-border / -opacity / -filter,
+ *   --techtree-dim-edge-opacity
+ *                              nodes off the highlighted path (and nodes dimmed
+ *                              by filterMode 'dim'); defaults derive from the
+ *                              theme's canvas / node colours (AA), opacity 1
+ */
+@import '@xyflow/react/dist/style.css';
+
+.techtree-root {
+  /* graph (used by the 'css-variables' theme) */
+  --techtree-canvas-bg: #f7f6f2;
+  --techtree-canvas-grid: #e4e1d8;
+  --techtree-node-bg: #ffffff;
+  --techtree-node-border: #c9c4b5;
+  --techtree-node-text: #1f2430;
+  --techtree-node-shadow: rgba(30, 30, 40, 0.12);
+  --techtree-edge: #8a8f9c;
+  --techtree-edge-soft: #7aa7d9;
+  --techtree-edge-label: #5c6270;
+  --techtree-accent: #d08a00;
+  --techtree-era-label: #5c6270;
+  --techtree-era-banner-bg: linear-gradient(to bottom, rgba(247, 246, 242, 0.95), rgba(247, 246, 242, 0));
+  --techtree-kind-capability: #ffffff;
+  --techtree-kind-milestone: #fff4d6;
+  --techtree-kind-wonder: #f1e6fa;
+  --techtree-lane-tint: 9%;
+  --techtree-badge-ring: #ffffff;
+  --techtree-minimap-mask: rgba(240, 238, 230, 0.7);
+  /* statuses (fills) */
+  --techtree-status-locked: #a3a7b0;
+  --techtree-status-available: #3a76c0;
+  --techtree-status-not_started: #8a8f9c;
+  --techtree-status-investigating: #3a76c0;
+  --techtree-status-demonstrated: #1d8082;
+  --techtree-status-operational: #4a8237;
+  --techtree-status-strategic_standard: #c08a00;
+  --techtree-status-legacy: #ad6227;
+  --techtree-status-retiring: #b24a4a;
+  --techtree-status-in_progress: #b8862a;
+  --techtree-status-submitted: #a2673a;
+  --techtree-status-pending_approval: #a68f1f;
+  --techtree-status-achieved: #4a8237;
+  --techtree-status-rejected: #b24a4a;
+  /* AA on-colours for the default fills (override: --techtree-on-status-<id>) */
+  --tt-on-status-default: #ffffff;
+  --tt-on-status-locked: #14171f;
+  --tt-on-status-available: #ffffff;
+  --tt-on-status-not_started: #14171f;
+  --tt-on-status-investigating: #ffffff;
+  --tt-on-status-demonstrated: #ffffff;
+  --tt-on-status-operational: #ffffff;
+  --tt-on-status-strategic_standard: #14171f;
+  --tt-on-status-legacy: #ffffff;
+  --tt-on-status-retiring: #ffffff;
+  --tt-on-status-in_progress: #14171f;
+  --tt-on-status-submitted: #ffffff;
+  --tt-on-status-pending_approval: #14171f;
+  --tt-on-status-achieved: #ffffff;
+  --tt-on-status-rejected: #ffffff;
+  --tt-on-accent: #14171f;
+  /* chrome (toolbar, drawer, outline) */
+  --techtree-panel-bg: #ffffff;
+  --techtree-panel-text: #1f2430;
+  --techtree-panel-muted: #646a78;
+  --techtree-panel-border: #dcd8cc;
+  --techtree-chip-bg: #f1efe8;
+  --techtree-link: #2f6db3;
+  --techtree-focus: #2f6db3;
+  --techtree-font: inherit;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  color: var(--techtree-panel-text);
+  font-family: var(--techtree-font);
+  background: var(--techtree-canvas-bg);
+}
+
+/* dark defaults: colorScheme 'dark', or 'system' under a `.dark` host class */
+.techtree-root[data-color-scheme='dark'],
+:where(.dark) .techtree-root[data-color-scheme='system'] {
+  --techtree-canvas-bg: #161a24;
+  --techtree-canvas-grid: #232937;
+  --techtree-node-bg: #232a38;
+  --techtree-node-border: #3a4356;
+  --techtree-node-text: #e8e6df;
+  --techtree-node-shadow: rgba(0, 0, 0, 0.45);
+  --techtree-edge: #7d8799;
+  --techtree-edge-soft: #5aa9e6;
+  --techtree-edge-label: #b8bccb;
+  --techtree-accent: #f2c94c;
+  --techtree-era-label: #d9c977;
+  --techtree-era-banner-bg: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  --techtree-kind-capability: #263045;
+  --techtree-kind-milestone: #3d3420;
+  --techtree-kind-wonder: #342640;
+  --techtree-lane-tint: 12%;
+  --techtree-badge-ring: #161a24;
+  --techtree-minimap-mask: rgba(20, 25, 40, 0.7);
+  --techtree-status-locked: #4a5262;
+  --techtree-status-available: #8fb8e8;
+  --techtree-status-not_started: #7d8597;
+  --techtree-status-investigating: #6d8fc4;
+  --techtree-status-demonstrated: #4fa3a5;
+  --techtree-status-operational: #6fae5d;
+  --techtree-status-strategic_standard: #e0b84c;
+  --techtree-status-legacy: #c4865a;
+  --techtree-status-retiring: #b5545c;
+  --tt-on-status-default: #14171f;
+  --tt-on-status-locked: #ffffff;
+  --tt-on-status-available: #14171f;
+  --tt-on-status-not_started: #14171f;
+  --tt-on-status-investigating: #14171f;
+  --tt-on-status-demonstrated: #14171f;
+  --tt-on-status-operational: #14171f;
+  --tt-on-status-strategic_standard: #14171f;
+  --tt-on-status-legacy: #14171f;
+  --tt-on-status-retiring: #ffffff;
+  --tt-on-accent: #14171f;
+  --techtree-panel-bg: #1e2330;
+  --techtree-panel-text: #e8e6df;
+  --techtree-panel-muted: #9aa0ae;
+  --techtree-panel-border: #343b4c;
+  --techtree-chip-bg: #262c3a;
+  --techtree-link: #7cb6f0;
+  --techtree-focus: #7cb6f0;
+}
+
+/* 'system' without a host class: prefers-color-scheme (a `.light` ancestor wins) */
+@media (prefers-color-scheme: dark) {
+  .techtree-root[data-color-scheme='system']:not(:where(.light) *) {
+    --techtree-canvas-bg: #161a24;
+    --techtree-canvas-grid: #232937;
+    --techtree-node-bg: #232a38;
+    --techtree-node-border: #3a4356;
+    --techtree-node-text: #e8e6df;
+    --techtree-node-shadow: rgba(0, 0, 0, 0.45);
+    --techtree-edge: #7d8799;
+    --techtree-edge-soft: #5aa9e6;
+    --techtree-edge-label: #b8bccb;
+    --techtree-accent: #f2c94c;
+    --techtree-era-label: #d9c977;
+    --techtree-era-banner-bg: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+    --techtree-kind-capability: #263045;
+    --techtree-kind-milestone: #3d3420;
+    --techtree-kind-wonder: #342640;
+    --techtree-lane-tint: 12%;
+    --techtree-badge-ring: #161a24;
+    --techtree-minimap-mask: rgba(20, 25, 40, 0.7);
+    --techtree-status-locked: #4a5262;
+    --techtree-status-available: #8fb8e8;
+    --techtree-status-not_started: #7d8597;
+    --techtree-status-investigating: #6d8fc4;
+    --techtree-status-demonstrated: #4fa3a5;
+    --techtree-status-operational: #6fae5d;
+    --techtree-status-strategic_standard: #e0b84c;
+    --techtree-status-legacy: #c4865a;
+    --techtree-status-retiring: #b5545c;
+    --tt-on-status-default: #14171f;
+    --tt-on-status-locked: #ffffff;
+    --tt-on-status-available: #14171f;
+    --tt-on-status-not_started: #14171f;
+    --tt-on-status-investigating: #14171f;
+    --tt-on-status-demonstrated: #14171f;
+    --tt-on-status-operational: #14171f;
+    --tt-on-status-strategic_standard: #14171f;
+    --tt-on-status-legacy: #14171f;
+    --tt-on-status-retiring: #ffffff;
+    --tt-on-accent: #14171f;
+    --techtree-panel-bg: #1e2330;
+    --techtree-panel-text: #e8e6df;
+    --techtree-panel-muted: #9aa0ae;
+    --techtree-panel-border: #343b4c;
+    --techtree-chip-bg: #262c3a;
+    --techtree-link: #7cb6f0;
+    --techtree-focus: #7cb6f0;
+  }
+}
+
+.techtree-root :focus-visible {
+  outline: 2px solid var(--techtree-focus);
+  outline-offset: 2px;
+}
+
+/* ---- toolbar ---------------------------------------------------------- */
+.techtree-root .tt-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--techtree-panel-bg);
+  border-bottom: 1px solid var(--techtree-panel-border);
+  z-index: 25;
+}
+
+.techtree-root .tt-status-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.techtree-root .tt-chip {
+  --tt-chip-color: var(--techtree-accent);
+  --tt-chip-on: var(--techtree-on-accent, var(--tt-on-accent));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px; /* WCAG 2.5.8 target size */
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--techtree-panel-border);
+  background: var(--techtree-chip-bg);
+  color: var(--techtree-panel-text);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.techtree-root .tt-chip svg {
+  color: var(--tt-chip-color);
+}
+.techtree-root .tt-chip[aria-pressed='true'] {
+  background: var(--tt-chip-color);
+  border-color: var(--tt-chip-color);
+  color: var(--tt-chip-on);
+}
+.techtree-root .tt-chip[aria-pressed='true'] svg {
+  color: inherit;
+}
+.techtree-root .tt-chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.techtree-root .tt-chip-count {
+  /* full-colour text (an opacity here fails AA on pressed fills) */
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.techtree-root .tt-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tt-chip-color);
+}
+
+.techtree-root .tt-segmented {
+  display: inline-flex;
+  border: 1px solid var(--techtree-panel-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.techtree-root .tt-segmented button {
+  font: inherit;
+  font-size: 12px;
+  min-height: 24px;
+  padding: 3px 10px;
+  border: 0;
+  background: var(--techtree-chip-bg);
+  color: var(--techtree-panel-text);
+  cursor: pointer;
+}
+.techtree-root .tt-segmented button + button {
+  border-left: 1px solid var(--techtree-panel-border);
+}
+.techtree-root .tt-segmented button[aria-pressed='true'] {
+  background: var(--techtree-accent);
+  color: var(--techtree-on-accent, var(--tt-on-accent));
+}
+
+/* ---- body / canvas ---------------------------------------------------- */
+.techtree-root .tt-body {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+.techtree-root .tt-canvas {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.techtree-root .react-flow__controls button {
+  background: var(--techtree-panel-bg);
+  color: var(--techtree-panel-text);
+  border-bottom-color: var(--techtree-panel-border);
+  fill: currentColor;
+}
+
+/* ---- drawer ----------------------------------------------------------- */
+.techtree-root .tt-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 100%);
+  overflow-y: auto;
+  background: var(--techtree-panel-bg);
+  color: var(--techtree-panel-text);
+  border-left: 1px solid var(--techtree-panel-border);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.18);
+  z-index: 20;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.techtree-root .tt-detail {
+  padding: 14px 16px 20px;
+}
+.techtree-root .tt-detail-header {
+  position: relative;
+  padding-right: 32px;
+}
+.techtree-root .tt-detail-kicker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--techtree-panel-muted);
+}
+.techtree-root .tt-detail-title {
+  margin: 4px 0 8px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+/* Focus moves here on selection (tabindex=-1): ring only for keyboard users. */
+.techtree-root .tt-detail-title:focus:not(:focus-visible) {
+  outline: none;
+}
+.techtree-root .tt-icon-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--techtree-panel-border);
+  border-radius: 6px;
+  background: var(--techtree-chip-bg);
+  color: var(--techtree-panel-text);
+  font-size: 16px;
+  cursor: pointer;
+}
+.techtree-root .tt-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.techtree-root .tt-pill {
+  --tt-pill-color: var(--techtree-accent);
+  --tt-pill-on: var(--techtree-on-accent, var(--tt-on-accent));
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--tt-pill-color);
+  color: var(--tt-pill-on);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.techtree-root .tt-availability {
+  margin: 8px 0;
+  font-size: 12px;
+  color: var(--techtree-panel-muted);
+}
+.techtree-root .tt-detail .tt-segmented {
+  margin: 4px 0 10px;
+}
+.techtree-root .tt-summary {
+  font-weight: 600;
+  margin: 8px 0 4px;
+}
+.techtree-root .tt-description {
+  margin: 4px 0;
+  white-space: pre-wrap;
+}
+.techtree-root .tt-section {
+  margin-top: 14px;
+}
+.techtree-root .tt-section p {
+  margin: 0;
+}
+.techtree-root .tt-section-title {
+  margin: 0 0 4px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--techtree-panel-muted);
+}
+.techtree-root .tt-list {
+  margin: 0;
+  padding-left: 18px;
+}
+.techtree-root .tt-list li {
+  margin-bottom: 3px;
+}
+.techtree-root .tt-eurekas {
+  list-style: none;
+  padding-left: 0;
+}
+.techtree-root .tt-eurekas li[data-achieved='true'] .tt-eureka-mark {
+  /* only the (decorative) mark is coloured: status fills are not text colours */
+  color: var(--techtree-status-operational);
+  font-weight: 700;
+}
+.techtree-root .tt-node-link {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  color: var(--techtree-link);
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: left;
+}
+.techtree-root .tt-link {
+  color: var(--techtree-link);
+}
+/* WCAG 2.5.8: 24 px targets for the links / buttons in the drawer and outline
+   (host links rendered through renderLink included). */
+.techtree-root .tt-node-link,
+.techtree-root .tt-outline-node,
+.techtree-root .tt-drawer .tt-list a,
+.techtree-root .tt-drawer .tt-link {
+  display: inline-block;
+  min-width: 24px;
+  min-height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+}
+.techtree-root .tt-link-ref {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+.techtree-root .tt-muted {
+  color: var(--techtree-panel-muted);
+}
+.techtree-root .tt-node-id {
+  margin-top: 18px;
+  font-size: 11px;
+  color: var(--techtree-panel-muted);
+}
+.techtree-root .tt-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---- outline ---------------------------------------------------------- */
+.techtree-root .tt-outline {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 12px 20px 40px;
+  background: var(--techtree-panel-bg);
+  color: var(--techtree-panel-text);
+  font-size: 14px;
+}
+.techtree-root .tt-outline-track-title {
+  margin: 18px 0 4px;
+  font-size: 16px;
+}
+.techtree-root .tt-outline-band-title {
+  margin: 10px 0 4px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--techtree-panel-muted);
+}
+.techtree-root .tt-outline ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.techtree-root .tt-outline li {
+  margin-bottom: 8px;
+}
+.techtree-root .tt-outline-node {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--techtree-panel-text);
+  cursor: pointer;
+}
+.techtree-root .tt-outline-node[aria-current='true'] {
+  text-decoration: underline;
+  color: var(--techtree-link);
+}
+.techtree-root .tt-outline-rel {
+  font-size: 12px;
+  margin-left: 2px;
+}
+.techtree-root .tt-drawer a {
+  color: var(--techtree-link);
+}

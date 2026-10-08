@@ -1,0 +1,5 @@
+id: t.cap/a
+title: A
+kind: capability
+requires:
+  - any_of: [t.cap/b, t.cap/missing]

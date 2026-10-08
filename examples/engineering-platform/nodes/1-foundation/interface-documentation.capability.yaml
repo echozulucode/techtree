@@ -1,0 +1,11 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/interface-documentation
+title: "Documented Interfaces"
+kind: capability
+era: foundation
+branch: architecture
+summary: "Every external interface has a written, versioned description."
+unlocks:
+  - "Teams integrate against a document instead of a person"
+owner: "Systems Engineering"

@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/trusted-fleet-update
+title: "Trusted Fleet Update"
+kind: milestone
+era: automation
+branch: deployment
+summary: "Only genuine devices receive updates, and the fleet's health confirms each rollout."
+description: "Confidence comes from either live fleet health or lab HIL regression — one is enough to start."
+requires:
+  - eng.platform/safe-automatic-update
+  - eng.platform/device-identity
+  - any_of:
+      - eng.platform/fleet-health-monitoring
+      - eng.platform/hil-regression
+owner: "Platform Ops"

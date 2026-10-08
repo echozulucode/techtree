@@ -1,0 +1,19 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/reusable-bsp
+title: "Reusable Board Support Package"
+kind: capability
+era: standardization
+branch: hardware-bsp
+summary: "One maintained BSP layer serves every board variant."
+requires:
+  - eng.platform/board-bring-up
+  - eng.platform/scripted-platform-build
+unlocks:
+  - "New board variants as configuration, not forks"
+implementations:
+  - technology:petalinux
+  - feature:device-tree-configuration
+links:
+  - { type: example, ref: device-tree-overlay-fpga, relation: demonstrates }
+owner: "Embedded Platforms"

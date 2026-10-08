@@ -1,0 +1,15 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/fleet-health-monitoring
+title: "Fleet Health Monitoring"
+kind: capability
+era: automation
+branch: deployment
+summary: "Deployed devices report health so problems are seen before users report them."
+requires:
+  - eng.platform/live-telemetry
+  - eng.platform/safe-automatic-update
+implementations:
+  - feature:health-check
+  - technology:prometheus
+owner: "Platform Ops"

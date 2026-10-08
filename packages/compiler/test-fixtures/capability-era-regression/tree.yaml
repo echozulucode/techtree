@@ -1,0 +1,4 @@
+tree: { id: era-regression, title: Era regression, profile: capability }
+eras:
+  - { id: early, title: Early, order: 0 }
+  - { id: late, title: Late, order: 1 }

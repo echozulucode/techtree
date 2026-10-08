@@ -12,9 +12,33 @@ export {
   type SkillLearningResource,
 } from './skill-data.js';
 
+export {
+  capabilitySchema,
+  CAPABILITY_SCHEMA_VERSION,
+  capabilityStatusEnum,
+  capabilityKindEnum,
+  capabilityLinkRelationEnum,
+  type Capability,
+  type CapabilityPrerequisite,
+} from './capability.js';
+
+// Zod-free (also the light entry `@echozedlabs/techtree-schema/capability-data`).
+export {
+  CAPABILITY_STATUSES,
+  CAPABILITY_KINDS,
+  CAPABILITY_LINK_RELATIONS,
+  capabilityData,
+  type CapabilityStatus,
+  type CapabilityKind,
+  type CapabilityLinkRelation,
+  type CapabilityData,
+  type CapabilityEureka,
+  type CapabilityLink,
+} from './capability-data.js';
+
 export { themeSchema, THEME_SCHEMA_VERSION, type Theme } from './theme.js';
 
-export { treeSchema, TREE_SCHEMA_VERSION, type Tree, type EraDef, type PathDef } from './tree.js';
+export { treeSchema, TREE_SCHEMA_VERSION, type Tree, type EraDef, type PathDef, type LayoutDef } from './tree.js';
 
 export { skillId, isValidSkillId, type SkillId } from './ids.js';
 

@@ -13,6 +13,7 @@ tree:
     - self
   default_theme: civ-iv
   namespace: ai
+  profile: delivery
 
 # Bands = project phases (timeline columns).
 eras:

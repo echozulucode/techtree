@@ -1,0 +1,20 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/reproducible-builds
+title: "Reproducible Platform Builds"
+kind: capability
+era: standardization
+branch: platform-os
+summary: "The same commit always produces the same platform image."
+requires:
+  - eng.platform/scripted-platform-build
+  - eng.platform/version-control
+eurekas:
+  - id: bit-identical
+    statement: "Two clean builds of the same commit produce identical images."
+implementations:
+  - feature:dependency-pinning
+links:
+  - { type: example, ref: yocto-builds-github-actions, relation: demonstrates }
+owner: "Embedded Platforms"
+target_status: operational

@@ -1,0 +1,17 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/live-telemetry
+title: "Live Telemetry Visualization"
+kind: capability
+era: platformization
+branch: sim-test
+summary: "Engineers watch live system telemetry while testing."
+requires:
+  - eng.platform/standard-message-bus
+implementations:
+  - feature:interactive-plotting
+  - technology:websocket
+links:
+  - { type: example, ref: react-live-plots-websocket, relation: demonstrates }
+  - { type: example, ref: prometheus-embedded-daemon, relation: evidence }
+owner: "Instrumentation"

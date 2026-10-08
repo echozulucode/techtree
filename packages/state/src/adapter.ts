@@ -22,8 +22,8 @@ export interface StateAdapter {
   save(state: TreeState): Promise<void>;
   /** Convenience mutator: update a single skill entry; persists immediately. */
   setSkill(skillId: string, entry: SkillStateEntry): Promise<TreeState>;
-  /** Convenience mutator: transition a skill to a new explicit status. */
-  setStatus(skillId: string, status: SetStatus): Promise<TreeState>;
+  /** Convenience mutator: transition a node to a new explicit (stored) status. */
+  setStatus(skillId: string, status: SetStatus | (string & {})): Promise<TreeState>;
   /** Convenience mutator: remove a skill entry, reverting to derived status. */
   clearSkill(skillId: string): Promise<TreeState>;
 }
@@ -34,17 +34,18 @@ export class LocalStorageStateAdapter implements StateAdapter {
     private readonly userId: string,
     private readonly treeId: string,
     private readonly primaryPath?: string,
+    private readonly profile?: string,
   ) {}
 
   async load(): Promise<TreeState> {
     const raw = typeof localStorage !== 'undefined' ? localStorage.getItem(this.storageKey) : null;
-    if (!raw) return emptyState(this.userId, this.treeId, this.primaryPath);
+    if (!raw) return emptyState(this.userId, this.treeId, this.primaryPath, this.profile);
     try {
       const parsed = treeStateSchema.parse(JSON.parse(raw));
       return parsed;
     } catch {
       // Corrupt state — start fresh rather than crash. Caller can inspect via dev tools.
-      return emptyState(this.userId, this.treeId, this.primaryPath);
+      return emptyState(this.userId, this.treeId, this.primaryPath, this.profile);
     }
   }
 
@@ -61,7 +62,7 @@ export class LocalStorageStateAdapter implements StateAdapter {
     return next;
   }
 
-  async setStatus(skillId: string, status: SetStatus): Promise<TreeState> {
+  async setStatus(skillId: string, status: SetStatus | (string & {})): Promise<TreeState> {
     const cur = await this.load();
     const existing = cur.skills[skillId];
     const now = new Date().toISOString();
@@ -73,6 +74,7 @@ export class LocalStorageStateAdapter implements StateAdapter {
         ? { submitted_at: existing?.submitted_at ?? now }
         : {}),
       ...(status === 'achieved' ? { completed_at: now } : {}),
+      updated_at: now,
     };
     return this.setSkill(skillId, entry);
   }

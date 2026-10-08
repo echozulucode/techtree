@@ -1,0 +1,18 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/standard-message-bus
+title: "Standard Message Bus"
+kind: capability
+era: standardization
+branch: architecture
+summary: "Components talk over one agreed messaging layer with schema-defined messages."
+requires:
+  - eng.platform/interface-documentation
+implementations:
+  - technology:zeromq
+  - technology:flatbuffers
+  - feature:publish-subscribe-messaging
+links:
+  - { type: example, ref: zeromq-flatbuffers-pubsub, relation: demonstrates }
+owner: "Mission Software"
+target_status: strategic_standard

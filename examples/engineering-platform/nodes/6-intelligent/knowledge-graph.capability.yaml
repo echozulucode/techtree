@@ -1,0 +1,14 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/knowledge-graph
+title: "Engineering Knowledge Graph"
+kind: wonder
+era: intelligent
+branch: knowledge
+summary: "Requirements, designs, code, tests, examples and people are connected and queryable."
+requires:
+  - eng.platform/automated-traceability
+  - eng.platform/developer-portal
+  - eng.platform/example-catalog
+benefit: "Any engineering question — why, where, who, proven how — is answered in minutes."
+owner: "Systems Engineering"

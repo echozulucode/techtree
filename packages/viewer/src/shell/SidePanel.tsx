@@ -1,13 +1,13 @@
 import type { IRNode } from '@echozedlabs/techtree-ir';
 import type { SkillData, Theme } from '@echozedlabs/techtree-schema';
-import type { NodeStatus, SetStatus, SkillStateEntry } from '@echozedlabs/techtree-state';
+import type { SetStatus, SkillStateEntry } from '@echozedlabs/techtree-state';
 import { difficultyPips, iconFor } from './icons.js';
 import { categoryFill, contrastTextOn, fontFamily, nodeText } from './theme-utils.js';
 import { statusColor, statusLabel } from './status-style.js';
 
 export interface SidePanelProps {
   node: IRNode;
-  status: NodeStatus;
+  status: string;
   stateEntry?: SkillStateEntry;
   prereqs: IRNode[];
   dependents: IRNode[];

@@ -1,42 +1,23 @@
 import type { IR } from '@echozedlabs/techtree-ir';
 import type { NodeStatus, TreeState } from './schema.js';
+import { deriveEffectiveStatuses, skillStatusModel } from './status-model.js';
 
 /**
- * Derive per-node status from the IR's prerequisite graph + the user's TreeState.
- * Returns a map: node id → one of the five UI states.
+ * Derive per-node status from the IR's prerequisite graph + the user's TreeState
+ * under the skill status model. Returns a map: node id → one of the UI states.
  *
- *  - explicitly set in TreeState  → use that value (in_progress | submitted | achieved)
- *  - all `requires` prereqs are achieved → available
+ *  - explicitly set in TreeState  → use that value (in_progress | submitted | achieved | …)
+ *  - all `requires` prereqs are achieved (any-of groups: one member) → available
  *  - otherwise → locked
  *
- * See docs/high-level-plan.md Phase 3.
+ * Other profiles use `deriveStatusView(ir, states, model)` from status-model.ts;
+ * this function is the skill-model special case kept for compatibility.
  */
 export function deriveStatuses(ir: IR, state: TreeState | null): Map<string, NodeStatus> {
-  const out = new Map<string, NodeStatus>();
-  const setBy = new Map(Object.entries(state?.skills ?? {}));
-
-  const prereqs = new Map<string, string[]>();
-  for (const e of ir.edges) {
-    if (e.kind !== 'requires') continue;
-    if (!prereqs.has(e.to)) prereqs.set(e.to, []);
-    prereqs.get(e.to)!.push(e.from);
-  }
-
-  for (const n of ir.nodes) {
-    const explicit = setBy.get(n.id);
-    if (explicit) {
-      out.set(n.id, explicit.status);
-      continue;
-    }
-    const reqs = prereqs.get(n.id) ?? [];
-    if (reqs.length === 0) {
-      out.set(n.id, 'available');
-      continue;
-    }
-    const allAchieved = reqs.every((r) => setBy.get(r)?.status === 'achieved');
-    out.set(n.id, allAchieved ? 'available' : 'locked');
-  }
-  return out;
+  return deriveEffectiveStatuses(ir, state?.skills ?? null, skillStatusModel) as Map<
+    string,
+    NodeStatus
+  >;
 }
 
 /**
@@ -44,13 +25,15 @@ export function deriveStatuses(ir: IR, state: TreeState | null): Map<string, Nod
  * during initial load. Preference order:
  *   1. First in_progress node on the primary_path
  *   2. First in_progress node anywhere
+ *      (the capability model has no in_progress; its frontier is the first
+ *      `investigating` node, then the first available one)
  *   3. First available node on the primary_path
  *   4. First available node anywhere
  *   5. First node in the IR (fallback)
  */
 export function pickFrontierNodeId(
   ir: IR,
-  statuses: Map<string, NodeStatus>,
+  statuses: ReadonlyMap<string, string>,
   primaryPath?: string,
 ): string | null {
   if (ir.nodes.length === 0) return null;
@@ -62,6 +45,10 @@ export function pickFrontierNodeId(
 
   const inProgressAny = ir.nodes.find((n) => statuses.get(n.id) === 'in_progress');
   if (inProgressAny) return inProgressAny.id;
+
+  const investigating = onPrimaryPath.find((n) => statuses.get(n.id) === 'investigating') ??
+    ir.nodes.find((n) => statuses.get(n.id) === 'investigating');
+  if (investigating) return investigating.id;
 
   const availableOnPath = onPrimaryPath.find((n) => statuses.get(n.id) === 'available');
   if (availableOnPath) return availableOnPath.id;

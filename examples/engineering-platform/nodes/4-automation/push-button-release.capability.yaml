@@ -1,0 +1,22 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/push-button-release
+title: "Push-Button Release"
+kind: milestone
+era: automation
+branch: dev-scripting
+summary: "A release is one button press: build, test, sign, package, publish."
+description: "Needs one automated hardware gate: board qualification or HIL regression — either suffices."
+requires:
+  - eng.platform/continuous-integration
+  - eng.platform/software-packaging
+  - eng.platform/artifact-signing
+  - any_of:
+      - eng.platform/automated-board-qualification
+      - eng.platform/hil-regression
+unlocks:
+  - "Releases on demand instead of release weekends"
+implementations:
+  - feature:continuous-delivery
+owner: "Developer Experience"
+target_status: operational

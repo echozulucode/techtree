@@ -1,0 +1,4 @@
+id: t.cap/product-platform
+title: Product Platform
+kind: capability
+requires: [t.cap/platform-api]

@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/hil-regression
+title: "Hardware-in-the-Loop Regression"
+kind: capability
+era: automation
+branch: sim-test
+summary: "Hardware-in-the-loop tests run automatically on every release candidate."
+requires:
+  - eng.platform/hardware-test-harness
+  - eng.platform/continuous-integration
+implementations:
+  - feature:hardware-in-the-loop-testing
+links:
+  - { type: example, ref: robot-hil-can-harness, relation: evidence }
+owner: "Test Engineering"

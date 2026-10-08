@@ -1,0 +1,201 @@
+{
+  "notice": "DEMO DATA — fictional statuses, people and notes for demonstration only; they describe no real organisation. Unlisted capabilities are not_started.",
+  "profile": "capability",
+  "schema_version": 1,
+  "skills": {
+    "eng.platform/access-controlled-repos": {
+      "note": "Repository permissions managed by group.",
+      "status": "operational",
+      "updated_at": "2026-09-05T09:00:00Z",
+      "updated_by": "mbell"
+    },
+    "eng.platform/artifact-signing": {
+      "achieved_eurekas": [
+        "reject-unsigned"
+      ],
+      "note": "Release packages signed; verification on one device family.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-12T09:00:00Z",
+      "updated_by": "mbell"
+    },
+    "eng.platform/board-bring-up": {
+      "note": "Bring-up procedure used for the last three boards.",
+      "status": "operational",
+      "updated_at": "2026-09-04T09:00:00Z",
+      "updated_by": "rcosta"
+    },
+    "eng.platform/continuous-integration": {
+      "achieved_eurekas": [
+        "first-red-build"
+      ],
+      "note": "Every merge request is built and tested.",
+      "status": "operational",
+      "updated_at": "2026-09-10T09:00:00Z",
+      "updated_by": "ehart"
+    },
+    "eng.platform/device-identity": {
+      "note": "Identity provisioning options under review.",
+      "status": "investigating",
+      "updated_at": "2026-09-23T09:00:00Z",
+      "updated_by": "rcosta"
+    },
+    "eng.platform/example-catalog": {
+      "note": "Catalog live for all engineers.",
+      "status": "operational",
+      "updated_at": "2026-09-18T09:00:00Z",
+      "updated_by": "ehart"
+    },
+    "eng.platform/hardware-abstraction": {
+      "note": "Interface boundaries being drawn for two drivers.",
+      "status": "investigating",
+      "updated_at": "2026-09-15T09:00:00Z",
+      "updated_by": "mokafor"
+    },
+    "eng.platform/hardware-simulation": {
+      "note": "Peripheral models being evaluated.",
+      "status": "investigating",
+      "updated_at": "2026-09-24T09:00:00Z",
+      "updated_by": "spark"
+    },
+    "eng.platform/hardware-test-harness": {
+      "note": "Harness drives the CAN bench for one product.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-11T09:00:00Z",
+      "updated_by": "tdelgado"
+    },
+    "eng.platform/hil-regression": {
+      "note": "Nightly HIL job prototyped.",
+      "status": "investigating",
+      "updated_at": "2026-09-22T09:00:00Z",
+      "updated_by": "tdelgado"
+    },
+    "eng.platform/interface-documentation": {
+      "note": "ICDs exist for the two main products.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-04T09:00:00Z",
+      "updated_by": "lfischer"
+    },
+    "eng.platform/live-telemetry": {
+      "note": "Live plots used in two test campaigns.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-17T09:00:00Z",
+      "updated_by": "anovak"
+    },
+    "eng.platform/platform-api": {
+      "note": "API surface prototyped.",
+      "status": "investigating",
+      "updated_at": "2026-09-16T09:00:00Z",
+      "updated_by": "praman"
+    },
+    "eng.platform/recorded-data-replay": {
+      "achieved_eurekas": [
+        "replay-bug"
+      ],
+      "note": "CAN traffic replayed on a desk to reproduce a field issue.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-16T09:00:00Z",
+      "updated_by": "anovak"
+    },
+    "eng.platform/repeatable-release": {
+      "note": "Manual checklist being replaced by push-button release.",
+      "status": "retiring",
+      "updated_at": "2026-09-05T09:00:00Z",
+      "updated_by": "mbell"
+    },
+    "eng.platform/reproducible-builds": {
+      "note": "Bit-identical rebuild shown on one product line.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-08T09:00:00Z",
+      "updated_by": "rcosta"
+    },
+    "eng.platform/reusable-bsp": {
+      "note": "One BSP layer serves all current board variants.",
+      "status": "operational",
+      "updated_at": "2026-09-08T09:00:00Z",
+      "updated_by": "mokafor"
+    },
+    "eng.platform/rollback-support": {
+      "note": "A/B rollback proven on the bench.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-15T09:00:00Z",
+      "updated_by": "rcosta"
+    },
+    "eng.platform/safe-automatic-update": {
+      "achieved_eurekas": [
+        "rollback-drill"
+      ],
+      "note": "Offline bundle and rollback drill demonstrated separately.",
+      "status": "investigating",
+      "updated_at": "2026-09-17T09:00:00Z",
+      "updated_by": "mbell"
+    },
+    "eng.platform/sbom-scanning": {
+      "note": "SBOM generated and scanned in one pipeline.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-22T09:00:00Z",
+      "updated_by": "mbell"
+    },
+    "eng.platform/scripted-platform-build": {
+      "note": "Image builds are scripted end to end.",
+      "status": "operational",
+      "updated_at": "2026-09-03T09:00:00Z",
+      "updated_by": "rcosta"
+    },
+    "eng.platform/secure-boot": {
+      "note": "Signed boot chain on one board.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-18T09:00:00Z",
+      "updated_by": "rcosta"
+    },
+    "eng.platform/shared-documentation": {
+      "note": "Old wiki kept read-only; new material goes to the example catalog.",
+      "status": "legacy",
+      "updated_at": "2026-09-06T09:00:00Z",
+      "updated_by": "lfischer"
+    },
+    "eng.platform/software-packaging": {
+      "note": "All deliverables shipped as versioned packages.",
+      "status": "operational",
+      "updated_at": "2026-09-12T09:00:00Z",
+      "updated_by": "mbell"
+    },
+    "eng.platform/standard-message-bus": {
+      "note": "Messaging standard adopted for all new services.",
+      "status": "strategic_standard",
+      "updated_at": "2026-09-09T09:00:00Z",
+      "updated_by": "praman"
+    },
+    "eng.platform/static-analysis": {
+      "note": "Static analysis gates merges.",
+      "status": "operational",
+      "updated_at": "2026-09-10T09:00:00Z",
+      "updated_by": "ehart"
+    },
+    "eng.platform/test-metadata": {
+      "note": "Test results published with build and requirement ids.",
+      "status": "demonstrated",
+      "updated_at": "2026-09-11T09:00:00Z",
+      "updated_by": "tdelgado"
+    },
+    "eng.platform/unit-testing": {
+      "note": "Unit tests run on every component in CI.",
+      "status": "operational",
+      "updated_at": "2026-09-03T09:00:00Z",
+      "updated_by": "tdelgado"
+    },
+    "eng.platform/version-control": {
+      "note": "All engineering source is in Git; enforced for new projects.",
+      "status": "strategic_standard",
+      "updated_at": "2026-09-02T09:00:00Z",
+      "updated_by": "mokafor"
+    },
+    "eng.platform/versioned-apis": {
+      "note": "Compatibility policy drafted.",
+      "status": "investigating",
+      "updated_at": "2026-09-09T09:00:00Z",
+      "updated_by": "praman"
+    }
+  },
+  "tree_id": "engineering-platform",
+  "user_id": "demo"
+}

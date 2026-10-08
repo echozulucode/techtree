@@ -1,20 +1,54 @@
 {
   "name": "@echozedlabs/techtree-state",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
+  "description": "User-state schema, status derivation, and storage adapters (file / localStorage / API) for TechTree.",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "license": "Apache-2.0",
+  "author": "Eric Zimmerman (https://echozed.com)",
+  "homepage": "https://echozed.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echozulucode/techtree.git",
+    "directory": "packages/state"
+  },
+  "bugs": {
+    "url": "https://github.com/echozulucode/techtree/issues"
+  },
+  "keywords": [
+    "tech-tree",
+    "state",
+    "status",
+    "overlay"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./status-model": {
+      "types": "./dist/status-model-entry.d.ts",
+      "import": "./dist/status-model-entry.js"
+    }
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run --passWithNoTests",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@echozedlabs/techtree-ir": "workspace:*",
+    "@echozedlabs/techtree-schema": "workspace:*",
     "zod": "^3.24.0"
   }
 }

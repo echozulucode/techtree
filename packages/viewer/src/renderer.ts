@@ -1,7 +1,17 @@
 import type { ComponentType } from 'react';
 import type { IR } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
-import type { NodeStatus } from '@echozedlabs/techtree-state';
+import type { StatusModel } from '@echozedlabs/techtree-state/status-model';
+
+/** Fit options in renderer-neutral form (node ids, not renderer node objects). */
+export interface RendererFitViewOptions {
+  padding?: number;
+  minZoom?: number;
+  maxZoom?: number;
+  duration?: number;
+  nodeIds?: readonly string[];
+  includeHiddenNodes?: boolean;
+}
 
 export interface Viewport {
   x: number;
@@ -24,11 +34,38 @@ export interface RendererProps {
   selectedId: string | null;
   /** Ancestors+descendants of selectedId. Empty when nothing selected. */
   relatedIds: ReadonlySet<string>;
-  /** Per-node status derived from user state. Renderers paint based on this. */
-  nodeStatus: ReadonlyMap<string, NodeStatus>;
-  /** Filter chip set. null = show all; otherwise dim nodes whose id is not in the set. */
+  /**
+   * Per-node EFFECTIVE status (stored, or derived available/locked) under
+   * `statusModel`. Renderers paint based on this.
+   */
+  nodeStatus: ReadonlyMap<string, string>;
+  /** The status model `nodeStatus` belongs to. Default: the skill model. */
+  statusModel?: StatusModel;
+  /** Filter set. null = show all; otherwise nodes not in the set are dimmed or hidden. */
   visibleIds: ReadonlySet<string> | null;
+  /**
+   * What happens to nodes outside `visibleIds`: 'dim' (default) or 'hide'.
+   * Either way positions, bands and lanes never move.
+   */
+  filterMode?: 'dim' | 'hide';
+  /** Show the minimap / zoom controls (default true). */
+  showMiniMap?: boolean;
+  showControls?: boolean;
   theme: Theme;
+  /**
+   * Light / dark mode for the renderer's own chrome (React Flow's `colorMode`,
+   * which also puts a `light` / `dark` class on its container). Resolve
+   * 'system' before passing it so the class matches the host's theme.
+   * Default 'light'.
+   */
+  colorMode?: 'light' | 'dark';
+  /** Zoom bounds (renderer defaults when omitted). */
+  minZoom?: number;
+  maxZoom?: number;
+  /** Fit options for the "fit view" control (and the initial fit, unless `initialFitViewOptions`). */
+  fitViewOptions?: RendererFitViewOptions;
+  /** Fit options for the initial camera only (e.g. one focused node at a fixed zoom). */
+  initialFitViewOptions?: RendererFitViewOptions;
   /** Node id to center the viewport on (initial focus / state-mutation re-focus). */
   focusOnNodeId: string | null;
   onSelectNode: (id: string) => void;

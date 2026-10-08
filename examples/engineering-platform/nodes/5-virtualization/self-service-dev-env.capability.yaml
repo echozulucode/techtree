@@ -1,0 +1,14 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/self-service-dev-env
+title: "Self-Service Development Environment"
+kind: wonder
+era: virtualization
+branch: dev-scripting
+summary: "Any engineer gets a working, production-like environment on demand."
+requires:
+  - eng.platform/dev-containers
+  - eng.platform/push-button-release
+  - eng.platform/hardware-independent-development
+benefit: "New engineers and new projects are productive on day one; no tickets, no waiting for hardware."
+owner: "Developer Experience"

@@ -1,0 +1,19 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/artifact-signing
+title: "Artifact Signing"
+kind: capability
+era: standardization
+branch: security
+summary: "Released artifacts are cryptographically signed and verified before use."
+requires:
+  - eng.platform/access-controlled-repos
+eurekas:
+  - id: reject-unsigned
+    statement: "A device refuses to install an unsigned package."
+implementations:
+  - feature:code-signing
+links:
+  - { type: example, ref: tauri-auto-update-signed, relation: demonstrates }
+owner: "Platform Ops"
+target_status: operational

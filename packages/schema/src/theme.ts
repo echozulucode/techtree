@@ -13,6 +13,14 @@ const categoryStyle = z
   })
   .strict();
 
+const statusStyle = z
+  .object({
+    color: colorRef.optional(),
+    icon: z.string().min(1).optional(),
+    label: z.string().min(1).optional(),
+  })
+  .strict();
+
 const edgeStyle = z
   .object({
     stroke: colorRef.optional(),
@@ -50,6 +58,14 @@ export const themeSchema = z
       .optional(),
 
     categories: z.record(z.string(), categoryStyle).optional(),
+
+    /**
+     * Per-status presentation, keyed by status id from any profile's status
+     * model (e.g. 'achieved', 'operational', 'locked'). Overrides the model's
+     * default colour / icon. `icon` names an entry in the viewer's status icon
+     * set (see @echozedlabs/techtree-viewer STATUS_ICON_NAMES).
+     */
+    statuses: z.record(z.string(), statusStyle).optional(),
 
     edges: z
       .object({

@@ -1,0 +1,15 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/dev-containers
+title: "Reproducible Development Containers"
+kind: capability
+era: virtualization
+branch: platform-os
+summary: "The full development toolchain starts from one container definition."
+requires:
+  - eng.platform/reproducible-builds
+  - eng.platform/platform-sdk
+implementations:
+  - technology:docker
+  - feature:environment-configuration
+owner: "Developer Experience"

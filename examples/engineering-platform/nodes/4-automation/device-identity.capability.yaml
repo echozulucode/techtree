@@ -1,0 +1,13 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/device-identity
+title: "Device Identity and Attestation"
+kind: capability
+era: automation
+branch: security
+summary: "Every device has a hardware-rooted identity it can prove."
+requires:
+  - eng.platform/secure-boot
+implementations:
+  - feature:device-commissioning
+owner: "Embedded Platforms"

@@ -1,0 +1,21 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/platform-sdk
+title: "Platform SDK"
+kind: milestone
+era: platformization
+branch: dev-scripting
+summary: "Teams build products on the platform from an SDK, without platform-team help."
+description: "A milestone: it only lands when build, API, hardware abstraction and packaging come together."
+requires:
+  - eng.platform/reproducible-builds
+  - eng.platform/platform-api
+  - eng.platform/hardware-abstraction
+  - eng.platform/software-packaging
+unlocks:
+  - "Product teams that start from the platform, not from scratch"
+eurekas:
+  - id: outside-team
+    statement: "A team outside the platform group ships an application using only the SDK."
+owner: "Developer Experience"
+target_status: operational

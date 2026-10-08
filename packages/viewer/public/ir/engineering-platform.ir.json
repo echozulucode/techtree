@@ -1,0 +1,2215 @@
+{
+  "bands": [
+    {
+      "id": "foundation",
+      "order": 0,
+      "title": "I · Foundation"
+    },
+    {
+      "id": "standardization",
+      "order": 1,
+      "title": "II · Standardization"
+    },
+    {
+      "id": "platformization",
+      "order": 2,
+      "title": "III · Platformization"
+    },
+    {
+      "id": "automation",
+      "order": 3,
+      "title": "IV · Automation"
+    },
+    {
+      "id": "virtualization",
+      "order": 4,
+      "title": "V · Virtualization"
+    },
+    {
+      "id": "intelligent",
+      "order": 5,
+      "title": "VI · Intelligent Engineering"
+    }
+  ],
+  "edges": [
+    {
+      "from": "eng.platform/access-controlled-repos",
+      "kind": "requires",
+      "to": "eng.platform/artifact-signing"
+    },
+    {
+      "from": "eng.platform/artifact-signing",
+      "kind": "requires",
+      "to": "eng.platform/push-button-release"
+    },
+    {
+      "from": "eng.platform/artifact-signing",
+      "kind": "requires",
+      "to": "eng.platform/safe-automatic-update"
+    },
+    {
+      "from": "eng.platform/artifact-signing",
+      "kind": "requires",
+      "to": "eng.platform/secure-boot"
+    },
+    {
+      "from": "eng.platform/automated-board-qualification",
+      "kind": "requires",
+      "to": "eng.platform/hardware-simulation-lab"
+    },
+    {
+      "from": "eng.platform/automated-board-qualification",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/push-button-release"
+    },
+    {
+      "from": "eng.platform/automated-traceability",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/developer-portal"
+    },
+    {
+      "from": "eng.platform/automated-traceability",
+      "kind": "requires",
+      "to": "eng.platform/knowledge-graph"
+    },
+    {
+      "from": "eng.platform/board-bring-up",
+      "kind": "requires",
+      "to": "eng.platform/hardware-test-harness"
+    },
+    {
+      "from": "eng.platform/board-bring-up",
+      "kind": "requires",
+      "to": "eng.platform/reusable-bsp"
+    },
+    {
+      "from": "eng.platform/continuous-integration",
+      "kind": "requires",
+      "to": "eng.platform/ai-assisted-development"
+    },
+    {
+      "from": "eng.platform/continuous-integration",
+      "kind": "requires",
+      "to": "eng.platform/automated-board-qualification"
+    },
+    {
+      "from": "eng.platform/continuous-integration",
+      "kind": "requires",
+      "to": "eng.platform/hil-regression"
+    },
+    {
+      "from": "eng.platform/continuous-integration",
+      "kind": "requires",
+      "to": "eng.platform/push-button-release"
+    },
+    {
+      "from": "eng.platform/continuous-integration",
+      "kind": "requires",
+      "to": "eng.platform/sbom-scanning"
+    },
+    {
+      "from": "eng.platform/dev-containers",
+      "kind": "requires",
+      "to": "eng.platform/self-service-dev-env"
+    },
+    {
+      "from": "eng.platform/developer-portal",
+      "kind": "requires",
+      "to": "eng.platform/knowledge-graph"
+    },
+    {
+      "from": "eng.platform/device-identity",
+      "kind": "requires",
+      "to": "eng.platform/trusted-fleet-update"
+    },
+    {
+      "from": "eng.platform/example-catalog",
+      "kind": "requires",
+      "to": "eng.platform/ai-assisted-development"
+    },
+    {
+      "from": "eng.platform/example-catalog",
+      "kind": "requires",
+      "to": "eng.platform/developer-portal"
+    },
+    {
+      "from": "eng.platform/example-catalog",
+      "kind": "requires",
+      "to": "eng.platform/knowledge-graph"
+    },
+    {
+      "from": "eng.platform/fleet-health-monitoring",
+      "kind": "requires",
+      "to": "eng.platform/predictive-maintenance"
+    },
+    {
+      "from": "eng.platform/fleet-health-monitoring",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/trusted-fleet-update"
+    },
+    {
+      "from": "eng.platform/generated-clients",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/developer-portal"
+    },
+    {
+      "from": "eng.platform/generated-clients",
+      "kind": "requires",
+      "to": "eng.platform/service-virtualization"
+    },
+    {
+      "from": "eng.platform/hardware-abstraction",
+      "kind": "requires",
+      "to": "eng.platform/digital-twin"
+    },
+    {
+      "from": "eng.platform/hardware-abstraction",
+      "kind": "requires",
+      "to": "eng.platform/hardware-independent-development"
+    },
+    {
+      "from": "eng.platform/hardware-abstraction",
+      "kind": "requires",
+      "to": "eng.platform/hardware-simulation"
+    },
+    {
+      "from": "eng.platform/hardware-abstraction",
+      "kind": "requires",
+      "to": "eng.platform/platform-sdk"
+    },
+    {
+      "from": "eng.platform/hardware-independent-development",
+      "kind": "requires",
+      "to": "eng.platform/self-service-dev-env"
+    },
+    {
+      "from": "eng.platform/hardware-simulation",
+      "kind": "requires",
+      "to": "eng.platform/digital-twin"
+    },
+    {
+      "from": "eng.platform/hardware-simulation",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/hardware-independent-development"
+    },
+    {
+      "from": "eng.platform/hardware-simulation",
+      "kind": "requires",
+      "to": "eng.platform/hardware-simulation-lab"
+    },
+    {
+      "from": "eng.platform/hardware-test-harness",
+      "kind": "requires",
+      "to": "eng.platform/automated-board-qualification"
+    },
+    {
+      "from": "eng.platform/hardware-test-harness",
+      "kind": "requires",
+      "to": "eng.platform/hil-regression"
+    },
+    {
+      "from": "eng.platform/hil-regression",
+      "kind": "requires",
+      "to": "eng.platform/hardware-simulation-lab"
+    },
+    {
+      "from": "eng.platform/hil-regression",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/push-button-release"
+    },
+    {
+      "from": "eng.platform/hil-regression",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/trusted-fleet-update"
+    },
+    {
+      "from": "eng.platform/interface-documentation",
+      "kind": "requires",
+      "to": "eng.platform/standard-message-bus"
+    },
+    {
+      "from": "eng.platform/interface-documentation",
+      "kind": "requires",
+      "to": "eng.platform/versioned-apis"
+    },
+    {
+      "from": "eng.platform/live-telemetry",
+      "kind": "requires",
+      "to": "eng.platform/fleet-health-monitoring"
+    },
+    {
+      "from": "eng.platform/platform-api",
+      "kind": "requires",
+      "to": "eng.platform/generated-clients"
+    },
+    {
+      "from": "eng.platform/platform-api",
+      "kind": "requires",
+      "to": "eng.platform/platform-sdk"
+    },
+    {
+      "from": "eng.platform/platform-api",
+      "kind": "requires",
+      "to": "eng.platform/service-virtualization"
+    },
+    {
+      "from": "eng.platform/platform-sdk",
+      "kind": "requires",
+      "to": "eng.platform/dev-containers"
+    },
+    {
+      "from": "eng.platform/platform-sdk",
+      "kind": "requires",
+      "to": "eng.platform/developer-portal"
+    },
+    {
+      "from": "eng.platform/platform-sdk",
+      "kind": "requires",
+      "to": "eng.platform/hardware-independent-development"
+    },
+    {
+      "from": "eng.platform/push-button-release",
+      "kind": "requires",
+      "to": "eng.platform/self-service-dev-env"
+    },
+    {
+      "from": "eng.platform/recorded-data-replay",
+      "kind": "requires",
+      "to": "eng.platform/digital-twin"
+    },
+    {
+      "from": "eng.platform/recorded-data-replay",
+      "group": "any-1",
+      "kind": "requires",
+      "to": "eng.platform/hardware-independent-development"
+    },
+    {
+      "from": "eng.platform/recorded-data-replay",
+      "kind": "requires",
+      "to": "eng.platform/hardware-simulation"
+    },
+    {
+      "from": "eng.platform/repeatable-release",
+      "kind": "requires",
+      "to": "eng.platform/software-packaging"
+    },
+    {
+      "from": "eng.platform/reproducible-builds",
+      "kind": "requires",
+      "to": "eng.platform/dev-containers"
+    },
+    {
+      "from": "eng.platform/reproducible-builds",
+      "kind": "requires",
+      "to": "eng.platform/platform-sdk"
+    },
+    {
+      "from": "eng.platform/reproducible-builds",
+      "kind": "requires",
+      "to": "eng.platform/rollback-support"
+    },
+    {
+      "from": "eng.platform/reusable-bsp",
+      "kind": "requires",
+      "to": "eng.platform/automated-board-qualification"
+    },
+    {
+      "from": "eng.platform/reusable-bsp",
+      "kind": "requires",
+      "to": "eng.platform/hardware-abstraction"
+    },
+    {
+      "from": "eng.platform/reusable-bsp",
+      "kind": "requires",
+      "to": "eng.platform/secure-boot"
+    },
+    {
+      "from": "eng.platform/rollback-support",
+      "kind": "requires",
+      "to": "eng.platform/safe-automatic-update"
+    },
+    {
+      "from": "eng.platform/safe-automatic-update",
+      "kind": "requires",
+      "to": "eng.platform/fleet-health-monitoring"
+    },
+    {
+      "from": "eng.platform/safe-automatic-update",
+      "kind": "requires",
+      "to": "eng.platform/trusted-fleet-update"
+    },
+    {
+      "from": "eng.platform/scripted-platform-build",
+      "kind": "requires",
+      "to": "eng.platform/reproducible-builds"
+    },
+    {
+      "from": "eng.platform/scripted-platform-build",
+      "kind": "requires",
+      "to": "eng.platform/reusable-bsp"
+    },
+    {
+      "from": "eng.platform/scripted-platform-build",
+      "kind": "requires",
+      "to": "eng.platform/software-packaging"
+    },
+    {
+      "from": "eng.platform/secure-boot",
+      "kind": "requires",
+      "to": "eng.platform/device-identity"
+    },
+    {
+      "from": "eng.platform/shared-documentation",
+      "kind": "requires",
+      "to": "eng.platform/example-catalog"
+    },
+    {
+      "from": "eng.platform/shared-documentation",
+      "kind": "requires",
+      "to": "eng.platform/structured-requirements"
+    },
+    {
+      "from": "eng.platform/software-packaging",
+      "kind": "requires",
+      "to": "eng.platform/platform-sdk"
+    },
+    {
+      "from": "eng.platform/software-packaging",
+      "kind": "requires",
+      "to": "eng.platform/push-button-release"
+    },
+    {
+      "from": "eng.platform/software-packaging",
+      "kind": "requires",
+      "to": "eng.platform/safe-automatic-update"
+    },
+    {
+      "from": "eng.platform/software-packaging",
+      "kind": "requires",
+      "to": "eng.platform/sbom-scanning"
+    },
+    {
+      "from": "eng.platform/standard-message-bus",
+      "kind": "requires",
+      "to": "eng.platform/live-telemetry"
+    },
+    {
+      "from": "eng.platform/standard-message-bus",
+      "kind": "requires",
+      "to": "eng.platform/platform-api"
+    },
+    {
+      "from": "eng.platform/standard-message-bus",
+      "kind": "requires",
+      "to": "eng.platform/recorded-data-replay"
+    },
+    {
+      "from": "eng.platform/static-analysis",
+      "kind": "requires",
+      "to": "eng.platform/ai-assisted-development"
+    },
+    {
+      "from": "eng.platform/structured-requirements",
+      "kind": "requires",
+      "to": "eng.platform/automated-traceability"
+    },
+    {
+      "from": "eng.platform/test-metadata",
+      "kind": "requires",
+      "to": "eng.platform/automated-traceability"
+    },
+    {
+      "from": "eng.platform/test-metadata",
+      "kind": "requires",
+      "to": "eng.platform/recorded-data-replay"
+    },
+    {
+      "from": "eng.platform/trusted-fleet-update",
+      "kind": "requires",
+      "to": "eng.platform/predictive-maintenance"
+    },
+    {
+      "from": "eng.platform/unit-testing",
+      "kind": "requires",
+      "to": "eng.platform/continuous-integration"
+    },
+    {
+      "from": "eng.platform/unit-testing",
+      "kind": "requires",
+      "to": "eng.platform/hardware-test-harness"
+    },
+    {
+      "from": "eng.platform/unit-testing",
+      "kind": "requires",
+      "to": "eng.platform/test-metadata"
+    },
+    {
+      "from": "eng.platform/version-control",
+      "kind": "requires",
+      "to": "eng.platform/access-controlled-repos"
+    },
+    {
+      "from": "eng.platform/version-control",
+      "kind": "requires",
+      "to": "eng.platform/continuous-integration"
+    },
+    {
+      "from": "eng.platform/version-control",
+      "kind": "requires",
+      "to": "eng.platform/example-catalog"
+    },
+    {
+      "from": "eng.platform/version-control",
+      "kind": "requires",
+      "to": "eng.platform/reproducible-builds"
+    },
+    {
+      "from": "eng.platform/version-control",
+      "kind": "requires",
+      "to": "eng.platform/static-analysis"
+    },
+    {
+      "from": "eng.platform/version-control",
+      "kind": "requires",
+      "to": "eng.platform/versioned-apis"
+    },
+    {
+      "from": "eng.platform/versioned-apis",
+      "kind": "requires",
+      "to": "eng.platform/automated-traceability"
+    },
+    {
+      "from": "eng.platform/versioned-apis",
+      "kind": "requires",
+      "to": "eng.platform/generated-clients"
+    },
+    {
+      "from": "eng.platform/versioned-apis",
+      "kind": "requires",
+      "to": "eng.platform/hardware-abstraction"
+    },
+    {
+      "from": "eng.platform/versioned-apis",
+      "kind": "requires",
+      "to": "eng.platform/platform-api"
+    }
+  ],
+  "ir_version": 1,
+  "meta": {
+    "edge_count": 92,
+    "node_count": 48,
+    "source_count": 48
+  },
+  "nodes": [
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:role-based-access-control"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Platform Ops",
+        "summary": "Who can read and change which source is controlled and auditable.",
+        "unlocks": []
+      },
+      "id": "eng.platform/access-controlled-repos",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 1272
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Access-Controlled Source Repositories",
+      "track": "security"
+    },
+    {
+      "aliases": [],
+      "band": "intelligent",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:mcp-server-integration",
+          "technology:model-context-protocol"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "mcp-server-test-results",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Developer Experience",
+        "summary": "AI assistants work from the organisation's own examples, standards and checks.",
+        "unlocks": []
+      },
+      "id": "eng.platform/ai-assisted-development",
+      "pinned": false,
+      "position": {
+        "x": 3182,
+        "y": 592
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "AI-Assisted Development",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "reject-unsigned",
+            "statement": "A device refuses to install an unsigned package."
+          }
+        ],
+        "implementations": [
+          "feature:code-signing"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "tauri-auto-update-signed",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Platform Ops",
+        "summary": "Released artifacts are cryptographically signed and verified before use.",
+        "target_status": "operational",
+        "unlocks": []
+      },
+      "id": "eng.platform/artifact-signing",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 1272
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Artifact Signing",
+      "track": "security"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Test Engineering",
+        "summary": "A new board build is qualified by an automated test run, not a manual campaign.",
+        "unlocks": []
+      },
+      "id": "eng.platform/automated-board-qualification",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 176
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Automated Board Qualification",
+      "track": "hardware-bsp"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "trace-report",
+            "statement": "A release report links each requirement to its passing tests automatically."
+          }
+        ],
+        "implementations": [
+          "feature:requirements-traceability"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "requirements-trace-markdown",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Systems Engineering",
+        "summary": "Requirement-to-test-to-release traces are generated, not hand-maintained.",
+        "unlocks": []
+      },
+      "id": "eng.platform/automated-traceability",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 1536
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Automated Traceability",
+      "track": "knowledge"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Embedded Platforms",
+        "summary": "New boards are brought up with a written, repeatable procedure.",
+        "unlocks": [
+          "Second and third boards come up in days, not weeks"
+        ]
+      },
+      "id": "eng.platform/board-bring-up",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 176
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Documented Board Bring-Up",
+      "track": "hardware-bsp"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "first-red-build",
+            "statement": "A broken commit is caught by CI before review."
+          }
+        ],
+        "implementations": [
+          "feature:ci-pipeline",
+          "technology:github-actions"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "yocto-builds-github-actions",
+            "relation": "demonstrates",
+            "type": "example"
+          },
+          {
+            "ref": "cron-nightly-builds",
+            "relation": "evidence",
+            "type": "example"
+          }
+        ],
+        "owner": "Developer Experience",
+        "summary": "Every change is built and tested automatically before it merges.",
+        "target_status": "strategic_standard",
+        "unlocks": []
+      },
+      "id": "eng.platform/continuous-integration",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 592
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Continuous Integration",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:docker",
+          "feature:environment-configuration"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "The full development toolchain starts from one container definition.",
+        "unlocks": []
+      },
+      "id": "eng.platform/dev-containers",
+      "pinned": false,
+      "position": {
+        "x": 2282,
+        "y": 24
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Reproducible Development Containers",
+      "track": "platform-os"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "wonder",
+      "data": {
+        "benefit": "Engineers find, reuse and build on what exists instead of rebuilding it.",
+        "eurekas": [],
+        "implementations": [],
+        "kind": "wonder",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "One front door to SDKs, APIs, examples, pipelines and their owners.",
+        "unlocks": []
+      },
+      "id": "eng.platform/developer-portal",
+      "pinned": false,
+      "position": {
+        "x": 2282,
+        "y": 1536
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Developer Portal",
+      "track": "knowledge"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:device-commissioning"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Embedded Platforms",
+        "summary": "Every device has a hardware-rooted identity it can prove.",
+        "unlocks": []
+      },
+      "id": "eng.platform/device-identity",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 1384
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Device Identity and Attestation",
+      "track": "security"
+    },
+    {
+      "aliases": [],
+      "band": "intelligent",
+      "category": "wonder",
+      "data": {
+        "benefit": "Changes are proven against a twin of the fielded system before they reach a single device.",
+        "eurekas": [],
+        "implementations": [],
+        "kind": "wonder",
+        "links": [],
+        "owner": "Systems Engineering",
+        "summary": "A live, faithful model of the deployed system that runs the real software.",
+        "unlocks": []
+      },
+      "description": "Simulation + hardware abstraction + recorded I/O, from the write-up.",
+      "id": "eng.platform/digital-twin",
+      "pinned": false,
+      "position": {
+        "x": 3182,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Digital Twin",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "Working examples of how things are done are searchable in one place.",
+        "unlocks": []
+      },
+      "id": "eng.platform/example-catalog",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 1536
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Engineering Example Catalog",
+      "track": "knowledge"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:health-check",
+          "technology:prometheus"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Platform Ops",
+        "summary": "Deployed devices report health so problems are seen before users report them.",
+        "unlocks": []
+      },
+      "id": "eng.platform/fleet-health-monitoring",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 1120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Fleet Health Monitoring",
+      "track": "deployment"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "one-production-service",
+            "statement": "One production service uses a generated client."
+          }
+        ],
+        "implementations": [
+          "technology:protocol-buffers",
+          "technology:flatbuffers"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Mission Software",
+        "summary": "Interface clients are generated from the interface definitions.",
+        "unlocks": []
+      },
+      "id": "eng.platform/generated-clients",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 328
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Generated Interface Clients",
+      "track": "architecture"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "port-one-driver",
+            "statement": "One driver runs unchanged on two different boards."
+          }
+        ],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Embedded Platforms",
+        "summary": "Applications use stable device interfaces instead of board-specific code.",
+        "target_status": "operational",
+        "unlocks": []
+      },
+      "id": "eng.platform/hardware-abstraction",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 176
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Hardware Abstraction Layer",
+      "track": "hardware-bsp"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "milestone",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "milestone",
+        "links": [],
+        "owner": "Embedded Platforms",
+        "summary": "Most development and testing happens without access to target hardware.",
+        "unlocks": [
+          "Hardware stops being the schedule bottleneck"
+        ]
+      },
+      "description": "Simulation or recorded-data replay — either one, on top of the abstraction layer and SDK.",
+      "id": "eng.platform/hardware-independent-development",
+      "pinned": false,
+      "position": {
+        "x": 2582,
+        "y": 176
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Hardware-Independent Development",
+      "track": "hardware-bsp"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "boot-in-sim",
+            "statement": "The platform image boots against simulated peripherals."
+          }
+        ],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Test Engineering",
+        "summary": "The software runs against simulated peripherals and boards.",
+        "target_status": "demonstrated",
+        "unlocks": []
+      },
+      "id": "eng.platform/hardware-simulation",
+      "pinned": false,
+      "position": {
+        "x": 2282,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Hardware Simulation",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "wonder",
+      "data": {
+        "benefit": "Every team tests against every supported board, continuously, without owning the boards.",
+        "eurekas": [],
+        "implementations": [],
+        "kind": "wonder",
+        "links": [],
+        "owner": "Test Engineering",
+        "summary": "A shared lab of simulated and real hardware, booked and driven by automation.",
+        "unlocks": []
+      },
+      "id": "eng.platform/hardware-simulation-lab",
+      "pinned": false,
+      "position": {
+        "x": 2582,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Hardware Simulation Lab",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:robot-framework",
+          "feature:keyword-driven-testing"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "robot-hil-can-harness",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Test Engineering",
+        "summary": "Tests can drive and observe real hardware through a scripted harness.",
+        "unlocks": []
+      },
+      "id": "eng.platform/hardware-test-harness",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 968
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Hardware Test Harness",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:hardware-in-the-loop-testing"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "robot-hil-can-harness",
+            "relation": "evidence",
+            "type": "example"
+          }
+        ],
+        "owner": "Test Engineering",
+        "summary": "Hardware-in-the-loop tests run automatically on every release candidate.",
+        "unlocks": []
+      },
+      "id": "eng.platform/hil-regression",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Hardware-in-the-Loop Regression",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Systems Engineering",
+        "summary": "Every external interface has a written, versioned description.",
+        "unlocks": [
+          "Teams integrate against a document instead of a person"
+        ]
+      },
+      "id": "eng.platform/interface-documentation",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 328
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Documented Interfaces",
+      "track": "architecture"
+    },
+    {
+      "aliases": [],
+      "band": "intelligent",
+      "category": "wonder",
+      "data": {
+        "benefit": "Any engineering question — why, where, who, proven how — is answered in minutes.",
+        "eurekas": [],
+        "implementations": [],
+        "kind": "wonder",
+        "links": [],
+        "owner": "Systems Engineering",
+        "summary": "Requirements, designs, code, tests, examples and people are connected and queryable.",
+        "unlocks": []
+      },
+      "id": "eng.platform/knowledge-graph",
+      "pinned": false,
+      "position": {
+        "x": 3182,
+        "y": 1536
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Engineering Knowledge Graph",
+      "track": "knowledge"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:interactive-plotting",
+          "technology:websocket"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "react-live-plots-websocket",
+            "relation": "demonstrates",
+            "type": "example"
+          },
+          {
+            "ref": "prometheus-embedded-daemon",
+            "relation": "evidence",
+            "type": "example"
+          }
+        ],
+        "owner": "Instrumentation",
+        "summary": "Engineers watch live system telemetry while testing.",
+        "unlocks": []
+      },
+      "id": "eng.platform/live-telemetry",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 968
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Live Telemetry Visualization",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Mission Software",
+        "summary": "Platform services are reached through one documented, versioned API.",
+        "unlocks": []
+      },
+      "id": "eng.platform/platform-api",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 328
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Platform API",
+      "track": "architecture"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "milestone",
+      "data": {
+        "eurekas": [
+          {
+            "id": "outside-team",
+            "statement": "A team outside the platform group ships an application using only the SDK."
+          }
+        ],
+        "implementations": [],
+        "kind": "milestone",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "Teams build products on the platform from an SDK, without platform-team help.",
+        "target_status": "operational",
+        "unlocks": [
+          "Product teams that start from the platform, not from scratch"
+        ]
+      },
+      "description": "A milestone: it only lands when build, API, hardware abstraction and packaging come together.",
+      "id": "eng.platform/platform-sdk",
+      "pinned": false,
+      "position": {
+        "x": 1382,
+        "y": 592
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Platform SDK",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "intelligent",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Platform Ops",
+        "summary": "Fleet data predicts failures and schedules updates or service before they happen.",
+        "unlocks": []
+      },
+      "id": "eng.platform/predictive-maintenance",
+      "pinned": false,
+      "position": {
+        "x": 3182,
+        "y": 1120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Predictive Fleet Maintenance",
+      "track": "deployment"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "milestone",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:continuous-delivery"
+        ],
+        "kind": "milestone",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "A release is one button press: build, test, sign, package, publish.",
+        "target_status": "operational",
+        "unlocks": [
+          "Releases on demand instead of release weekends"
+        ]
+      },
+      "description": "Needs one automated hardware gate: board qualification or HIL regression — either suffices.",
+      "id": "eng.platform/push-button-release",
+      "pinned": false,
+      "position": {
+        "x": 1982,
+        "y": 592
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Push-Button Release",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "replay-bug",
+            "statement": "A field bug is reproduced on a desk by replaying recorded traffic."
+          }
+        ],
+        "implementations": [
+          "technology:can-bus",
+          "feature:high-speed-data-recording"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "can-replay-bench",
+            "relation": "demonstrates",
+            "type": "example"
+          },
+          {
+            "ref": "can-decoder-from-dbc",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Test Engineering",
+        "summary": "Recorded bus and sensor traffic can be replayed into the software on a desk.",
+        "unlocks": []
+      },
+      "description": "The write-up's \"Recorded I/O\".",
+      "id": "eng.platform/recorded-data-replay",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Recorded Data Replay",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Platform Ops",
+        "summary": "Releases follow a written checklist that produces the same result each time.",
+        "unlocks": []
+      },
+      "description": "The manual checklist that predates packaging and push-button releases. In the demo state it is marked retiring: it is being replaced, not removed overnight.",
+      "id": "eng.platform/repeatable-release",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 1120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Repeatable Release Procedure",
+      "track": "deployment"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "bit-identical",
+            "statement": "Two clean builds of the same commit produce identical images."
+          }
+        ],
+        "implementations": [
+          "feature:dependency-pinning"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "yocto-builds-github-actions",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Embedded Platforms",
+        "summary": "The same commit always produces the same platform image.",
+        "target_status": "operational",
+        "unlocks": []
+      },
+      "id": "eng.platform/reproducible-builds",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 24
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Reproducible Platform Builds",
+      "track": "platform-os"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:petalinux",
+          "feature:device-tree-configuration"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "device-tree-overlay-fpga",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Embedded Platforms",
+        "summary": "One maintained BSP layer serves every board variant.",
+        "unlocks": [
+          "New board variants as configuration, not forks"
+        ]
+      },
+      "id": "eng.platform/reusable-bsp",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 176
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Reusable Board Support Package",
+      "track": "hardware-bsp"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:firmware-update"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "systemd-self-update-rollback",
+            "relation": "demonstrates",
+            "type": "example"
+          },
+          {
+            "ref": "kubernetes-rollback-drill",
+            "relation": "evidence",
+            "type": "example"
+          }
+        ],
+        "owner": "Embedded Platforms",
+        "summary": "A failed update returns the device to its last known-good image on its own.",
+        "unlocks": []
+      },
+      "id": "eng.platform/rollback-support",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 24
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Rollback Support",
+      "track": "platform-os"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [
+          {
+            "id": "rollback-drill",
+            "statement": "A deliberately bad update rolls back on its own on a bench unit."
+          },
+          {
+            "id": "offline-bundle",
+            "statement": "An air-gapped unit updates from a signed offline bundle."
+          }
+        ],
+        "implementations": [
+          "feature:automatic-update",
+          "feature:code-signing",
+          "technology:yocto-project"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "offline-update-bundle-zynq",
+            "relation": "demonstrates",
+            "type": "example"
+          },
+          {
+            "ref": "systemd-self-update-rollback",
+            "relation": "demonstrates",
+            "type": "example"
+          },
+          {
+            "ref": "ota-updates-mqtt",
+            "relation": "eureka",
+            "type": "example"
+          },
+          {
+            "ref": "fleet-update-agent",
+            "relation": "evidence",
+            "type": "tool"
+          }
+        ],
+        "owner": "Platform Ops",
+        "summary": "Devices update themselves from signed packages and roll back if the update fails.",
+        "target_status": "operational",
+        "unlocks": [
+          "Fleet-wide updates without site visits"
+        ]
+      },
+      "description": "Package management, cryptographic signing and rollback combined: the write-up's canonical cross-branch capability.",
+      "id": "eng.platform/safe-automatic-update",
+      "pinned": false,
+      "position": {
+        "x": 1382,
+        "y": 1120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Safe Automatic Update",
+      "track": "deployment"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:sbom-generation"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "sbom-in-ci",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Platform Ops",
+        "summary": "Every build publishes a software bill of materials that is scanned for known vulnerabilities.",
+        "unlocks": []
+      },
+      "id": "eng.platform/sbom-scanning",
+      "pinned": false,
+      "position": {
+        "x": 1682,
+        "y": 1272
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "SBOM and Vulnerability Scanning",
+      "track": "security"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:yocto-project",
+          "technology:petalinux",
+          "feature:linux-image-build"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Embedded Platforms",
+        "summary": "The Linux platform image is built by a script anyone can run, not by hand.",
+        "unlocks": [
+          "Builds that do not depend on one person's workstation"
+        ]
+      },
+      "id": "eng.platform/scripted-platform-build",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 24
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Scripted Platform Build",
+      "track": "platform-os"
+    },
+    {
+      "aliases": [],
+      "band": "platformization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:zynq-7000"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "secure-boot-zynq",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Embedded Platforms",
+        "summary": "Devices only boot signed bootloaders, kernels and images.",
+        "unlocks": []
+      },
+      "id": "eng.platform/secure-boot",
+      "pinned": false,
+      "position": {
+        "x": 1082,
+        "y": 1272
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Secure Boot",
+      "track": "security"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "wonder",
+      "data": {
+        "benefit": "New engineers and new projects are productive on day one; no tickets, no waiting for hardware.",
+        "eurekas": [],
+        "implementations": [],
+        "kind": "wonder",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "Any engineer gets a working, production-like environment on demand.",
+        "unlocks": []
+      },
+      "id": "eng.platform/self-service-dev-env",
+      "pinned": false,
+      "position": {
+        "x": 2882,
+        "y": 592
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Self-Service Development Environment",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "virtualization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Mission Software",
+        "summary": "Dependent services can be replaced by faithful virtual stand-ins in tests.",
+        "unlocks": []
+      },
+      "id": "eng.platform/service-virtualization",
+      "pinned": false,
+      "position": {
+        "x": 2282,
+        "y": 328
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Service Virtualization",
+      "track": "architecture"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Systems Engineering",
+        "summary": "Engineering knowledge is written down somewhere everyone can find it.",
+        "unlocks": []
+      },
+      "id": "eng.platform/shared-documentation",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 1536
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Shared Engineering Documentation",
+      "track": "knowledge"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:conan",
+          "feature:dependency-pinning"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "conan-lockfiles-cross",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Platform Ops",
+        "summary": "Software is delivered as versioned packages with declared dependencies.",
+        "unlocks": []
+      },
+      "description": "The write-up calls this \"Package Management\". Packages are the unit that signing, update and rollback build on.",
+      "id": "eng.platform/software-packaging",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 1120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Software Packaging",
+      "track": "deployment"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:zeromq",
+          "technology:flatbuffers",
+          "feature:publish-subscribe-messaging"
+        ],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "zeromq-flatbuffers-pubsub",
+            "relation": "demonstrates",
+            "type": "example"
+          }
+        ],
+        "owner": "Mission Software",
+        "summary": "Components talk over one agreed messaging layer with schema-defined messages.",
+        "target_status": "strategic_standard",
+        "unlocks": []
+      },
+      "id": "eng.platform/standard-message-bus",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 440
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Standard Message Bus",
+      "track": "architecture"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:pre-commit-check"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "Agreed coding standards are checked automatically on every change.",
+        "unlocks": []
+      },
+      "id": "eng.platform/static-analysis",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 704
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Coding Standards and Static Analysis",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [],
+        "owner": "Systems Engineering",
+        "summary": "Requirements have stable ids and live next to the work that satisfies them.",
+        "target_status": "operational",
+        "unlocks": []
+      },
+      "id": "eng.platform/structured-requirements",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 1536
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Structured Requirements",
+      "track": "knowledge"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "capability",
+        "links": [
+          {
+            "ref": "mcp-server-test-results",
+            "relation": "evidence",
+            "type": "example"
+          }
+        ],
+        "owner": "Test Engineering",
+        "summary": "Test results carry machine-readable metadata: what, where, which build, which requirement.",
+        "unlocks": []
+      },
+      "id": "eng.platform/test-metadata",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Structured Test Metadata",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "automation",
+      "category": "milestone",
+      "data": {
+        "eurekas": [],
+        "implementations": [],
+        "kind": "milestone",
+        "links": [],
+        "owner": "Platform Ops",
+        "summary": "Only genuine devices receive updates, and the fleet's health confirms each rollout.",
+        "unlocks": []
+      },
+      "description": "Confidence comes from either live fleet health or lab HIL regression — one is enough to start.",
+      "id": "eng.platform/trusted-fleet-update",
+      "pinned": false,
+      "position": {
+        "x": 1982,
+        "y": 1120
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Trusted Fleet Update",
+      "track": "deployment"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:unit-testing",
+          "technology:pytest",
+          "technology:vitest"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Test Engineering",
+        "summary": "Components ship with unit tests that run without hardware.",
+        "unlocks": []
+      },
+      "id": "eng.platform/unit-testing",
+      "pinned": false,
+      "position": {
+        "x": 312,
+        "y": 856
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Automated Unit Testing",
+      "track": "sim-test"
+    },
+    {
+      "aliases": [],
+      "band": "foundation",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "technology:git"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Developer Experience",
+        "summary": "Code, configuration, scripts and documentation live in version control.",
+        "unlocks": [
+          "Every later automation step"
+        ]
+      },
+      "id": "eng.platform/version-control",
+      "pinned": false,
+      "position": {
+        "x": 12,
+        "y": 592
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Version Control for All Engineering Source",
+      "track": "dev-scripting"
+    },
+    {
+      "aliases": [],
+      "band": "standardization",
+      "category": "capability",
+      "data": {
+        "eurekas": [],
+        "implementations": [
+          "feature:rest-api-design",
+          "feature:schema-driven-serialization"
+        ],
+        "kind": "capability",
+        "links": [],
+        "owner": "Mission Software",
+        "summary": "APIs carry explicit versions and a compatibility policy.",
+        "target_status": "operational",
+        "unlocks": [
+          "Independent release of producers and consumers"
+        ]
+      },
+      "id": "eng.platform/versioned-apis",
+      "pinned": false,
+      "position": {
+        "x": 612,
+        "y": 328
+      },
+      "size": {
+        "height": 88,
+        "width": 220
+      },
+      "tags": [],
+      "title": "Versioned APIs",
+      "track": "architecture"
+    }
+  ],
+  "tracks": [
+    {
+      "color": "#6d5a99",
+      "description": "Interfaces, messaging, APIs and their evolution.",
+      "id": "architecture",
+      "lane": {
+        "height": 248,
+        "y": 304
+      },
+      "order": 2,
+      "title": "Software Architecture"
+    },
+    {
+      "color": "#5a8a99",
+      "description": "Packaging, delivery and fleet update.",
+      "id": "deployment",
+      "lane": {
+        "height": 136,
+        "y": 1096
+      },
+      "order": 5,
+      "title": "Deployment & Update"
+    },
+    {
+      "color": "#4f8a6d",
+      "description": "How engineers build, check and release software.",
+      "id": "dev-scripting",
+      "lane": {
+        "height": 248,
+        "y": 568
+      },
+      "order": 3,
+      "title": "Development & Scripting"
+    },
+    {
+      "color": "#8a6d4f",
+      "description": "Board bring-up, BSP layers, hardware abstraction.",
+      "id": "hardware-bsp",
+      "lane": {
+        "height": 136,
+        "y": 152
+      },
+      "order": 1,
+      "title": "Hardware & Board Support"
+    },
+    {
+      "color": "#7a7f8c",
+      "description": "Requirements, documentation, examples and traceability.",
+      "id": "knowledge",
+      "lane": {
+        "height": 136,
+        "y": 1512
+      },
+      "order": 7,
+      "title": "Knowledge & Traceability"
+    },
+    {
+      "color": "#5a7399",
+      "description": "Linux platform image, build, boot and update mechanics.",
+      "id": "platform-os",
+      "lane": {
+        "height": 136,
+        "y": 0
+      },
+      "order": 0,
+      "title": "Platform & OS"
+    },
+    {
+      "color": "#995a5a",
+      "description": "Signing, secure boot, identity and supply-chain assurance.",
+      "id": "security",
+      "lane": {
+        "height": 248,
+        "y": 1248
+      },
+      "order": 6,
+      "title": "Security & Identity"
+    },
+    {
+      "color": "#99825a",
+      "description": "Testing with and without hardware; simulation and replay.",
+      "id": "sim-test",
+      "lane": {
+        "height": 248,
+        "y": 832
+      },
+      "order": 4,
+      "title": "Simulation & Test"
+    }
+  ],
+  "tree": {
+    "default_theme": "civ-iv",
+    "description": "DEMO / FICTIONAL. A Civilization-style capability tech tree for an embedded\nLinux engineering platform: six eras (columns) by eight branches (swimlanes),\nwith capabilities, milestones and wonders joined by prerequisites. Capability\nnames and structure come from Eric's write-up; owners, links, eurekas and the\nstatuses in demo.state.json are invented for demonstration and describe no\nreal organisation. Links are opaque `{type, ref, relation}` references that a\nhost application resolves (e.g. against its example catalog).\n",
+    "id": "engineering-platform",
+    "profile": "capability",
+    "title": "Engineering Platform",
+    "version": "2026.10-demo"
+  }
+}

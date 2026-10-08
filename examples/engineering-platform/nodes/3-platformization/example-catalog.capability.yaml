@@ -1,0 +1,12 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/example-catalog
+title: "Engineering Example Catalog"
+kind: capability
+era: platformization
+branch: knowledge
+summary: "Working examples of how things are done are searchable in one place."
+requires:
+  - eng.platform/shared-documentation
+  - eng.platform/version-control
+owner: "Developer Experience"

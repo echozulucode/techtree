@@ -1,0 +1,22 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/continuous-integration
+title: "Continuous Integration"
+kind: capability
+era: standardization
+branch: dev-scripting
+summary: "Every change is built and tested automatically before it merges."
+requires:
+  - eng.platform/version-control
+  - eng.platform/unit-testing
+eurekas:
+  - id: first-red-build
+    statement: "A broken commit is caught by CI before review."
+implementations:
+  - feature:ci-pipeline
+  - technology:github-actions
+links:
+  - { type: example, ref: yocto-builds-github-actions, relation: demonstrates }
+  - { type: example, ref: cron-nightly-builds, relation: evidence }
+owner: "Developer Experience"
+target_status: strategic_standard

@@ -37,6 +37,18 @@ export const minimalDark: Theme = {
     process: { shape: 'rect', fill: '#21262d' },
     leadership: { shape: 'rect', fill: '#21262d' },
     operations: { shape: 'rect', fill: '#21262d' },
+    capability: { shape: 'rect', fill: '#21262d' },
+    milestone: { shape: 'rect', fill: '#2d2a1f' },
+    wonder: { shape: 'rect', fill: '#2a2233' },
+  },
+  statuses: {
+    not_started: { color: '#484f58', icon: 'circle' },
+    investigating: { color: '#58a6ff', icon: 'search' },
+    demonstrated: { color: '#39c5cf', icon: 'circle-half' },
+    operational: { color: '#238636', icon: 'circle-check' },
+    strategic_standard: { color: '#d29922', icon: 'star' },
+    legacy: { color: '#db6d28', icon: 'alert-triangle' },
+    retiring: { color: '#da3633', icon: 'x-circle' },
   },
   edges: {
     requires: { stroke: '#484f58', width: 1.5, style: 'solid' },

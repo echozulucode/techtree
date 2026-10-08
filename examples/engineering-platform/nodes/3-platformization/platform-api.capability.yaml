@@ -1,0 +1,12 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/platform-api
+title: "Platform API"
+kind: capability
+era: platformization
+branch: architecture
+summary: "Platform services are reached through one documented, versioned API."
+requires:
+  - eng.platform/standard-message-bus
+  - eng.platform/versioned-apis
+owner: "Mission Software"

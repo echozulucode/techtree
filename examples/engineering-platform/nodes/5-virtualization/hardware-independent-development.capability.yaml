@@ -1,0 +1,18 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/hardware-independent-development
+title: "Hardware-Independent Development"
+kind: milestone
+era: virtualization
+branch: hardware-bsp
+summary: "Most development and testing happens without access to target hardware."
+description: "Simulation or recorded-data replay — either one, on top of the abstraction layer and SDK."
+requires:
+  - eng.platform/hardware-abstraction
+  - eng.platform/platform-sdk
+  - any_of:
+      - eng.platform/hardware-simulation
+      - eng.platform/recorded-data-replay
+unlocks:
+  - "Hardware stops being the schedule bottleneck"
+owner: "Embedded Platforms"

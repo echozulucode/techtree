@@ -1,0 +1,31 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/safe-automatic-update
+title: "Safe Automatic Update"
+kind: capability
+era: platformization
+branch: deployment
+summary: "Devices update themselves from signed packages and roll back if the update fails."
+description: "Package management, cryptographic signing and rollback combined: the write-up's canonical cross-branch capability."
+requires:
+  - eng.platform/software-packaging
+  - eng.platform/artifact-signing
+  - eng.platform/rollback-support
+unlocks:
+  - "Fleet-wide updates without site visits"
+eurekas:
+  - id: rollback-drill
+    statement: "A deliberately bad update rolls back on its own on a bench unit."
+  - id: offline-bundle
+    statement: "An air-gapped unit updates from a signed offline bundle."
+implementations:
+  - feature:automatic-update
+  - feature:code-signing
+  - technology:yocto-project
+links:
+  - { type: example, ref: offline-update-bundle-zynq, relation: demonstrates }
+  - { type: example, ref: systemd-self-update-rollback, relation: demonstrates }
+  - { type: example, ref: ota-updates-mqtt, relation: eureka }
+  - { type: tool, ref: fleet-update-agent, relation: evidence }
+owner: "Platform Ops"
+target_status: operational

@@ -582,11 +582,13 @@
     {
       "description": "Server-side, data, infrastructure.",
       "id": "backend",
+      "order": 0,
       "title": "Backend Track"
     },
     {
       "description": "Cross-team and organizational impact.",
       "id": "leadership",
+      "order": 1,
       "title": "Technical Leadership"
     }
   ],
@@ -594,6 +596,7 @@
     "default_theme": "civ-iv",
     "description": "Example career-track tree for software engineering progression\nfrom junior IC through staff. Authored as a demonstration of how\na real organization's competency matrix can be expressed in the\n@skill-tree schema.\n",
     "id": "eng-career",
+    "profile": "skill",
     "title": "Engineering Career Progression",
     "version": "2026.1"
   }

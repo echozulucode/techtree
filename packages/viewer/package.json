@@ -1,21 +1,63 @@
 {
   "name": "@echozedlabs/techtree-viewer",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
+  "description": "TechTree viewer: embeddable React component (<TechTreeView>, React 18/19, Next.js App Router ready), renderer contract, React Flow renderer, and the standalone viewer shell.",
   "type": "module",
+  "license": "Apache-2.0",
+  "author": "Eric Zimmerman (https://echozed.com)",
+  "homepage": "https://echozed.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echozulucode/techtree.git",
+    "directory": "packages/viewer"
+  },
+  "bugs": {
+    "url": "https://github.com/echozulucode/techtree/issues"
+  },
+  "keywords": [
+    "tech-tree",
+    "react",
+    "viewer",
+    "graph",
+    "dag",
+    "react-flow"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts"
-    }
+      "types": "./dist/index.d.ts",
+      "techtree-source": "./src/index.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": {
+      "techtree-source": "./src/style.css",
+      "default": "./dist/style.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "setup-ir": "node scripts/setup-ir.mjs",
     "dev": "pnpm setup-ir && vite",
-    "build": "pnpm setup-ir && vite build",
-    "preview": "vite preview",
+    "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json && node scripts/build-css.mjs && node scripts/check-dist.mjs",
+    "build:app": "pnpm setup-ir && vite build --outDir dist-app",
+    "preview": "vite preview --outDir dist-app",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "react": "^18.3.0 || ^19.0.0",
+    "react-dom": "^18.3.0 || ^19.0.0"
   },
   "dependencies": {
     "@echozedlabs/techtree-ir": "workspace:*",
@@ -23,14 +65,14 @@
     "@echozedlabs/techtree-state": "workspace:*",
     "@echozedlabs/techtree-themes": "workspace:*",
     "@xyflow/react": "^12.4.0",
-    "lucide-react": "^0.469.0",
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "lucide-react": "^0.469.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
     "vite": "^5.4.0"
   }
 }

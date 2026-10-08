@@ -1,0 +1,11 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/board-bring-up
+title: "Documented Board Bring-Up"
+kind: capability
+era: foundation
+branch: hardware-bsp
+summary: "New boards are brought up with a written, repeatable procedure."
+unlocks:
+  - "Second and third boards come up in days, not weeks"
+owner: "Embedded Platforms"

@@ -1,0 +1,20 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/automated-traceability
+title: "Automated Traceability"
+kind: capability
+era: automation
+branch: knowledge
+summary: "Requirement-to-test-to-release traces are generated, not hand-maintained."
+requires:
+  - eng.platform/structured-requirements
+  - eng.platform/versioned-apis
+  - eng.platform/test-metadata
+eurekas:
+  - id: trace-report
+    statement: "A release report links each requirement to its passing tests automatically."
+implementations:
+  - feature:requirements-traceability
+links:
+  - { type: example, ref: requirements-trace-markdown, relation: demonstrates }
+owner: "Systems Engineering"

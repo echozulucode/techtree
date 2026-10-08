@@ -1,0 +1,17 @@
+id: t.cap/hardware-independent
+title: Hardware-Independent Development
+kind: milestone
+era: two
+branch: bottom
+summary: Most work happens without hardware.
+requires:
+  - t.cap/hal
+  - any_of: [t.cap/simulation, t.cap/replay]
+unlocks: [Faster schedules]
+eurekas:
+  - { id: first-sim-test, statement: A test passes against the simulator. }
+implementations: ['technology:qemu', Rust]
+links:
+  - { type: example, ref: sim-bench, relation: demonstrates }
+owner: Test Engineering
+target_status: operational

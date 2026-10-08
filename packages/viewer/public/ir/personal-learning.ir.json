@@ -514,11 +514,13 @@
     {
       "description": "Written and verbal communication for engineers.",
       "id": "communication",
+      "order": 1,
       "title": "Communication and Writing"
     },
     {
       "description": "Core programming progression from basics to systems thinking.",
       "id": "programming",
+      "order": 0,
       "title": "Programming Mastery"
     }
   ],
@@ -526,6 +528,7 @@
     "default_theme": "civ-iv",
     "description": "A personal growth tree for software-engineering continuous learning.\nAuthored as an example for the @skill-tree platform.\n",
     "id": "personal-learning",
+    "profile": "skill",
     "title": "Personal Continuous Learning",
     "version": "2026.1"
   }

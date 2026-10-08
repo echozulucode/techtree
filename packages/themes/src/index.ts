@@ -6,11 +6,13 @@
 import type { Theme } from '@echozedlabs/techtree-schema';
 import { civIv } from './civ-iv.js';
 import { minimalDark } from './minimal-dark.js';
+import { cssVariables } from './css-variables.js';
 
 export { civIv } from './civ-iv.js';
 export { minimalDark } from './minimal-dark.js';
+export { cssVariables, CSS_VARIABLE_NAMES } from './css-variables.js';
 
-export const BUILT_IN_THEMES: Theme[] = [civIv, minimalDark];
+export const BUILT_IN_THEMES: Theme[] = [civIv, minimalDark, cssVariables];
 
 export const DEFAULT_THEME_ID = civIv.id;
 

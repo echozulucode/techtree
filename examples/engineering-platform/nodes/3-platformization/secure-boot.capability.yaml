@@ -1,0 +1,16 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/secure-boot
+title: "Secure Boot"
+kind: capability
+era: platformization
+branch: security
+summary: "Devices only boot signed bootloaders, kernels and images."
+requires:
+  - eng.platform/artifact-signing
+  - eng.platform/reusable-bsp
+implementations:
+  - technology:zynq-7000
+links:
+  - { type: example, ref: secure-boot-zynq, relation: demonstrates }
+owner: "Embedded Platforms"

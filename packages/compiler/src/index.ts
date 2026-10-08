@@ -1,13 +1,21 @@
 export { compile, lint, type CompileResult } from './pipeline.js';
-export { type Profile, type CoreNode } from './profile.js';
+export {
+  type Profile,
+  type CoreNode,
+  type ProfileLintContext,
+  allPrerequisiteRefs,
+} from './profile.js';
 export {
   skillProfile,
   deliveryProfile,
+  capabilityProfile,
   PROFILES,
   getProfile,
   DEFAULT_PROFILE_ID,
 } from './profiles/index.js';
 export { stableStringify } from './emit.js';
+export { lintCapabilities } from './profiles/capability.js';
+export { detectTreeProfile } from './detect-profile.js';
 export { loadTree, type LoadedTree } from './loader.js';
 export {
   type Diagnostic,

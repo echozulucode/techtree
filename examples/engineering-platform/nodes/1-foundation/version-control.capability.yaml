@@ -1,0 +1,13 @@
+# DEMO CONTENT — capability names and structure from the write-up; fictional demo, see tree.yaml.
+schema_version: 1
+id: eng.platform/version-control
+title: "Version Control for All Engineering Source"
+kind: capability
+era: foundation
+branch: dev-scripting
+summary: "Code, configuration, scripts and documentation live in version control."
+unlocks:
+  - "Every later automation step"
+implementations:
+  - technology:git
+owner: "Developer Experience"
