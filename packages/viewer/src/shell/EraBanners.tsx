@@ -94,12 +94,27 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
               borderBottom: `1px solid ${color}33`,
               opacity: viewport.zoom > 0.15 ? 1 : 0.4,
               whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              // clip, not hidden: no scroll container, so the title below
+              // sticks to the edges of the header row, not of its own box.
+              overflow: 'clip',
               paddingTop: 4,
             }}
           >
-            {era.title ?? era.id}
+            {/* Sticky: a column cut by the canvas edge keeps its title in view. */}
+            <span
+              style={{
+                position: 'sticky',
+                left: 8,
+                right: 8,
+                display: 'inline-block',
+                maxWidth: '100%',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                verticalAlign: 'top',
+              }}
+            >
+              {era.title ?? era.id}
+            </span>
           </div>
         );
       })}

@@ -55,6 +55,10 @@ including the lane gutter):
    and the gutter never fit side by side at 0.8). The rail is `aria-hidden`
    (duplicates the canvas titles; the outline view is the accessible structure)
    and uses the AA panel colours.
+   Era titles likewise stay inside the header row when their column is cut by
+   the canvas edge (a sticky title inside each era's header box): on a 356 px
+   phone canvas the focused era's title, centred over a box that reaches the
+   next era, was otherwise clipped on the right.
 3. **Resize behaviour.** The renderer contract gains
    `initialCamera(container) → viewport`; the React Flow renderer applies it
    when the canvas first has a size and again on every size change (coalesced

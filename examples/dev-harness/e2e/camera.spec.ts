@@ -60,6 +60,7 @@ async function measure(page: Page) {
 }
 
 for (const vp of [
+  { name: 'small phone', width: 360, height: 740, mode: 'focus', label: 'rail' },
   { name: 'phone', width: 390, height: 844, mode: 'focus', label: 'rail' },
   { name: 'laptop', width: 1440, height: 900, mode: 'focus', label: 'canvas' },
   { name: 'wide', width: 2560, height: 1440, mode: 'fit', label: 'canvas' },
