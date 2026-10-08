@@ -4,6 +4,7 @@ import type { IRNode } from '@echozedlabs/techtree-ir';
 import type { SkillData, Theme } from '@echozedlabs/techtree-schema';
 import { skillStatusModel, type StatusModel } from '@echozedlabs/techtree-state/status-model';
 import { difficultyPips, iconFor } from '../../shell/icons.js';
+import { LANE_LABEL_INSET } from '../../shell/lane-geometry.js';
 import { KIND_ICONS, statusIcon } from '../../shell/status-icons.js';
 import {
   canvasBackground,
@@ -189,6 +190,8 @@ export const SkillNode = GraphNode;
 
 export type LaneNodeData = {
   title: string;
+  /** Track id of the lane. */
+  trackId?: string;
   color?: string;
   theme: Theme;
 };
@@ -199,6 +202,7 @@ export function LaneNode({ data, width, height }: NodeProps<Node<LaneNodeData>>)
   return (
     <div
       data-testid="graph-lane"
+      {...(data.trackId ? { 'data-track-id': data.trackId } : {})}
       style={{
         width,
         height,
@@ -211,9 +215,10 @@ export function LaneNode({ data, width, height }: NodeProps<Node<LaneNodeData>>)
       }}
     >
       <div
+        data-testid="lane-label"
         style={{
           position: 'absolute',
-          left: 12,
+          left: LANE_LABEL_INSET,
           top: 10,
           width: 150,
           fontFamily: fontFamily(data.theme),

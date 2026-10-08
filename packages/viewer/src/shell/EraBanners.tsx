@@ -1,6 +1,7 @@
 import type { IR } from '@echozedlabs/techtree-ir';
 import type { Theme } from '@echozedlabs/techtree-schema';
 import type { Viewport } from '../renderer.js';
+import { ERA_HEADER_HEIGHT } from './lane-geometry.js';
 import { eraLabelColor, fontFamily } from './theme-utils.js';
 
 export interface EraBannersProps {
@@ -62,7 +63,7 @@ export function EraBanners({ ir, theme, viewport }: EraBannersProps) {
         top: 0,
         left: 0,
         right: 0,
-        height: 44,
+        height: ERA_HEADER_HEIGHT,
         pointerEvents: 'none',
         zIndex: 5,
         overflow: 'hidden',

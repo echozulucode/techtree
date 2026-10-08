@@ -20,6 +20,14 @@ export interface Viewport {
 }
 
 /**
+ * Initial camera as a function of the canvas size in screen px. The renderer
+ * applies it once the canvas has a size and again when that size changes,
+ * until the reader moves the camera (pan, zoom, minimap, controls, keyboard)
+ * or a focus request does; then never again.
+ */
+export type RendererInitialCamera = (container: { width: number; height: number }) => Viewport;
+
+/**
  * Contract that renderer implementations satisfy. Deliberately small — the
  * shell (toolbar, side panel, era banners, theme switcher, filter chips) lives
  * outside this surface and is rendered once regardless of which renderer is
@@ -66,6 +74,11 @@ export interface RendererProps {
   fitViewOptions?: RendererFitViewOptions;
   /** Fit options for the initial camera only (e.g. one focused node at a fixed zoom). */
   initialFitViewOptions?: RendererFitViewOptions;
+  /**
+   * Initial camera computed from the canvas size; replaces the initial fit
+   * (`initialFitViewOptions` / `fitViewOptions` then only drive the fit button).
+   */
+  initialCamera?: RendererInitialCamera;
   /** Node id to center the viewport on (initial focus / state-mutation re-focus). */
   focusOnNodeId: string | null;
   onSelectNode: (id: string) => void;
