@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-ir",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "TechTree IR types — the domain-agnostic contract consumed by every downstream tool (compiler, viewer, server).",
   "type": "module",
   "license": "Apache-2.0",

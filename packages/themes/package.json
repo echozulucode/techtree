@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-themes",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Built-in themes for the TechTree viewer (Civ-IV-inspired, minimal dark, host CSS variables).",
   "type": "module",
   "license": "Apache-2.0",

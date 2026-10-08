@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-server",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Thin governance server for TechTree: role-gated state mutations, append-only audit log, approval workflow.",
   "type": "module",
   "license": "Apache-2.0",
