@@ -396,7 +396,11 @@ line that would stop npm from trying OIDC.
    Push the tags the script creates (`git push origin --tags`).
 2. **Attach the trusted publisher (once per package).** On npmjs.com: package →
    Settings → Trusted publisher → GitHub Actions: organization `echozulucode`,
-   repository `techtree`, workflow `release.yml`, no environment. Or with npm ≥ 11.15:
+   repository `techtree`, workflow `release.yml`, no environment, and under
+   **Allowed actions** enable **direct publish** (`npm publish`). A new trusted
+   publisher allows only staged publishes by default; the workflow publishes directly,
+   so without it npm answers `E403 OIDC permission denied for this action`. A
+   connection can't be edited: delete it and add it again. Or with npm ≥ 11.15:
    `npm trust github <package> --repo echozulucode/techtree --file release.yml --allow-publish`.
    Then Settings → Publishing access → "Require two-factor authentication and
    disallow tokens" (trusted publishing keeps working).
@@ -407,7 +411,10 @@ line that would stop npm from trying OIDC.
    the same way. Already-published versions are skipped, so re-runs are safe.
 5. **Check:** `npm view @echozedlabs/techtree-viewer versions`; the run log shows
    one "New tag" line per package. An `E404` from `npm publish` in CI usually means
-   the trusted-publisher fields do not match (repository, workflow file name).
+   the trusted-publisher fields do not match (repository, workflow file name); an
+   `E403 OIDC permission denied for this action` means the trusted publisher does not
+   allow direct publish (step 2). A failed run publishes nothing it could not; fix the
+   setting and re-run the Release workflow (already-published versions are skipped).
 
 Every package ships `dist/`, `README.md`, `LICENSE` and `CHANGELOG.md`
 (`files` + npm defaults) with `publishConfig.access: public`, and its
