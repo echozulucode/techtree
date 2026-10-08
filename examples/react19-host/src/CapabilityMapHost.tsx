@@ -1,6 +1,6 @@
 'use client';
 // Reference host component: how a React 19 / Next.js App Router page embeds the
-// capability map with the 0.2 accessibility options — no DOM patching, no
+// capability map with the 0.2 accessibility options and the 0.3 "auto" camera — no DOM patching, no
 // CSS overrides for contrast / targets / dimming, no sr-only heading. Map your
 // design tokens in CSS (see host-theme.css next to this file).
 import type { IR } from '@echozedlabs/techtree-ir';
@@ -38,10 +38,11 @@ export function CapabilityMapHost({ ir, states, colorScheme, examples, selectedI
       ariaLabel={`${ir.tree.title} capability map`}
       // The page has an h1: the drawer title and outline branches become h2.
       headingLevel={2}
-      // Phones: start on the frontier at a readable zoom; the fit button and
-      // larger screens never go below 35 %.
-      initialFocus="frontier"
-      initialZoom={0.8}
+      // 0.3 camera: the whole tree when it fits at ≥ 60 % (wide screens), else
+      // the frontier's era at 80 % with the lane titles and era header in view
+      // (phones, laptops). A deep link to a node passes its id instead. The fit
+      // button never goes below 35 %.
+      initialFocus="auto"
       fitViewOptions={{ minZoom: 0.35 }}
       {...(selectedId !== undefined ? { selectedId } : {})}
       {...(onSelectNode ? { onSelectNode } : {})}

@@ -65,6 +65,29 @@ describe('initial camera', () => {
     expect(vp.zoom).toBeCloseTo(0.5, 5);
   });
 
+  it('initialFocus="auto": a 1200 × 800 canvas cannot fit the tree readably → frontier era at 0.8, lane titles and first lane under the era header', async () => {
+    render(<TechTreeView ir={ir} state={demoState.skills} initialFocus="auto" />);
+    const vp = await viewport();
+    const root = document.querySelector('[data-testid="techtree-view"]') as HTMLElement;
+    await waitFor(() => expect(root.dataset.camera).toBe('focus'));
+    expect(root.dataset.cameraAnchor).toBe('tree');
+    expect(Number(root.dataset.cameraFitZoom)).toBeLessThan(0.6);
+    expect(vp.zoom).toBeCloseTo(0.8, 5);
+    // tree left edge (lane-title gutter, 190 left of the first column at x 12) at 12 px; first lane (y 0) at 44 + 12 px
+    expect(vp.x).toBeCloseTo(12 + (190 - 12) * 0.8, 5);
+    expect(vp.y).toBeCloseTo(56, 5);
+    expect(document.querySelector('.react-flow.tt-camera-pending')).toBeNull();
+  });
+
+  it('initialFocus="auto" with readableZoom={0.3} fits the whole tree, top-aligned', async () => {
+    render(<TechTreeView ir={ir} state={demoState.skills} initialFocus="auto" readableZoom={0.3} />);
+    const vp = await viewport();
+    const root = document.querySelector('[data-testid="techtree-view"]') as HTMLElement;
+    await waitFor(() => expect(root.dataset.camera).toBe('fit'));
+    expect(vp.zoom).toBeCloseTo(Number(root.dataset.cameraFitZoom), 2);
+    expect(vp.y).toBeCloseTo(56, 5);
+  });
+
   it('initialZoom alone centres the whole tree at that zoom; unknown ids fall back to the fit', async () => {
     const { unmount } = render(<TechTreeView ir={ir} state={demoState.skills} initialZoom={0.75} />);
     expect((await viewport()).zoom).toBeCloseTo(0.75, 5);

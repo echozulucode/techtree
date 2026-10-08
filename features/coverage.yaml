@@ -10,8 +10,8 @@
 # (excluded from the executable run) and are intentionally omitted here.
 
 meta:
-  generated: '2026-10-07'
-  totals: { scenarios: 36, covered: 36, partial: 0, none: 0, manual: 1 }
+  generated: '2026-10-08'
+  totals: { scenarios: 38, covered: 38, partial: 0, none: 0, manual: 1 }
 
 features:
   graph_navigation:
@@ -115,6 +115,22 @@ features:
       unit:
         - 'react19-host/src/ssr.test.tsx::runs on React 19 in a DOM-less environment'
         - 'react19-host/src/ssr.test.tsx::the published entry is a "use client" module and ships style.css'
+    - scenario: 'The map opens readable on any screen'
+      status: covered
+      bdd: true
+      e2e:
+        - 'camera::auto camera 390×844: first lane title and era header in view, no empty band above the first lane'
+        - 'camera::auto camera 1440×900: first lane title and era header in view, no empty band above the first lane'
+        - 'camera::auto camera 2560×1440: first lane title and era header in view, no empty band above the first lane'
+      unit:
+        - 'viewer/src/camera.test.ts::wide screen (2464 × 1100): the whole tree fits at ≥ 0.6 → fit, top-aligned under the era header, centred'
+        - 'viewer/src/camera.test.ts::laptop (1344 × 686): fit would be ~0.37 → focus at 0.8, left edge at the lane titles, top at the first lane'
+        - 'viewer/src/camera.test.ts::phone (358 × 700): the frontier column does not fit beside the titles → left-aligned at it, titles in the rail'
+        - 'react19-host/src/camera.test.tsx::initialFocus="auto": a 1200 × 800 canvas cannot fit the tree readably → frontier era at 0.8, lane titles and first lane under the era header'
+    - scenario: 'The camera stays where the reader put it'
+      status: covered
+      bdd: true
+      e2e: ['camera::auto camera follows a resize until the reader moves the camera, then never again']
 
   accessibility:
     - scenario: 'The view passes an automated accessibility audit'

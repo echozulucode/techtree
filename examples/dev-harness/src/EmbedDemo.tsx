@@ -43,7 +43,7 @@ function renderLink(link: TechTreeLinkRef) {
 export interface EmbedDemoProps {
   name: string;
   colorScheme: ColorScheme;
-  /** `?focus=frontier|<node id>` → initialFocus. */
+  /** `?focus=auto|frontier|<node id>` → initialFocus. */
   initialFocus?: TechTreeInitialFocus;
   /** `?zoom=<number>` → initialZoom. */
   initialZoom?: number;
