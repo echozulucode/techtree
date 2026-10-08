@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-state",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "User-state schema, status derivation, and storage adapters (file / localStorage / API) for TechTree.",
   "type": "module",
   "license": "Apache-2.0",

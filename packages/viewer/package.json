@@ -1,6 +1,6 @@
 {
   "name": "@echozedlabs/techtree-viewer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "TechTree viewer: embeddable React component (<TechTreeView>, React 18/19, Next.js App Router ready), renderer contract, React Flow renderer, and the standalone viewer shell.",
   "type": "module",
   "license": "Apache-2.0",
