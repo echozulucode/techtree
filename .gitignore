@@ -12,3 +12,4 @@ playwright-report
 
 # Generated harness IR (copied from examples/*/dist by setup-ir)
 examples/dev-harness/public/ir
+.pack/

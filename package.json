@@ -32,7 +32,7 @@
     "dev:harness": "pnpm --filter @echozedlabs/dev-harness dev",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm -r build && changeset publish"
+    "release": "pnpm -r build && node scripts/publish-packages.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
