@@ -2,7 +2,7 @@
   "name": "techtree",
   "version": "0.0.0",
   "private": true,
-  "description": "TechTree — compile, render, and govern typed dependency graphs that change state over time.",
+  "description": "TechTree \u2014 compile, render, and govern typed dependency graphs that change state over time.",
   "license": "Apache-2.0",
   "author": "Eric Zimmerman (https://echozed.com)",
   "homepage": "https://echozed.com",
@@ -44,6 +44,18 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"
-    ]
+    ],
+    "packageExtensions": {
+      "lucide-react": {
+        "peerDependencies": {
+          "@types/react": "*"
+        },
+        "peerDependenciesMeta": {
+          "@types/react": {
+            "optional": true
+          }
+        }
+      }
+    }
   }
 }
